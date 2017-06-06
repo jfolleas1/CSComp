@@ -1,4 +1,15 @@
 
+// ==========================================================================
+//  GPPG error listing for yacc source file <ParserComp.y - 06/06/2017 17:05:10>
+// ==========================================================================
+//  Version:  1.5.2
+//  Machine:  FIDF3675368
+//  DateTime: 06/06/2017 17:05:31
+//  UserName: j.folleas
+// ==========================================================================
+
+
+
 %namespace Analyser
 %output=ParserComp.cs
 
@@ -24,7 +35,6 @@
 %token AND OR NOT
 %token EGALE INF INFEGALE SUP SUPEGALE
 %token ASSIGN
-%token DOLLAR
 
 %token <String> ID
 %token <String> STRING
@@ -33,13 +43,19 @@
 
 
 // Priority
-%left AND OR 
-%left NOT
-%left EGALE INF INFEGALE SUP SUPEGALE
 %left PLUS MINUS
 %left DIV MUL
 
 %% // Grammar rules section
+// Error: NonTerminal symbol "ET" has no productions
+// Error: NonTerminal symbol "OU" has no productions
+// Warning: Terminating OU fixes the following size-1 NonTerminal set
+   // {OU}
+// Error: There are 2 non-terminating NonTerminal Symbols
+   //  {ET, OU}
+// Warning: Terminating ET fixes the following size-1 NonTerminal set
+   // {ET}
+// ------------------------------------------------------------------
 
 program  : /* nothing */    { Console.WriteLine("empty Prgm"); }
          | expression       { Console.WriteLine("statement"); }
@@ -49,14 +65,14 @@ expression  :       expression PLUS expression      { Console.WriteLine("PLUS");
             |       expression MUL expression       { Console.WriteLine("MUL"); }
             |       expression DIV expression       { Console.WriteLine("DIV"); }
             |       expression MINUS expression     { Console.WriteLine("MINUS"); }
-			|       expression AND expression		{}
-            |       expression OR expression		{}
-            |       NOT expression					{}
-            |       expression EGALE expression		{}
-            |       expression INF expression		{}
-            |       expression INFEGALE expression	{}
-            |       expression SUP expression		{}
-            |       expression SUPEGALE expression	{}
+			|       expression ET expression
+            |       expression OU expression
+            |       NOT expression
+            |       expression EGALE expression
+            |       expression INF expression
+            |       expression INFEGALE expression
+            |       expression SUP expression
+            |       expression SUPEGALE expression
             |       var                             { Console.WriteLine("var"); }
             |       constante                       { Console.WriteLine("constante"); }
             ;
@@ -71,4 +87,6 @@ constante   :   INTEGER   { Console.WriteLine("int :" + $1 ); }
 
 // No argument CTOR. By deafult Parser's ctor requires scanner as param.
 public Parser(Scanner scn) : base(scn) {}
+
+// ==========================================================================
 

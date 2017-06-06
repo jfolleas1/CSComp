@@ -1,3 +1,14 @@
+
+// ==========================================================================
+//  GPLEX error listing for lex source file <scanerComp.lex>
+// ==========================================================================
+//  Version:  1.2.2
+//  Machine:  FIDF3675368
+//  DateTime: 06/06/2017 15:37:02
+//  UserName: j.folleas
+// ==========================================================================
+
+
 // appel des using avec le % pour les bout de code driect en C#
 
 
@@ -9,7 +20,7 @@
     
     /*
 
-    Ce code va être copier dans le ficher d'output
+    Ce code va Ãªtre copier dans le ficher d'output
 
 
 public void yyerror(string format, params object[] args) // remember to add override back
@@ -29,8 +40,6 @@ CharString \"(\\.|[^\\"])*\"
 
 %%
 
-[ \r\n\t]			{ /*ignore*/ }
-
 //
 // Start of Rules
 //
@@ -38,9 +47,8 @@ CharString \"(\\.|[^\\"])*\"
 %{ //user-code that will be executed before getting the next token
 %}
 
-"$true"                 {return (int)Tokens.TRUE; }
-"$false"                {return (int)Tokens.FALSE;}
-"$dollar"				{return (int)Tokens.DOLLAR;}
+"true"                  {return (int)Tokens.TRUE;}
+"false"                 {return (int)Tokens.FALSE;}
 "+"                     {return (int)Tokens.PLUS;}
 "-"                     {return (int)Tokens.MINUS;}
 "/"                     {return (int)Tokens.DIV;}
@@ -49,16 +57,20 @@ CharString \"(\\.|[^\\"])*\"
 "||"                    {return (int)Tokens.OR;}
 "!"                     {return (int)Tokens.NOT;}
 "=="                    {return (int)Tokens.EGALE;}
-":="					{return (int)Tokens.ASSIGN;}
 "<"                     {return (int)Tokens.INF;}
 "<="                    {return (int)Tokens.INFEGALE;}
 ">"                     {return (int)Tokens.SUP;}
 ">="                    {return (int)Tokens.SUPEGALE;}
 
 
-{Integer}              { Int64.TryParse (yytext, NumberStyles.Integer, CultureInfo.CurrentCulture, out yylval.Integer);  return (int)Tokens.INTEGER;}
-{Float}                {double.TryParse (yytext, NumberStyles.Float, CultureInfo.CurrentCulture, out yylval.Float); return (int)Tokens.FLOAT;}
+{Integer}              {yylval.long = long.Parse(yytext); return (int)Tokens.INTEGER;}
+//---------------------^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+// Error: Invalid action
+// Error: Parser error <Syntax error, unexpected csKeyword, expecting csIdent> 
+// ----------------------------------------------------------------------------
+{Float}                {yylval.Double = Double.Parse(yytext); return (int)Tokens.FLOAT;}
 {CharString}           {yylval.String = yytext; return (int)Tokens.STRING;}
 {Identifier}           {yylval.String = yytext; return (int)Tokens.ID;}
 
-%% //User-code Section
+%% //User-code Section// ==========================================================================
+
