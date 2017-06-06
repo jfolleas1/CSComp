@@ -1,0 +1,32 @@
+gramar expression
+
+
+
+
+/*
+expression  :       expression PLUS expression
+            |       expression FOIS expression
+            |       expression DIVISE expression
+            |       expression MOINS expression
+            |       expression ET expression
+            |       expression OU expression
+            |       NOT expression
+            |       expression EGALE expression
+            |       expression INF expression
+            |       expression INFEGALE expression
+            |       expression SUP expression
+            |       expression SUPEGALE expression
+            |       var
+            |       constante
+            ;
+
+var         :       DOLLAR ACCOLADE_OUVRANTE NOM_VARIABLE ACCOLADE_FERMANTE
+            ;
+
+constante   :       CHAINE_CARACTERE
+            |       ENTIER
+            |       FLOAT
+            |       TRUE
+            |       FALSE
+            ;
+*/
