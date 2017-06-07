@@ -1,10 +1,11 @@
+%using RunTime;
 
 %namespace Analyser
 %output=ParserComp.cs
 
 %{
     
-    
+    public AbstractExpression program = null;
 %}
 
 %start program
@@ -13,6 +14,9 @@
         public string String;
         public long Integer;
         public double Float;
+		public AbstractExpression expression;
+		public Variable constante;
+		public Variable variable ;	
 }
 
 // Defining Tokens
@@ -33,6 +37,11 @@
 %token <Integer> INTEGER
 %token <Float> FLOAT
 
+//types
+
+%type<expression> program
+%type<expression> expression
+%type<constante> constante
 
 // Priority
 
@@ -48,10 +57,10 @@
 %% // Grammar rules section
 
 program  : /* nothing */    { Console.WriteLine("empty Prgm"); }
-         | expression       { Console.WriteLine("statement"); }
+         | expression       { program = $1; }
          ;
 
-expression  :       expression PLUS expression      { Console.WriteLine("PLUS"); }
+expression  :       expression PLUS expression      { Console.WriteLine("PLUS"); $$ = new Expression(ExpressionSymbole.PLUS, $1, $3); }
             |       expression MUL expression       { Console.WriteLine("MUL"); }
             |       expression DIV expression       { Console.WriteLine("DIV"); }
             |       expression MINUS expression     { Console.WriteLine("MINUS"); }
@@ -65,13 +74,13 @@ expression  :       expression PLUS expression      { Console.WriteLine("PLUS");
             |       expression SUPEGALE expression	{ Console.WriteLine("SUPEGALE");}
 			|		PARENTOUV expression PARENTFERM	{ Console.WriteLine("PARENT");}
             |       var                             { Console.WriteLine("var"); }
-            |       constante                       { Console.WriteLine("constante"); }
+            |       constante                       { Console.WriteLine("constante");  $$ = $1; }
             ;
 
 var     :   ID      { Console.WriteLine("var :" +$1 ); }
         ;
 
-constante   :   INTEGER		{ Console.WriteLine("int :" + $1 ); }
+constante   :   INTEGER		{ Console.WriteLine("int :" + $1 ); $$ = new VariableInteger($1);}
 			|	FLOAT		{ Console.WriteLine("float :" + $1 );}
 			|	STRING		{ Console.WriteLine("string :" + $1 );}
             ;

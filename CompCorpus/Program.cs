@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using Analyser;
+using RunTime;
 
 
 namespace CompCorpus
@@ -16,6 +17,7 @@ namespace CompCorpus
             FileStream file = null;
             Scanner scn = null;
             Parser parser = null;
+            AbstractExpression program = null;
 
             try
             {
@@ -24,7 +26,17 @@ namespace CompCorpus
                 parser = new Parser(scn);
                 parser.Parse();
 
-                Console.WriteLine("FIN");
+                program = parser.program;
+
+                Console.WriteLine("FIN DE LECTURE DU CODE ");
+                Console.WriteLine();
+
+                if (program != null)
+                {
+                    program.Print();
+                    Console.WriteLine();
+                }
+                
                 Console.ReadLine();
 
             }
