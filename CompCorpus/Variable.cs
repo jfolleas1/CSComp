@@ -50,7 +50,7 @@ namespace RunTime
         {
             for (int i = 0; i < level; i++)
                 Console.Write("\t");
-            Console.Write("Var Integer" + value +"\n");
+            Console.Write("Var "+ base.type.ToString()+" "+ value +"\n");
         }
 
         public override string Write()
@@ -61,9 +61,9 @@ namespace RunTime
 
     public class VariableFloat : Variable
     {
-        float value;
+        double value;
 
-        public VariableFloat(float value) : base(VariableType.FLOAT)
+        public VariableFloat(double value) : base(VariableType.FLOAT)
         {
             this.value = value;
         }
@@ -72,7 +72,7 @@ namespace RunTime
         {
             for (int i = 0; i < level; i++)
                 Console.Write("\t");
-            Console.Write("Var Float" + value + "\n");
+            Console.Write("Var " + base.type.ToString() + " " + value + "\n");
         }
 
         public override string Write()
@@ -80,4 +80,51 @@ namespace RunTime
             throw new NotImplementedException();
         }
     }
+
+
+    public class VariableString : Variable
+    {
+        string value;
+
+        public VariableString(string value) : base(VariableType.STRING)
+        {
+            this.value = value;
+        }
+
+        public override void Print(int level)
+        {
+            for (int i = 0; i < level; i++)
+                Console.Write("\t");
+            Console.Write("Var " + base.type.ToString() + " " + value + "\n");
+        }
+
+        public override string Write()
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class VariableId : Variable
+    {
+        string value;
+
+        public VariableId(string value) : base(VariableType.ID)
+        {
+            this.value = value;
+        }
+
+        public override void Print(int level)
+        {
+            for (int i = 0; i < level; i++)
+                Console.Write("\t");
+            Console.Write("Var " + base.type.ToString() + " " + value + "\n");
+        }
+
+        public override string Write()
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+
 }

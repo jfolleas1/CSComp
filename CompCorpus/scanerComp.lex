@@ -24,7 +24,7 @@ public void yyerror(string format, params object[] args) // remember to add over
 
 Identifier [A-Za-z][A-Za-z0-9_]*
 Integer [0-9]+
-Float [0-9]+\.[0-9]+
+Float [0-9]+,[0-9]+
 CharString \"(\\.|[^\\"])*\"
 
 %%
@@ -63,7 +63,7 @@ CharString \"(\\.|[^\\"])*\"
 
 
 {Integer}              { Int64.TryParse (yytext, NumberStyles.Integer, CultureInfo.CurrentCulture, out yylval.Integer);  return (int)Tokens.INTEGER;}
-{Float}                {double.TryParse (yytext, NumberStyles.Float, CultureInfo.CurrentCulture, out yylval.Float); return (int)Tokens.FLOAT;}
+{Float}                {double.TryParse (yytext, NumberStyles.Float, CultureInfo.CurrentCulture, out yylval.Float); Console.WriteLine("LEX: " + yytext); return (int)Tokens.FLOAT;}
 {CharString}           {yylval.String = yytext; return (int)Tokens.STRING;}
 {Identifier}           {yylval.String = yytext; return (int)Tokens.ID;}
 

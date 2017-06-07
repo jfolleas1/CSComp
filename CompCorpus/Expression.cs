@@ -36,13 +36,24 @@ namespace RunTime
             this.expression2 = exp2;
         }
 
+        public Expression(ExpressionSymbole symb, AbstractExpression exp1)
+        {
+            Console.WriteLine("Constrction Expression unaire ");
+            this.symbole = symb;
+            this.expression1 = exp1;
+            this.expression2 = null;
+        }
+
         public override void Print(int level)
         {
             for (int i = 0; i < level; i++)
                 Console.Write("\t");
             Console.Write(symbole.ToString() + "\n");
             this.expression1.Print(level + 1);
-            this.expression2.Print(level + 1);
+            if (this.expression2 != null)
+            {
+                this.expression2.Print(level + 1);
+            }
         }
 
         public override string Write()

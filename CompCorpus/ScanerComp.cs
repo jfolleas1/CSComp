@@ -6,9 +6,9 @@
 //
 //  GPLEX Version:  1.2.2
 //  Machine:  FIDF3675368
-//  DateTime: 07/06/2017 09:17:08
+//  DateTime: 07/06/2017 14:58:01
 //  UserName: j.folleas
-//  GPLEX input file <scanerComp.lex - 07/06/2017 09:07:31>
+//  GPLEX input file <scanerComp.lex - 07/06/2017 14:10:00>
 //  GPLEX frame file <embedded resource>
 //
 //  Option settings: unicode, verbose, parser, stack, minimize
@@ -135,7 +135,7 @@ namespace Analyser
 /*
 
     Ce code va Ãªtre copier dans le ficher d'output
-
+	
 
 public void yyerror(string format, params object[] args) // remember to add override back
 {
@@ -185,7 +185,7 @@ public void yyerror(string format, params object[] args) // remember to add over
     static sbyte[] mapC0 = new sbyte[125] {
 /*     '\0' */ 0, 0, 0, 0, 0, 0, 0, 0, 0, 30, 1, 0, 0, 30, 0, 0, 
 /*   '\x10' */ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
-/*   '\x20' */ 30, 21, 28, 0, 2, 0, 19, 0, 17, 18, 16, 13, 0, 14, 27, 15, 
+/*   '\x20' */ 30, 21, 28, 0, 2, 0, 19, 0, 17, 18, 16, 13, 27, 14, 0, 15, 
 /*      '0' */ 26, 26, 26, 26, 26, 26, 26, 26, 26, 26, 25, 0, 23, 22, 24, 0, 
 /*      '@' */ 0, 31, 31, 31, 31, 31, 31, 31, 31, 31, 31, 31, 31, 31, 31, 31, 
 /*      'P' */ 31, 31, 31, 31, 31, 31, 31, 31, 31, 31, 31, 0, 29, 0, 0, 32, 
@@ -221,7 +221,7 @@ public void yyerror(string format, params object[] args) // remember to add over
 /* NxS[  12] */ // Shortest string "0"
       new Table(26, 2, -1, new sbyte[] {12, 32}),
 /* NxS[  13] */ new Table(0, 0, -1, null), // Shortest string "\"\""
-/* NxS[  14] */ // Shortest string "0.0"
+/* NxS[  14] */ // Shortest string "0,0"
       new Table(26, 1, -1, new sbyte[] {14}),
 /* NxS[  15] */ new Table(0, 0, -1, null), // Shortest string ":="
 /* NxS[  16] */ new Table(0, 0, -1, null), // Shortest string ">="
@@ -251,7 +251,7 @@ public void yyerror(string format, params object[] args) // remember to add over
       new Table(28, 2, 30, new sbyte[] {13, 31}),
 /* NxS[  31] */ // Shortest string "\"\\"
       new Table(1, 1, 30, new sbyte[] {-1}),
-/* NxS[  32] */ // Shortest string "0."
+/* NxS[  32] */ // Shortest string "0,"
       new Table(26, 1, -1, new sbyte[] {14}),
 /* NxS[  33] */ // Shortest string "$t"
       new Table(4, 1, -1, new sbyte[] {43}),
@@ -748,8 +748,8 @@ Int64.TryParse (yytext, NumberStyles.Integer, CultureInfo.CurrentCulture, out yy
         case 13: // Recognized '{CharString}',	Shortest string "\"\""
 yylval.String = yytext; return (int)Tokens.STRING;
             break;
-        case 14: // Recognized '{Float}',	Shortest string "0.0"
-double.TryParse (yytext, NumberStyles.Float, CultureInfo.CurrentCulture, out yylval.Float); return (int)Tokens.FLOAT;
+        case 14: // Recognized '{Float}',	Shortest string "0,0"
+double.TryParse (yytext, NumberStyles.Float, CultureInfo.CurrentCulture, out yylval.Float); Console.WriteLine("LEX: " + yytext); return (int)Tokens.FLOAT;
             break;
         case 15: // Recognized '":="',	Shortest string ":="
 return (int)Tokens.ASSIGN;

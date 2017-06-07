@@ -1,21 +1,22 @@
 
 // ==========================================================================
-//  GPPG error listing for yacc source file <ParserComp.y - 06/06/2017 17:05:10>
+//  GPPG error listing for yacc source file <ParserComp.y - 07/06/2017 14:49:14>
 // ==========================================================================
 //  Version:  1.5.2
 //  Machine:  FIDF3675368
-//  DateTime: 06/06/2017 17:05:31
+//  DateTime: 07/06/2017 14:49:19
 //  UserName: j.folleas
 // ==========================================================================
 
 
+%using RunTime;
 
 %namespace Analyser
 %output=ParserComp.cs
 
 %{
     
-    
+    public AbstractExpression program = null;
 %}
 
 %start program
@@ -24,63 +25,77 @@
         public string String;
         public long Integer;
         public double Float;
+		public AbstractExpression expression;
+		public Variable constante;
+		public Variable variable ;	
 }
 
 // Defining Tokens
-%token PLUS
-%token MINUS
-%token MUL
-%token DIV
-%token TRUE FALSE
+%token TRUE FALSE DOLLAR
+
+%token PLUS MINUS MUL DIV
+
+%token PARENTOUV PARENTFERM
+
 %token AND OR NOT
 %token EGALE INF INFEGALE SUP SUPEGALE
+
 %token ASSIGN
+
 
 %token <String> ID
 %token <String> STRING
 %token <Integer> INTEGER
 %token <Float> FLOAT
 
+//types
+
+%type<expression> program
+%type<expression> expression
+%type<constante> constante
 
 // Priority
+
+%left AND OR 
+%left NOT
+%left EGALE INF INFEGALE SUP SUPEGALE
+
+
 %left PLUS MINUS
 %left DIV MUL
 
+
 %% // Grammar rules section
-// Error: NonTerminal symbol "ET" has no productions
-// Error: NonTerminal symbol "OU" has no productions
-// Warning: Terminating OU fixes the following size-1 NonTerminal set
-   // {OU}
-// Error: There are 2 non-terminating NonTerminal Symbols
-   //  {ET, OU}
-// Warning: Terminating ET fixes the following size-1 NonTerminal set
-   // {ET}
-// ------------------------------------------------------------------
 
 program  : /* nothing */    { Console.WriteLine("empty Prgm"); }
-         | expression       { Console.WriteLine("statement"); }
+         | expression       { program = $1; }
          ;
 
-expression  :       expression PLUS expression      { Console.WriteLine("PLUS"); }
-            |       expression MUL expression       { Console.WriteLine("MUL"); }
-            |       expression DIV expression       { Console.WriteLine("DIV"); }
-            |       expression MINUS expression     { Console.WriteLine("MINUS"); }
-			|       expression ET expression
-            |       expression OU expression
-            |       NOT expression
-            |       expression EGALE expression
-            |       expression INF expression
-            |       expression INFEGALE expression
-            |       expression SUP expression
-            |       expression SUPEGALE expression
-            |       var                             { Console.WriteLine("var"); }
-            |       constante                       { Console.WriteLine("constante"); }
+expression  :       expression PLUS expression      { Console.WriteLine("PLUS"); $$ = new Expression(ExpressionSymbole.PLUS, $1, $3); }
+            |       expression MUL expression       { Console.WriteLine("MUL"); $$ = new Expression(ExpressionSymbole.MUL, $1, $3);}
+            |       expression DIV expression       { Console.WriteLine("DIV"); $$ = new Expression(ExpressionSymbole.DIV, $1, $3); }
+            |       expression MINUS expression     { Console.WriteLine("MINUS"); $$ = new Expression(ExpressionSymbole.MINUS, $1, $3); }
+			|       expression AND expression		{ Console.WriteLine("AND"); $$ = new Expression(ExpressionSymbole.AND, $1, $3); }
+            |       expression OR expression		{ Console.WriteLine("OR"); $$ = new Expression(ExpressionSymbole.OR, $1, $3); }
+            |       NOT expression					{ Console.WriteLine("NOT");$$ = new Expression(ExpressionSymbole.NOT, $2, null); }
+            |       expression EGALE expression		{ Console.WriteLine("EGALE");$$ = new Expression(ExpressionSymbole.EGALE, $1, $3); }
+            |       expression INF expression		{ Console.WriteLine("INF");$$ = new Expression(ExpressionSymbole.INF, $1, $3); }
+            |       expression INFEGALE expression	{ Console.WriteLine("INFEGALE");$$ = new Expression(ExpressionSymbole.INFEGALE, $1, $3); }
+            |       expression SUP expression		{ Console.WriteLine("SUP");$$ = new Expression(ExpressionSymbole.SUP, $1, $3); }
+            |       expression SUPEGALE expression	{ Console.WriteLine("SUPEGALE");$$ = new Expression(ExpressionSymbole.SUPEGALE, $1, $3); }
+			|		PARENTOUV expression PARENTFERM	{ Console.WriteLine("PARENT"); /*$$ = new Expression(ExpressionSymbole.PARENT, $2);*/ Console.WriteLine("j'ai essaiyé de construire"); }
+            |       var                             { Console.WriteLine("var"); $$ = new Expression(ExpressionSymbole.DIV, $1, $3); }
+// Error: Semantic action index is out of bounds
+// ---------------------------------------------
+            |       constante                       { Console.WriteLine("constante");  $$ = $1; }
             ;
 
-var     :   ID      { Console.WriteLine("id :" +$1 ); }
+var     :   ID      { Console.WriteLine("var :" +$1 ); }
         ;
 
-constante   :   INTEGER   { Console.WriteLine("int :" + $1 ); }
+constante   :   INTEGER		{ Console.WriteLine("int :" + $1 ); $$ = new VariableInteger($1);}
+			|	FLOAT		{ Console.WriteLine("float :" + $1 ); $$ = new VariableFloat($1);}
+			|	STRING		{ Console.WriteLine("string :" + $1 );}
             ;
 
 %%
