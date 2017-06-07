@@ -16,15 +16,17 @@
 }
 
 // Defining Tokens
-%token PLUS
-%token MINUS
-%token MUL
-%token DIV
-%token TRUE FALSE
+%token TRUE FALSE DOLLAR
+
+%token PLUS MINUS MUL DIV
+
+%token PARENTOUV PARENTFERM
+
 %token AND OR NOT
 %token EGALE INF INFEGALE SUP SUPEGALE
+
 %token ASSIGN
-%token DOLLAR
+
 
 %token <String> ID
 %token <String> STRING
@@ -33,11 +35,15 @@
 
 
 // Priority
+
 %left AND OR 
 %left NOT
 %left EGALE INF INFEGALE SUP SUPEGALE
+
+
 %left PLUS MINUS
 %left DIV MUL
+
 
 %% // Grammar rules section
 
@@ -49,22 +55,25 @@ expression  :       expression PLUS expression      { Console.WriteLine("PLUS");
             |       expression MUL expression       { Console.WriteLine("MUL"); }
             |       expression DIV expression       { Console.WriteLine("DIV"); }
             |       expression MINUS expression     { Console.WriteLine("MINUS"); }
-			|       expression AND expression		{}
-            |       expression OR expression		{}
-            |       NOT expression					{}
-            |       expression EGALE expression		{}
-            |       expression INF expression		{}
-            |       expression INFEGALE expression	{}
-            |       expression SUP expression		{}
-            |       expression SUPEGALE expression	{}
+			|       expression AND expression		{ Console.WriteLine("AND"); }
+            |       expression OR expression		{ Console.WriteLine("OR"); }
+            |       NOT expression					{ Console.WriteLine("NOT");}
+            |       expression EGALE expression		{ Console.WriteLine("EGALE");}
+            |       expression INF expression		{ Console.WriteLine("INF");}
+            |       expression INFEGALE expression	{ Console.WriteLine("INFEGALE");}
+            |       expression SUP expression		{ Console.WriteLine("SUP");}
+            |       expression SUPEGALE expression	{ Console.WriteLine("SUPEGALE");}
+			|		PARENTOUV expression PARENTFERM	{ Console.WriteLine("PARENT");}
             |       var                             { Console.WriteLine("var"); }
             |       constante                       { Console.WriteLine("constante"); }
             ;
 
-var     :   ID      { Console.WriteLine("id :" +$1 ); }
+var     :   ID      { Console.WriteLine("var :" +$1 ); }
         ;
 
-constante   :   INTEGER   { Console.WriteLine("int :" + $1 ); }
+constante   :   INTEGER		{ Console.WriteLine("int :" + $1 ); }
+			|	FLOAT		{ Console.WriteLine("float :" + $1 );}
+			|	STRING		{ Console.WriteLine("string :" + $1 );}
             ;
 
 %%
