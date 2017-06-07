@@ -10,12 +10,14 @@
     /*
 
     Ce code va être copier dans le ficher d'output
-	
+	*/
+	public static int currentLine = 1; 
 
-public void yyerror(string format, params object[] args) // remember to add override back
-{
-	System.Console.Error.WriteLine("Error: line {0} - " + format, yyline);
-}*/
+	public override void yyerror(string format, params object[] args) // remember to add override back
+	{
+		System.Console.Error.WriteLine("Error: line {0} - column {1} " + format, yyline, yycol);
+	}
+
 %}
 
 // Liste des regex
@@ -29,8 +31,8 @@ CharString \"(\\.|[^\\"])*\"
 
 %%
 
-[ \r\n\t]			{ /*ignore*/ }
-
+[ \r\t]			{ /*ignore*/ }
+"\n"			{ currentLine++; }
 //
 // Start of Rules
 //
@@ -47,8 +49,10 @@ CharString \"(\\.|[^\\"])*\"
 "/"                     {return (int)Tokens.DIV;}
 "*"                     {return (int)Tokens.MUL;}
 
-"("						{return (int)Tokens.PARENTOUV;}
-")"						{return (int)Tokens.PARENTFERM;}
+"("						{return (int)Tokens.PARENTOPEN;}
+")"						{return (int)Tokens.PARENTCLOSE;}
+"{"						{return (int)Tokens.BRACEOPEN;}
+"}"						{return (int)Tokens.BRACECLOSE;}
 
 "&&"                    {return (int)Tokens.AND;}
 "||"                    {return (int)Tokens.OR;}

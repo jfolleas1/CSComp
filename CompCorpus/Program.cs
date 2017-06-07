@@ -17,7 +17,7 @@ namespace CompCorpus
             FileStream file = null;
             Scanner scn = null;
             Parser parser = null;
-            AbstractExpression program = null;
+            List<Affectation> program = null;
 
             try
             {
@@ -33,7 +33,10 @@ namespace CompCorpus
 
                 if (program != null)
                 {
-                    program.Print();
+                    foreach(Affectation aff in program)
+                    {
+                        aff.Print();
+                    }
                     Console.WriteLine();
                 }
                 

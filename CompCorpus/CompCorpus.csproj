@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AbstractExpression.cs" />
+    <Compile Include="Affectation.cs" />
     <Compile Include="Expression.cs" />
     <Compile Include="ParserComp.cs" />
     <Compile Include="ScanerComp.cs" />
