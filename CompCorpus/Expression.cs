@@ -58,7 +58,55 @@ namespace RunTime
 
         public override string Write()
         {
-            throw new NotImplementedException();
+            string myExpressionInString;
+            switch (symbole)
+            {
+               
+                case ExpressionSymbole.PLUS:
+                    myExpressionInString = expression1.Write() + "+" + expression2.Write();
+                    break;
+                case ExpressionSymbole.MUL:
+                    myExpressionInString = expression1.Write() + "*" + expression2.Write();
+                    break;
+                case ExpressionSymbole.DIV:
+                    myExpressionInString = expression1.Write() + "/" + expression2.Write();
+                    break;
+                case ExpressionSymbole.MINUS:
+                    myExpressionInString = expression1.Write() + "-" + expression2.Write();
+                    break;
+                case ExpressionSymbole.AND:
+                    myExpressionInString = expression1.Write() + "&&" + expression2.Write();
+                    break;
+                case ExpressionSymbole.OR:
+                    myExpressionInString = expression1.Write() + "||" + expression2.Write();
+                    break;
+                case ExpressionSymbole.NOT:
+                    myExpressionInString = "!" +expression1.Write();
+                    break;
+                case ExpressionSymbole.EGALE:
+                    myExpressionInString = expression1.Write() + "==" + expression2.Write();
+                    break;
+                case ExpressionSymbole.INF:
+                    myExpressionInString = expression1.Write() + "<" + expression2.Write();
+                    break;
+                case ExpressionSymbole.INFEGALE:
+                    myExpressionInString = expression1.Write() + "<=" + expression2.Write();
+                    break;
+                case ExpressionSymbole.SUP:
+                    myExpressionInString = expression1.Write() + ">" + expression2.Write();
+                    break;
+                case ExpressionSymbole.SUPEGALE:
+                    myExpressionInString = expression1.Write() + ">=" + expression2.Write();
+                    break;
+                case ExpressionSymbole.PARENT:
+                    myExpressionInString = "(" + expression1.Write() + ")";
+                    break;
+                default:
+                    Console.WriteLine("Symbole de calcul non reconu");
+                    myExpressionInString = "";
+                    break;
+            }
+            return myExpressionInString;
         }
     }
 }

@@ -1,5 +1,7 @@
 ﻿using System;
+
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -77,7 +79,7 @@ namespace RunTime
 
         public override string Write()
         {
-            return value.ToString();
+            return value.ToString("G", CultureInfo.CreateSpecificCulture("en-US"));
         }
     }
 

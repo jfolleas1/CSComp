@@ -28,7 +28,12 @@ namespace RunTime
 
         public string Write()
         {
-            throw new NotImplementedException();
+            Console.WriteLine("AFFECTATION");
+            Console.WriteLine("Var name : ");
+            this.variableName.Print();
+            Console.WriteLine("Expression : ");
+            Console.WriteLine(this.expression.Write());
+            return "";
         }
 
     }
