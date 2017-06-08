@@ -14,39 +14,48 @@ namespace CompCorpus
     {
         static void Main(string[] args)
         {
-            FileStream file = null;
-            Scanner scn = null;
-            Parser parser = null;
-            List<Affectation> program = null;
-
-            try
+            if (args.Length == 2)
             {
-                file = new FileStream(@"C:\Users\j.folleas\Documents\testGplex\truc\fichierAParser.txt", FileMode.Open);
-                scn = new Scanner(file);
-                parser = new Parser(scn);
-                parser.Parse();
+                string sourceFileName = args[0];
+                string targetFileName = args[1];
 
-                program = parser.program;
+                FileStream file = null;
+                Scanner scn = null;
+                Parser parser = null;
+                List<Affectation> program = null;
 
-                Console.WriteLine("FIN DE LECTURE DU CODE ");
-                Console.WriteLine();
-
-                if (program != null)
+                try
                 {
-                    foreach(Affectation aff in program)
-                    {
-                        aff.Print();
-                    }
-                    Console.WriteLine();
-                }
-                
-                Console.ReadLine();
+                    file = new FileStream(sourceFileName, FileMode.Open);
+                    scn = new Scanner(file);
+                    parser = new Parser(scn);
+                    parser.Parse();
 
+                    program = parser.program;
+
+                    Console.WriteLine("FIN DE LECTURE DU CODE ");
+                    Console.WriteLine();
+
+                    if (program != null)
+                    {
+                        foreach (Affectation aff in program)
+                        {
+                            aff.Print();
+                        }
+                        Console.WriteLine();
+                    }
+
+                }
+                catch (FileNotFoundException exnotfound)
+                {
+                    Console.WriteLine(exnotfound.Message);
+                }
+                finally
+                {
+                    file.Close();
+                }
             }
-            finally
-            {
-                file.Close();
-            }
+            Console.ReadLine();
         }
     }
 }

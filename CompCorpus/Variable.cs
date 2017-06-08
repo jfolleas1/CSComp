@@ -55,7 +55,7 @@ namespace RunTime
 
         public override string Write()
         {
-            throw new NotImplementedException();
+            return value.ToString();
         }
     }
 
@@ -77,7 +77,7 @@ namespace RunTime
 
         public override string Write()
         {
-            throw new NotImplementedException();
+            return value.ToString();
         }
     }
 
@@ -100,7 +100,7 @@ namespace RunTime
 
         public override string Write()
         {
-            throw new NotImplementedException();
+            return value;
         }
     }
 
@@ -122,7 +122,7 @@ namespace RunTime
 
         public override string Write()
         {
-            throw new NotImplementedException();
+            return value;
         }
     }
 
