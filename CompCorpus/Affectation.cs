@@ -28,12 +28,12 @@ namespace RunTime
 
         public string Write()
         {
-            Console.WriteLine("AFFECTATION");
-            Console.WriteLine("Var name : ");
-            this.variableName.Print();
-            Console.WriteLine("Expression : ");
-            Console.WriteLine(this.expression.Write());
-            return "";
+            string myAffectationString = "$scope.";
+            myAffectationString += this.variableName.name;
+            myAffectationString += " = function() \n { \n \t return ";
+            myAffectationString += this.expression.Write();
+            myAffectationString += "; \n } \n\n";
+            return myAffectationString;
         }
 
     }

@@ -33,6 +33,8 @@
 
 %token ASSIGN
 
+%token SEMICOLON
+
 
 %token <String> ID
 %token <String> STRING
@@ -69,7 +71,7 @@ listAffectation :	affectation						{ $$ = new List<Affectation>(); $$.Add($1); C
 				|   listAffectation affectation		{ $$=$1; $$.Add($2); Console.WriteLine(" liste Affectation "); }
 				;
 
-affectation	:		var ASSIGN expression				{  Console.WriteLine("affection") ; $$ = new Affectation($1, $3); }
+affectation	:		var ASSIGN expression SEMICOLON				{  Console.WriteLine("affection") ; $$ = new Affectation($1, $3); }
 					;
 
 expression  :       expression PLUS expression			{ Console.WriteLine("PLUS"); $$ = new Expression(ExpressionSymbole.PLUS, $1, $3); }

@@ -40,9 +40,9 @@ namespace CompCorpus
                     {
                         foreach (Affectation aff in program)
                         {
-                            aff.Write();
+                            Console.Write(aff.Write());
                         }
-                        Console.WriteLine();
+                        //Console.WriteLine();
                     }
 
                 }

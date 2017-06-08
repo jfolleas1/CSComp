@@ -41,7 +41,7 @@ namespace RunTime
 
     public class VariableInteger : Variable
     {
-        long value;
+        public long value { get; }
 
         public VariableInteger(long value) : base(VariableType.INTEGER)
         {
@@ -63,7 +63,7 @@ namespace RunTime
 
     public class VariableFloat : Variable
     {
-        double value;
+        public double value { get; }
 
         public VariableFloat(double value) : base(VariableType.FLOAT)
         {
@@ -86,7 +86,7 @@ namespace RunTime
 
     public class VariableString : Variable
     {
-        string value;
+        public string value { get; }
 
         public VariableString(string value) : base(VariableType.STRING)
         {
@@ -108,23 +108,23 @@ namespace RunTime
 
     public class VariableId : Variable
     {
-        string value;
+        public string name { get; }
 
-        public VariableId(string value) : base(VariableType.ID)
+        public VariableId(string name) : base(VariableType.ID)
         {
-            this.value = value;
+            this.name = name;
         }
 
         public override void Print(int level)
         {
             for (int i = 0; i < level; i++)
                 Console.Write("\t");
-            Console.Write("Var " + base.type.ToString() + " " + value + "\n");
+            Console.Write("Var " + base.type.ToString() + " " + name + "\n");
         }
 
         public override string Write()
         {
-            return value;
+            return name;
         }
     }
 

@@ -65,6 +65,7 @@ CharString \"(\\.|[^\\"])*\"
 
 ":="					{return (int)Tokens.ASSIGN;}
 
+";"						{return (int)Tokens.SEMICOLON; }
 
 {Integer}              { Int64.TryParse (yytext, NumberStyles.Integer, CultureInfo.CurrentCulture, out yylval.Integer);  return (int)Tokens.INTEGER;}
 {Float}                {double.TryParse (yytext, NumberStyles.Float, CultureInfo.CurrentCulture, out yylval.Float); Console.WriteLine("LEX: " + yytext); return (int)Tokens.FLOAT;}
