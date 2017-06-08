@@ -48,6 +48,7 @@
     <Compile Include="AbstractExpression.cs" />
     <Compile Include="Affectation.cs" />
     <Compile Include="Expression.cs" />
+    <Compile Include="Montage.cs" />
     <Compile Include="ParserComp.cs" />
     <Compile Include="ScanerComp.cs" />
     <Compile Include="Program.cs" />
