@@ -40,6 +40,7 @@ CharString \"(\\.|[^\\"])*\"
 %{ //user-code that will be executed before getting the next token
 %}
 
+"$Titre"				{return (int)Tokens.TITREACTEKW;}
 "$true"                 {return (int)Tokens.TRUE; }
 "$false"                {return (int)Tokens.FALSE;}
 "$dollar"				{return (int)Tokens.DOLLAR;}

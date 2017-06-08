@@ -5,7 +5,7 @@
 
 %{
     
-    public List<Affectation> program = null;
+    public Montage program = null;
 %}
 
 %start program
@@ -22,6 +22,9 @@
 }
 
 // Defining Tokens
+
+%token TITREACTEKW
+
 %token TRUE FALSE DOLLAR
 
 %token PLUS MINUS MUL DIV
@@ -64,7 +67,7 @@
 %% // Grammar rules section
 
 program		: /* nothing */		{ Console.WriteLine("empty Prgm"); }
-			| listAffectation	{ Console.WriteLine("listAffectation");  program = $1; }
+			| defTitreActe listAffectation	{ Console.WriteLine("listAffectation");  program = new Montage("nom de mon acte",$2); }
 			;
 
 listAffectation :	affectation						{ $$ = new List<Affectation>(); $$.Add($1); Console.WriteLine("Affectation du bout"); }

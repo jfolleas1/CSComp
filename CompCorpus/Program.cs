@@ -14,15 +14,16 @@ namespace CompCorpus
     {
         static void Main(string[] args)
         {
-            if (args.Length == 2)
+            if (args.Length == 3)
             {
                 string sourceFileName = args[0];
-                string targetFileName = args[1];
+                string targetFilehtmlName = args[1];
+                string targetFileJSName = args[2];
 
                 FileStream file = null;
                 Scanner scn = null;
                 Parser parser = null;
-                List<Affectation> program = null;
+                Montage program = null;
 
                 try
                 {
@@ -32,16 +33,13 @@ namespace CompCorpus
                     parser.Parse();
 
                     program = parser.program;
-
                     Console.WriteLine("FIN DE LECTURE DU CODE ");
                     Console.WriteLine();
 
                     if (program != null)
                     {
-                        foreach (Affectation aff in program)
-                        {
-                            Console.Write(aff.Write());
-                        }
+                        program.PrintFutureFiles();
+                        program.WriteInFiles(targetFilehtmlName, targetFileJSName);
                         //Console.WriteLine();
                     }
 

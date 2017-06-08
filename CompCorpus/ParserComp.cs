@@ -4,9 +4,9 @@
 
 // GPPG version 1.5.2
 // Machine:  FIDF3675368
-// DateTime: 08/06/2017 11:36:43
+// DateTime: 08/06/2017 13:51:10
 // UserName: j.folleas
-// Input file <ParserComp.y - 08/06/2017 11:36:04>
+// Input file <ParserComp.y - 08/06/2017 13:51:06>
 
 // options: no-lines gplex
 
@@ -59,10 +59,10 @@ public class ScanObj {
 [GeneratedCodeAttribute( "Gardens Point Parser Generator", "1.5.2")]
 public class Parser: ShiftReduceParser<ValueType, LexLocation>
 {
-  // Verbatim content from ParserComp.y - 08/06/2017 11:36:04
+  // Verbatim content from ParserComp.y - 08/06/2017 13:51:06
     
-    public List<Affectation> program = null;
-  // End verbatim content from ParserComp.y - 08/06/2017 11:36:04
+    public Montage program = null;
+  // End verbatim content from ParserComp.y - 08/06/2017 13:51:06
 
 #pragma warning disable 649
   private static Dictionary<int, string> aliases;
@@ -163,7 +163,7 @@ public class Parser: ShiftReduceParser<ValueType, LexLocation>
 { Console.WriteLine("empty Prgm"); }
         break;
       case 3: // program -> listAffectation
-{ Console.WriteLine("listAffectation");  program = ValueStack[ValueStack.Depth-1].listAffectation; }
+{ Console.WriteLine("listAffectation");  program = new Montage("nom de mon acte",ValueStack[ValueStack.Depth-1].listAffectation); }
         break;
       case 4: // listAffectation -> affectation
 { CurrentSemanticValue.listAffectation = new List<Affectation>(); CurrentSemanticValue.listAffectation.Add(ValueStack[ValueStack.Depth-1].affectation); Console.WriteLine("Affectation du bout"); }
