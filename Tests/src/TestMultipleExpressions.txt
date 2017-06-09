@@ -1,0 +1,5 @@
+$Titre{Le Titre de mon Actè}
+maVar1 := "une petite strïng";
+maVar2 := 15 + 2;
+maVar3 := 10,23;
+maVar4 := maVar2 + maVar3;

@@ -43,6 +43,7 @@
 %token <String> STRING
 %token <Integer> INTEGER
 %token <Float> FLOAT
+%token <String> DEADWORD
 
 //types
 
@@ -52,7 +53,8 @@
 %type<constante> constante
 %type<variable> var
 %type<listAffectation> listAffectation
-
+%type<String> defActeTitle
+%type<String> deadText
 // Priority
 
 %left AND OR 
@@ -66,9 +68,18 @@
 
 %% // Grammar rules section
 
-program		: /* nothing */		{ Console.WriteLine("empty Prgm"); }
-			| defTitreActe listAffectation	{ Console.WriteLine("listAffectation");  program = new Montage("nom de mon acte",$2); }
+program		:	 /*nothing*/		{ Console.WriteLine("programme vide "); }
+			|	defActeTitle listAffectation		{ Console.WriteLine("listAffectation");  program = new Montage($1,$2); }
 			;
+
+defActeTitle	:	TITREACTEKW BRACEOPEN deadText BRACECLOSE		{ $$ = $3; }
+				;
+
+deadText		:	DEADWORD						{ $$ = $1; }
+				|	ID								{ $$ = $1; }
+				|	deadText DEADWORD				{ $$ = $1 + " " + $2; }
+				|	deadText ID						{ $$ = $1 + " " + $2; }
+				;
 
 listAffectation :	affectation						{ $$ = new List<Affectation>(); $$.Add($1); Console.WriteLine("Affectation du bout"); }
 				|   listAffectation affectation		{ $$=$1; $$.Add($2); Console.WriteLine(" liste Affectation "); }

@@ -4,7 +4,7 @@
 // ==========================================================================
 //  Version:  1.2.2
 //  Machine:  FIDF3675368
-//  DateTime: 07/06/2017 16:26:14
+//  DateTime: 09/06/2017 09:59:55
 //  UserName: j.folleas
 // ==========================================================================
 
@@ -14,10 +14,7 @@
 
 %namespace Analyser
 
-%option stack, minimize, parser, verbose, persistbuffer, unicode, compressNext, embedbuffers, error-verbose
-//-----^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-// Error: Unrecognized "%option" command  <error-verbose> 
-// -------------------------------------------------------
+%option stack, minimize, parser, verbose, persistbuffer, unicode, compressNext, embedbuffers
 
 %{
     
@@ -29,7 +26,7 @@
 
 	public override void yyerror(string format, params object[] args) // remember to add override back
 	{
-		System.Console.Error.WriteLine("Error: line {0} - " + format, yyline);
+		System.Console.Error.WriteLine("Error: line {0} - column {1} " + format, yyline, yycol);
 	}
 
 %}
@@ -43,6 +40,8 @@ Integer [0-9]+
 Float [0-9]+,[0-9]+
 CharString \"(\\.|[^\\"])*\"
 
+DeadWord	(\w)+
+
 %%
 
 [ \r\t]			{ /*ignore*/ }
@@ -54,6 +53,7 @@ CharString \"(\\.|[^\\"])*\"
 %{ //user-code that will be executed before getting the next token
 %}
 
+"$Titre"				{return (int)Tokens.TITREACTEKW;}
 "$true"                 {return (int)Tokens.TRUE; }
 "$false"                {return (int)Tokens.FALSE;}
 "$dollar"				{return (int)Tokens.DOLLAR;}
@@ -79,11 +79,23 @@ CharString \"(\\.|[^\\"])*\"
 
 ":="					{return (int)Tokens.ASSIGN;}
 
+";"						{return (int)Tokens.SEMICOLON; }
+
+
 
 {Integer}              { Int64.TryParse (yytext, NumberStyles.Integer, CultureInfo.CurrentCulture, out yylval.Integer);  return (int)Tokens.INTEGER;}
 {Float}                {double.TryParse (yytext, NumberStyles.Float, CultureInfo.CurrentCulture, out yylval.Float); Console.WriteLine("LEX: " + yytext); return (int)Tokens.FLOAT;}
 {CharString}           {yylval.String = yytext; return (int)Tokens.STRING;}
 {Identifier}           {yylval.String = yytext; return (int)Tokens.ID;}
+//^^^^^^^^^^
+// Warning: This pattern always overrides "{DeadWord}" 
+// ----------------------------------------------------
+
+{DeadWord}				{yylval.String = yytext; Console.WriteLine("DW space: "+yytext); return (int)Tokens.DEADWORD;}
+//^^^^^^^^
+// Warning: This pattern always overridden by "{Identifier}" 
+// ----------------------------------------------------------
+
 
 %% //User-code Section// ==========================================================================
 

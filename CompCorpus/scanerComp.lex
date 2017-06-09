@@ -29,6 +29,8 @@ Integer [0-9]+
 Float [0-9]+,[0-9]+
 CharString \"(\\.|[^\\"])*\"
 
+DeadWord	[^ \t\n${}()+-/*(&&)(||)!(==)(<=)(<)(>=)(>)(:=);]+
+
 %%
 
 [ \r\t]			{ /*ignore*/ }
@@ -68,11 +70,14 @@ CharString \"(\\.|[^\\"])*\"
 
 ";"						{return (int)Tokens.SEMICOLON; }
 
+
+
 {Integer}              { Int64.TryParse (yytext, NumberStyles.Integer, CultureInfo.CurrentCulture, out yylval.Integer);  return (int)Tokens.INTEGER;}
 {Float}                {double.TryParse (yytext, NumberStyles.Float, CultureInfo.CurrentCulture, out yylval.Float); Console.WriteLine("LEX: " + yytext); return (int)Tokens.FLOAT;}
 {CharString}           {yylval.String = yytext; return (int)Tokens.STRING;}
 {Identifier}           {yylval.String = yytext; return (int)Tokens.ID;}
 
+{DeadWord}				{yylval.String = yytext; Console.WriteLine("DW space: "+yytext); return (int)Tokens.DEADWORD;}
 
 
 %% //User-code Section
