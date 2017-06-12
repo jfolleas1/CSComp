@@ -4,9 +4,9 @@
 
 // GPPG version 1.5.2
 // Machine:  FIDF3675368
-// DateTime: 12/06/2017 14:24:01
+// DateTime: 12/06/2017 15:44:07
 // UserName: j.folleas
-// Input file <ParserComp.y - 12/06/2017 14:23:57>
+// Input file <ParserComp.y - 12/06/2017 15:44:04>
 
 // options: no-lines gplex
 
@@ -59,11 +59,11 @@ public class ScanObj {
 [GeneratedCodeAttribute( "Gardens Point Parser Generator", "1.5.2")]
 public class Parser: ShiftReduceParser<ValueType, LexLocation>
 {
-  // Verbatim content from ParserComp.y - 12/06/2017 14:23:57
+  // Verbatim content from ParserComp.y - 12/06/2017 15:44:04
     
     public Montage montage = new Montage();
 
-  // End verbatim content from ParserComp.y - 12/06/2017 14:23:57
+  // End verbatim content from ParserComp.y - 12/06/2017 15:44:04
 
 #pragma warning disable 649
   private static Dictionary<int, string> aliases;
@@ -202,7 +202,7 @@ public class Parser: ShiftReduceParser<ValueType, LexLocation>
 { CurrentSemanticValue.listAffectation=ValueStack[ValueStack.Depth-2].listAffectation; CurrentSemanticValue.listAffectation.Add(ValueStack[ValueStack.Depth-1].affectation);  }
         break;
       case 11: // affectation -> var, ASSIGN, expression, SEMICOLON
-{ ValueStack[ValueStack.Depth-2].expression.CheckValidity(LocationStack[LocationStack.Depth-4].StartLine); CurrentSemanticValue.affectation = new Affectation(ValueStack[ValueStack.Depth-4].variable, ValueStack[ValueStack.Depth-2].expression); }
+{ ValueStack[ValueStack.Depth-2].expression.CheckValidity(LocationStack[LocationStack.Depth-4].StartLine); montage.AddSymbole(ValueStack[ValueStack.Depth-4].variable.name, ValueStack[ValueStack.Depth-2].expression.dataType.ToString()); CurrentSemanticValue.affectation = new Affectation(ValueStack[ValueStack.Depth-4].variable, ValueStack[ValueStack.Depth-2].expression); }
         break;
       case 12: // expression -> expression, PLUS, expression
 { /*Console.WriteLine("PLUS");*/	CurrentSemanticValue.expression = new Expression(ExpressionSymbole.PLUS, ValueStack[ValueStack.Depth-3].expression, ValueStack[ValueStack.Depth-1].expression); }
@@ -250,7 +250,7 @@ public class Parser: ShiftReduceParser<ValueType, LexLocation>
 { /*Console.WriteLine("constante");*/  CurrentSemanticValue.expression = ValueStack[ValueStack.Depth-1].constante; }
         break;
       case 27: // var -> ID
-{ CurrentLocationSpan = LocationStack[LocationStack.Depth-1]; CurrentSemanticValue.variable = new VariableId(ValueStack[ValueStack.Depth-1].String); }
+{ CurrentLocationSpan = LocationStack[LocationStack.Depth-1]; CurrentSemanticValue.variable = new VariableId(ValueStack[ValueStack.Depth-1].String, montage.GetVarTypeString(ValueStack[ValueStack.Depth-1].String)); }
         break;
       case 28: // constante -> INTEGER
 { CurrentLocationSpan = LocationStack[LocationStack.Depth-1]; /*Console.WriteLine("int :" + $1 );*/		CurrentSemanticValue.constante = new VariableInteger(ValueStack[ValueStack.Depth-1].Integer);}

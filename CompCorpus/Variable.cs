@@ -111,7 +111,36 @@ namespace RunTime
     {
         public string name { get; }
 
-        public VariableId(string name) : base(VariableType.ID, ExpressionType.STRING)
+        public static ExpressionType ComputeDataType(string dataType)
+        {
+            ExpressionType type = ExpressionType.INVALIDE;
+            switch (dataType)
+            {
+                case "STRING":
+                    {
+                        type = ExpressionType.STRING;
+                        break;
+                    }
+                case "NUMERICALE":
+                    {
+                        type = ExpressionType.NUMERICALE;
+                        break;
+                    }
+                case "BOOL":
+                    {
+                        type = ExpressionType.BOOL;
+                        break;
+                    }
+                default:
+                    {
+                        type = ExpressionType.INVALIDE;
+                        break;
+                    }
+            };
+            return type;
+        }
+
+        public VariableId(string name, string varType) : base(VariableType.ID, ComputeDataType(varType))
         {
             this.name = name;
         }

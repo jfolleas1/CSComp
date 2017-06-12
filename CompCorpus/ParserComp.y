@@ -86,7 +86,7 @@ listAffectation :	affectation						{ $$ = new List<Affectation>(); $$.Add($1);  
 				|   listAffectation affectation		{ $$=$1; $$.Add($2);  }
 				;
 
-affectation	:		var ASSIGN expression SEMICOLON				{ $3.CheckValidity(@1.StartLine); $$ = new Affectation($1, $3); }
+affectation	:		var ASSIGN expression SEMICOLON				{ $3.CheckValidity(@1.StartLine); montage.AddSymbole($1.name, $3.dataType.ToString()); $$ = new Affectation($1, $3); }
 					;
 
 expression  :       expression PLUS expression			{ /*Console.WriteLine("PLUS");*/	$$ = new Expression(ExpressionSymbole.PLUS, $1, $3); }
@@ -106,7 +106,7 @@ expression  :       expression PLUS expression			{ /*Console.WriteLine("PLUS");*
             |       constante							{ /*Console.WriteLine("constante");*/  $$ = $1; }
             ;
 
-var     :   ID      { @$ = @1; $$ = new VariableId($1); }
+var     :   ID      { @$ = @1; $$ = new VariableId($1, montage.GetVarTypeString($1)); }
         ;
 
 constante   :   INTEGER		{ @$ = @1; /*Console.WriteLine("int :" + $1 );*/		$$ = new VariableInteger($1);}

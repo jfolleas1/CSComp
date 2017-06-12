@@ -37,11 +37,28 @@ namespace RunTime
             }
         }
 
+        public void AddSymbole(string varName, string type)
+        {
+            if (symboleTabe.ContainsKey(varName))
+            {
+                symboleTabe.Remove(varName);
+            }
+            symboleTabe.Add(varName, type);
+        }
+
+        public string GetVarTypeString(string varName)
+        {
+            string value = "";
+            if (!symboleTabe.TryGetValue(varName, out value))
+                value = "NULL";
+            return value;
+        }
+
         public bool IsInSymboleTable(string symbole, int line, int column)
         {
             if (!symboleTabe.ContainsKey(symbole))
             {
-                Console.WriteLine("La variable " + symbole +"à la ligne "+ line + " et colonne " + column+ " n'est pas définie.");
+                Console.WriteLine("ERREUR : La variable " + symbole +"à la ligne "+ line + " et colonne " + column+ " n'est pas définie.");
                 return false;
             }
             else
