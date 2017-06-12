@@ -6,9 +6,9 @@
 //
 //  GPLEX Version:  1.2.2
 //  Machine:  FIDF3675368
-//  DateTime: 12/06/2017 11:05:01
+//  DateTime: 12/06/2017 15:50:02
 //  UserName: j.folleas
-//  GPLEX input file <scanerComp.lex - 12/06/2017 11:04:56>
+//  GPLEX input file <scanerComp.lex - 12/06/2017 15:49:58>
 //  GPLEX frame file <embedded resource>
 //
 //  Option settings: unicode, verbose, parser, stack, minimize
@@ -126,8 +126,8 @@ namespace Analyser
         
         enum Result {accept, noMatch, contextFound};
 
-        const int maxAccept = 32;
-        const int initial = 33;
+        const int maxAccept = 33;
+        const int initial = 34;
         const int eofNum = 0;
         const int goStart = -1;
         const int INITIAL = 0;
@@ -174,7 +174,7 @@ namespace Analyser
         }
     };
 
-    static int[] startState = new int[] {33, 0};
+    static int[] startState = new int[] {34, 0};
 
 #region CompressedCharacterMap
     //
@@ -185,13 +185,13 @@ namespace Analyser
     // Decision tree depth is 1
     //
     static sbyte[] mapC0 = new sbyte[126] {
-/*     '\0' */ 38, 38, 38, 38, 38, 38, 38, 38, 38, 35, 1, 38, 38, 39, 38, 38, 
-/*   '\x10' */ 38, 38, 38, 38, 38, 38, 38, 38, 38, 38, 38, 38, 38, 38, 38, 38, 
-/*   '\x20' */ 35, 25, 33, 38, 2, 38, 23, 38, 19, 20, 18, 15, 32, 16, 0, 17, 
-/*      '0' */ 31, 31, 31, 31, 31, 31, 31, 31, 31, 31, 29, 30, 27, 26, 28, 38, 
-/*      '@' */ 38, 36, 36, 36, 36, 36, 36, 36, 36, 36, 36, 36, 36, 36, 36, 36, 
-/*      'P' */ 36, 36, 36, 36, 3, 36, 36, 36, 36, 36, 36, 38, 34, 38, 38, 37, 
-/*      '`' */ 38, 10, 36, 36, 13, 7, 9, 36, 36, 4, 36, 36, 11, 36, 36, 14, 
+/*     '\0' */ 0, 0, 0, 0, 0, 0, 0, 0, 0, 35, 1, 0, 0, 38, 0, 0, 
+/*   '\x10' */ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+/*   '\x20' */ 35, 25, 33, 0, 2, 0, 23, 0, 19, 20, 18, 15, 32, 16, 37, 17, 
+/*      '0' */ 31, 31, 31, 31, 31, 31, 31, 31, 31, 31, 29, 30, 27, 26, 28, 0, 
+/*      '@' */ 0, 36, 36, 36, 36, 36, 36, 36, 36, 36, 36, 36, 36, 36, 36, 36, 
+/*      'P' */ 36, 36, 36, 36, 3, 36, 36, 36, 36, 36, 36, 0, 34, 0, 0, 39, 
+/*      '`' */ 0, 10, 36, 36, 13, 7, 9, 36, 36, 4, 36, 36, 11, 36, 36, 14, 
 /*      'p' */ 36, 36, 6, 12, 5, 8, 36, 36, 36, 36, 36, 21, 24, 22 };
 
     static sbyte MapC(int code)
@@ -199,55 +199,55 @@ namespace Analyser
       if (code < 126) // '\0' <= code <= '}'
         return mapC0[code - 0];
       else // '~' <= code <= '\U0010FFFF'
-        return (sbyte)38;
+        return (sbyte)0;
     }
 #endregion
 
-    static Table[] NxS = new Table[58] {
+    static Table[] NxS = new Table[59] {
 /* NxS[   0] */ new Table(0, 0, 0, null), // Shortest string ""
-/* NxS[   1] */ new Table(0, 0, -1, null), // Shortest string "\n"
-/* NxS[   2] */ // Shortest string "T"
-      new Table(31, 24, -1, new sbyte[] {2, -1, 17, 17, -1, 2, 
-          2, 17, 17, -1, -1, -1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 
-          2, 2}),
-/* NxS[   3] */ new Table(0, 0, -1, null), // Shortest string "+"
-/* NxS[   4] */ new Table(0, 0, -1, null), // Shortest string "-"
-/* NxS[   5] */ new Table(0, 0, -1, null), // Shortest string "/"
-/* NxS[   6] */ new Table(0, 0, -1, null), // Shortest string "*"
-/* NxS[   7] */ new Table(0, 0, -1, null), // Shortest string "("
-/* NxS[   8] */ new Table(0, 0, -1, null), // Shortest string ")"
-/* NxS[   9] */ new Table(0, 0, -1, null), // Shortest string "{"
-/* NxS[  10] */ new Table(0, 0, -1, null), // Shortest string "}"
-/* NxS[  11] */ new Table(0, 0, -1, null), // Shortest string "!"
-/* NxS[  12] */ // Shortest string "<"
+/* NxS[   1] */ // Shortest string "\\"
+      new Table(31, 24, -1, new sbyte[] {1, -1, 1, 1, -1, 1, 
+          -1, 1, 1, 1, -1, -1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
+          1, 1}),
+/* NxS[   2] */ new Table(0, 0, -1, null), // Shortest string "\n"
+/* NxS[   3] */ // Shortest string "T"
+      new Table(31, 24, -1, new sbyte[] {3, -1, 1, 1, -1, 3, 
+          29, 1, 3, 1, -1, -1, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 
+          3, 3}),
+/* NxS[   4] */ new Table(0, 0, -1, null), // Shortest string "+"
+/* NxS[   5] */ new Table(0, 0, -1, null), // Shortest string "-"
+/* NxS[   6] */ new Table(0, 0, -1, null), // Shortest string "/"
+/* NxS[   7] */ new Table(0, 0, -1, null), // Shortest string "*"
+/* NxS[   8] */ new Table(0, 0, -1, null), // Shortest string "("
+/* NxS[   9] */ new Table(0, 0, -1, null), // Shortest string ")"
+/* NxS[  10] */ new Table(0, 0, -1, null), // Shortest string "{"
+/* NxS[  11] */ new Table(0, 0, -1, null), // Shortest string "}"
+/* NxS[  12] */ new Table(0, 0, -1, null), // Shortest string "!"
+/* NxS[  13] */ // Shortest string "<"
       new Table(26, 1, -1, new sbyte[] {25}),
-/* NxS[  13] */ // Shortest string ">"
+/* NxS[  14] */ // Shortest string ">"
       new Table(26, 1, -1, new sbyte[] {24}),
-/* NxS[  14] */ new Table(0, 0, -1, null), // Shortest string ";"
-/* NxS[  15] */ // Shortest string "0"
-      new Table(31, 24, -1, new sbyte[] {15, 41, 17, 17, -1, 17, 
-          17, 17, 17, -1, -1, -1, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 
-          17, 17}),
-/* NxS[  16] */ // Shortest string "\""
-      new Table(31, 24, 39, new sbyte[] {16, 39, 19, 20, 39, 16, 
-          16, 16, 16, 39, 39, 39, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 
-          16, 16}),
-/* NxS[  17] */ // Shortest string "\\"
-      new Table(31, 24, -1, new sbyte[] {17, -1, 17, 17, -1, 17, 
-          17, 17, 17, -1, -1, -1, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 
+/* NxS[  15] */ new Table(0, 0, -1, null), // Shortest string ";"
+/* NxS[  16] */ // Shortest string "0"
+      new Table(31, 24, -1, new sbyte[] {16, 42, 1, 1, -1, 1, 
+          -1, 1, 1, 1, -1, -1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
+          1, 1}),
+/* NxS[  17] */ // Shortest string "\""
+      new Table(31, 24, 40, new sbyte[] {17, 40, 19, 20, 40, 17, 
+          40, 17, 17, 17, 40, 40, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 
           17, 17}),
 /* NxS[  18] */ // Shortest string "\r"
-      new Table(31, 24, -1, new sbyte[] {17, -1, 17, 17, -1, 17, 
-          17, 17, 17, -1, -1, -1, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 
-          17, 17}),
+      new Table(31, 24, -1, new sbyte[] {1, -1, 1, 1, -1, 1, 
+          -1, 1, 1, 1, -1, -1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
+          1, 1}),
 /* NxS[  19] */ // Shortest string "\"\""
-      new Table(31, 24, -1, new sbyte[] {17, -1, 17, 17, -1, 17, 
-          17, 17, 17, -1, -1, -1, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 
-          17, 17}),
+      new Table(31, 24, -1, new sbyte[] {1, -1, 1, 1, -1, 1, 
+          -1, 1, 1, 1, -1, -1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
+          1, 1}),
 /* NxS[  20] */ // Shortest string "\"\\"
-      new Table(31, 24, 39, new sbyte[] {16, 39, 16, 16, 39, 16, 
-          16, 16, 16, 39, -1, 39, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 
-          16, 16}),
+      new Table(31, 24, 40, new sbyte[] {17, 40, 17, 17, 40, 17, 
+          40, 17, 17, 17, -1, 40, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 
+          17, 17}),
 /* NxS[  21] */ new Table(0, 0, -1, null), // Shortest string "\"\n\""
 /* NxS[  22] */ // Shortest string "0,0"
       new Table(31, 1, -1, new sbyte[] {22}),
@@ -257,63 +257,67 @@ namespace Analyser
 /* NxS[  26] */ new Table(0, 0, -1, null), // Shortest string "=="
 /* NxS[  27] */ new Table(0, 0, -1, null), // Shortest string "||"
 /* NxS[  28] */ new Table(0, 0, -1, null), // Shortest string "&&"
-/* NxS[  29] */ new Table(0, 0, -1, null), // Shortest string "$dollar"
-/* NxS[  30] */ new Table(0, 0, -1, null), // Shortest string "$false"
-/* NxS[  31] */ new Table(0, 0, -1, null), // Shortest string "$true"
-/* NxS[  32] */ new Table(0, 0, -1, null), // Shortest string "$Titre"
-/* NxS[  33] */ // Shortest string ""
-      new Table(15, 28, 2, new sbyte[] {3, 4, 5, 6, 7, 8, 
-          9, 10, 35, 36, 11, 37, 12, 13, 38, 14, 15, -1, 16, 17, 1, 2, 
-          17, 17, 18, -1, 1, 34}),
-/* NxS[  34] */ // Shortest string "$"
-      new Table(3, 11, -1, new sbyte[] {42, -1, 43, -1, -1, -1, 
-          44, -1, -1, -1, 45}),
-/* NxS[  35] */ // Shortest string "&"
+/* NxS[  29] */ // Shortest string "T."
+      new Table(31, 24, -1, new sbyte[] {29, -1, -1, -1, -1, 29, 
+          29, -1, 29, -1, -1, -1, 29, 29, 29, 29, 29, 29, 29, 29, 29, 29, 
+          29, 29}),
+/* NxS[  30] */ new Table(0, 0, -1, null), // Shortest string "$dollar"
+/* NxS[  31] */ new Table(0, 0, -1, null), // Shortest string "$false"
+/* NxS[  32] */ new Table(0, 0, -1, null), // Shortest string "$true"
+/* NxS[  33] */ new Table(0, 0, -1, null), // Shortest string "$Titre"
+/* NxS[  34] */ // Shortest string ""
+      new Table(15, 28, 3, new sbyte[] {4, 5, 6, 7, 8, 9, 
+          10, 11, 36, 37, 12, 38, 13, 14, 39, 15, 16, -1, 17, 1, 2, 3, 
+          -1, 18, 1, 1, 2, 35}),
+/* NxS[  35] */ // Shortest string "$"
+      new Table(3, 11, -1, new sbyte[] {43, -1, 44, -1, -1, -1, 
+          45, -1, -1, -1, 46}),
+/* NxS[  36] */ // Shortest string "&"
       new Table(23, 1, -1, new sbyte[] {28}),
-/* NxS[  36] */ // Shortest string "|"
+/* NxS[  37] */ // Shortest string "|"
       new Table(24, 1, -1, new sbyte[] {27}),
-/* NxS[  37] */ // Shortest string "="
+/* NxS[  38] */ // Shortest string "="
       new Table(26, 1, -1, new sbyte[] {26}),
-/* NxS[  38] */ // Shortest string ":"
+/* NxS[  39] */ // Shortest string ":"
       new Table(26, 1, -1, new sbyte[] {23}),
-/* NxS[  39] */ // Shortest string "\"\n"
-      new Table(33, 2, 39, new sbyte[] {21, 40}),
-/* NxS[  40] */ // Shortest string "\"\n\\"
-      new Table(1, 1, 39, new sbyte[] {-1}),
-/* NxS[  41] */ // Shortest string "0,"
+/* NxS[  40] */ // Shortest string "\"\n"
+      new Table(33, 2, 40, new sbyte[] {21, 41}),
+/* NxS[  41] */ // Shortest string "\"\n\\"
+      new Table(1, 1, 40, new sbyte[] {-1}),
+/* NxS[  42] */ // Shortest string "0,"
       new Table(31, 1, -1, new sbyte[] {22}),
-/* NxS[  42] */ // Shortest string "$T"
-      new Table(4, 1, -1, new sbyte[] {55}),
-/* NxS[  43] */ // Shortest string "$t"
-      new Table(6, 1, -1, new sbyte[] {53}),
-/* NxS[  44] */ // Shortest string "$f"
-      new Table(10, 1, -1, new sbyte[] {50}),
-/* NxS[  45] */ // Shortest string "$d"
-      new Table(14, 1, -1, new sbyte[] {46}),
-/* NxS[  46] */ // Shortest string "$do"
-      new Table(11, 1, -1, new sbyte[] {47}),
-/* NxS[  47] */ // Shortest string "$dol"
+/* NxS[  43] */ // Shortest string "$T"
+      new Table(4, 1, -1, new sbyte[] {56}),
+/* NxS[  44] */ // Shortest string "$t"
+      new Table(6, 1, -1, new sbyte[] {54}),
+/* NxS[  45] */ // Shortest string "$f"
+      new Table(10, 1, -1, new sbyte[] {51}),
+/* NxS[  46] */ // Shortest string "$d"
+      new Table(14, 1, -1, new sbyte[] {47}),
+/* NxS[  47] */ // Shortest string "$do"
       new Table(11, 1, -1, new sbyte[] {48}),
-/* NxS[  48] */ // Shortest string "$doll"
-      new Table(10, 1, -1, new sbyte[] {49}),
-/* NxS[  49] */ // Shortest string "$dolla"
-      new Table(6, 1, -1, new sbyte[] {29}),
-/* NxS[  50] */ // Shortest string "$fa"
-      new Table(11, 1, -1, new sbyte[] {51}),
-/* NxS[  51] */ // Shortest string "$fal"
-      new Table(12, 1, -1, new sbyte[] {52}),
-/* NxS[  52] */ // Shortest string "$fals"
-      new Table(7, 1, -1, new sbyte[] {30}),
-/* NxS[  53] */ // Shortest string "$tr"
-      new Table(8, 1, -1, new sbyte[] {54}),
-/* NxS[  54] */ // Shortest string "$tru"
+/* NxS[  48] */ // Shortest string "$dol"
+      new Table(11, 1, -1, new sbyte[] {49}),
+/* NxS[  49] */ // Shortest string "$doll"
+      new Table(10, 1, -1, new sbyte[] {50}),
+/* NxS[  50] */ // Shortest string "$dolla"
+      new Table(6, 1, -1, new sbyte[] {30}),
+/* NxS[  51] */ // Shortest string "$fa"
+      new Table(11, 1, -1, new sbyte[] {52}),
+/* NxS[  52] */ // Shortest string "$fal"
+      new Table(12, 1, -1, new sbyte[] {53}),
+/* NxS[  53] */ // Shortest string "$fals"
       new Table(7, 1, -1, new sbyte[] {31}),
-/* NxS[  55] */ // Shortest string "$Ti"
-      new Table(5, 1, -1, new sbyte[] {56}),
-/* NxS[  56] */ // Shortest string "$Tit"
-      new Table(6, 1, -1, new sbyte[] {57}),
-/* NxS[  57] */ // Shortest string "$Titr"
+/* NxS[  54] */ // Shortest string "$tr"
+      new Table(8, 1, -1, new sbyte[] {55}),
+/* NxS[  55] */ // Shortest string "$tru"
       new Table(7, 1, -1, new sbyte[] {32}),
+/* NxS[  56] */ // Shortest string "$Ti"
+      new Table(5, 1, -1, new sbyte[] {57}),
+/* NxS[  57] */ // Shortest string "$Tit"
+      new Table(6, 1, -1, new sbyte[] {58}),
+/* NxS[  58] */ // Shortest string "$Titr"
+      new Table(7, 1, -1, new sbyte[] {33}),
     };
 
 int NextState() {
@@ -746,56 +750,57 @@ int NextState() {
             if (yywrap())
                 return (int)Tokens.EOF;
             break;
-        case 1: // Recognized '[ \n\r\t]',	Shortest string "\n"
+        case 1: // Recognized '{DeadWord}',	Shortest string "\\"
+        case 17: // Recognized '{DeadWord}',	Shortest string "\""
+        case 20: // Recognized '{DeadWord}',	Shortest string "\"\\"
+yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); yylval.String = yytext; return (int)Tokens.DEADWORD;
+            break;
+        case 2: // Recognized '[ \n\r\t]',	Shortest string "\n"
         case 18: // Recognized '[ \n\r\t]',	Shortest string "\r"
 /*ignore*/ yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol);
             break;
-        case 2: // Recognized '{Identifier}',	Shortest string "T"
+        case 3: // Recognized '{Identifier}',	Shortest string "T"
+        case 29: // Recognized '{Identifier}',	Shortest string "T."
 yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); yylval.String = yytext; return (int)Tokens.ID;
             break;
-        case 3: // Recognized '"+"',	Shortest string "+"
+        case 4: // Recognized '"+"',	Shortest string "+"
 yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.PLUS;
             break;
-        case 4: // Recognized '"-"',	Shortest string "-"
+        case 5: // Recognized '"-"',	Shortest string "-"
 yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.MINUS;
             break;
-        case 5: // Recognized '"/"',	Shortest string "/"
+        case 6: // Recognized '"/"',	Shortest string "/"
 yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.DIV;
             break;
-        case 6: // Recognized '"*"',	Shortest string "*"
+        case 7: // Recognized '"*"',	Shortest string "*"
 yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.MUL;
             break;
-        case 7: // Recognized '"("',	Shortest string "("
+        case 8: // Recognized '"("',	Shortest string "("
 yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.PARENTOPEN;
             break;
-        case 8: // Recognized '")"',	Shortest string ")"
+        case 9: // Recognized '")"',	Shortest string ")"
 yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.PARENTCLOSE;
             break;
-        case 9: // Recognized '"{"',	Shortest string "{"
+        case 10: // Recognized '"{"',	Shortest string "{"
 yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.BRACEOPEN;
             break;
-        case 10: // Recognized '"}"',	Shortest string "}"
+        case 11: // Recognized '"}"',	Shortest string "}"
 yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.BRACECLOSE;
             break;
-        case 11: // Recognized '"!"',	Shortest string "!"
+        case 12: // Recognized '"!"',	Shortest string "!"
 yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.NOT;
             break;
-        case 12: // Recognized '"<"',	Shortest string "<"
+        case 13: // Recognized '"<"',	Shortest string "<"
 yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.INF;
             break;
-        case 13: // Recognized '">"',	Shortest string ">"
+        case 14: // Recognized '">"',	Shortest string ">"
 yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.SUP;
             break;
-        case 14: // Recognized '";"',	Shortest string ";"
+        case 15: // Recognized '";"',	Shortest string ";"
 yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.SEMICOLON;
             break;
-        case 15: // Recognized '{Integer}',	Shortest string "0"
+        case 16: // Recognized '{Integer}',	Shortest string "0"
 yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol);  Int64.TryParse (yytext, NumberStyles.Integer, CultureInfo.CurrentCulture, out yylval.Integer);  return (int)Tokens.INTEGER;
-            break;
-        case 16: // Recognized '{DeadWord}',	Shortest string "\""
-        case 17: // Recognized '{DeadWord}',	Shortest string "\\"
-        case 20: // Recognized '{DeadWord}',	Shortest string "\"\\"
-yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); yylval.String = yytext; return (int)Tokens.DEADWORD;
             break;
         case 19: // Recognized '{CharString}',	Shortest string "\"\""
         case 21: // Recognized '{CharString}',	Shortest string "\"\n\""
@@ -822,16 +827,16 @@ yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.OR
         case 28: // Recognized '"&&"',	Shortest string "&&"
 yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.AND;
             break;
-        case 29: // Recognized '"$dollar"',	Shortest string "$dollar"
+        case 30: // Recognized '"$dollar"',	Shortest string "$dollar"
 yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.DOLLAR;
             break;
-        case 30: // Recognized '"$false"',	Shortest string "$false"
+        case 31: // Recognized '"$false"',	Shortest string "$false"
 yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.FALSE;
             break;
-        case 31: // Recognized '"$true"',	Shortest string "$true"
+        case 32: // Recognized '"$true"',	Shortest string "$true"
 yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.TRUE;
             break;
-        case 32: // Recognized '"$Titre"',	Shortest string "$Titre"
+        case 33: // Recognized '"$Titre"',	Shortest string "$Titre"
 yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.TITREACTEKW;
             break;
         default:

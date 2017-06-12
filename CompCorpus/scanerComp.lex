@@ -25,7 +25,7 @@
 
 
 
-Identifier [A-Za-z][A-Za-z0-9_]*
+Identifier [A-Za-z][A-Za-z0-9_\.]*
 Integer [0-9]+
 Float [0-9]+,[0-9]+
 CharString \"(\\.|[^\\"])*\"

@@ -110,6 +110,7 @@ namespace RunTime
     public class VariableId : Variable
     {
         public string name { get; }
+        public bool local { get; }
 
         public static ExpressionType ComputeDataType(string dataType)
         {
@@ -117,16 +118,19 @@ namespace RunTime
             switch (dataType)
             {
                 case "STRING":
+                case "LSTRING":
                     {
                         type = ExpressionType.STRING;
                         break;
                     }
                 case "NUMERICALE":
+                case "LNUMERICALE":
                     {
                         type = ExpressionType.NUMERICALE;
                         break;
                     }
                 case "BOOL":
+                case "LBOOL":
                     {
                         type = ExpressionType.BOOL;
                         break;
@@ -143,6 +147,8 @@ namespace RunTime
         public VariableId(string name, string varType) : base(VariableType.ID, ComputeDataType(varType))
         {
             this.name = name;
+            local = ((varType == "LSTRING") || (varType == "LNUMERICALE") || (varType == "LBOOL"));
+
         }
 
         public override void Print(int level)
@@ -154,7 +160,12 @@ namespace RunTime
 
         public override string Write()
         {
-            return name;
+            string text = "$scope."+name;
+            if (local)
+            {
+                text += "()";
+            }
+            return text;
         }
     }
 

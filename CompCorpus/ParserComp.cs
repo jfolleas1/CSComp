@@ -4,9 +4,9 @@
 
 // GPPG version 1.5.2
 // Machine:  FIDF3675368
-// DateTime: 12/06/2017 15:44:07
+// DateTime: 12/06/2017 16:08:15
 // UserName: j.folleas
-// Input file <ParserComp.y - 12/06/2017 15:44:04>
+// Input file <ParserComp.y - 12/06/2017 16:08:11>
 
 // options: no-lines gplex
 
@@ -59,11 +59,11 @@ public class ScanObj {
 [GeneratedCodeAttribute( "Gardens Point Parser Generator", "1.5.2")]
 public class Parser: ShiftReduceParser<ValueType, LexLocation>
 {
-  // Verbatim content from ParserComp.y - 12/06/2017 15:44:04
+  // Verbatim content from ParserComp.y - 12/06/2017 16:08:11
     
     public Montage montage = new Montage();
 
-  // End verbatim content from ParserComp.y - 12/06/2017 15:44:04
+  // End verbatim content from ParserComp.y - 12/06/2017 16:08:11
 
 #pragma warning disable 649
   private static Dictionary<int, string> aliases;
@@ -202,7 +202,7 @@ public class Parser: ShiftReduceParser<ValueType, LexLocation>
 { CurrentSemanticValue.listAffectation=ValueStack[ValueStack.Depth-2].listAffectation; CurrentSemanticValue.listAffectation.Add(ValueStack[ValueStack.Depth-1].affectation);  }
         break;
       case 11: // affectation -> var, ASSIGN, expression, SEMICOLON
-{ ValueStack[ValueStack.Depth-2].expression.CheckValidity(LocationStack[LocationStack.Depth-4].StartLine); montage.AddSymbole(ValueStack[ValueStack.Depth-4].variable.name, ValueStack[ValueStack.Depth-2].expression.dataType.ToString()); CurrentSemanticValue.affectation = new Affectation(ValueStack[ValueStack.Depth-4].variable, ValueStack[ValueStack.Depth-2].expression); }
+{ ValueStack[ValueStack.Depth-2].expression.CheckValidity(LocationStack[LocationStack.Depth-4].StartLine); montage.AddSymbole(ValueStack[ValueStack.Depth-4].variable.name, ("L" + ValueStack[ValueStack.Depth-2].expression.dataType.ToString())); CurrentSemanticValue.affectation = new Affectation(ValueStack[ValueStack.Depth-4].variable, ValueStack[ValueStack.Depth-2].expression); }
         break;
       case 12: // expression -> expression, PLUS, expression
 { /*Console.WriteLine("PLUS");*/	CurrentSemanticValue.expression = new Expression(ExpressionSymbole.PLUS, ValueStack[ValueStack.Depth-3].expression, ValueStack[ValueStack.Depth-1].expression); }
