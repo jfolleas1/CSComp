@@ -22,6 +22,7 @@ namespace RunTime
             Console.WriteLine("AFFECTATION");
             Console.WriteLine("Var name : ");
             this.variableName.Print();
+            Console.WriteLine("DATA TYPE : " + expression.dataType.ToString());
             Console.WriteLine("Expression : ");
             this.expression.Print();
         }

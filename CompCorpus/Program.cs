@@ -34,7 +34,6 @@ namespace CompCorpus
                     Console.WriteLine(file.Name);
                     scn = new Scanner(file);
                     parser = new Parser(scn);
-                    //parser.program = new Montage();
                     parser.montage.AddSymboleFromFile(dataStructurePath);
 
                     parser.Parse();
@@ -45,6 +44,14 @@ namespace CompCorpus
 
                     if (montage != null)
                     {
+                        montage.Print();
+                        Console.WriteLine("///////////////////////////////////////////////////////");
+                        Console.WriteLine();
+                        Console.WriteLine();
+                        Console.WriteLine();
+                        Console.WriteLine();
+                        Console.WriteLine("///////////////////////////////////////////////////////");
+
                         montage.PrintFutureFiles();
                         montage.WriteInFiles(targetFilehtmlName, targetFileJSName);
                     }

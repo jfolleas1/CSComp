@@ -4,9 +4,9 @@
 
 // GPPG version 1.5.2
 // Machine:  FIDF3675368
-// DateTime: 12/06/2017 11:13:03
+// DateTime: 12/06/2017 14:24:01
 // UserName: j.folleas
-// Input file <ParserComp.y - 12/06/2017 11:12:51>
+// Input file <ParserComp.y - 12/06/2017 14:23:57>
 
 // options: no-lines gplex
 
@@ -59,11 +59,11 @@ public class ScanObj {
 [GeneratedCodeAttribute( "Gardens Point Parser Generator", "1.5.2")]
 public class Parser: ShiftReduceParser<ValueType, LexLocation>
 {
-  // Verbatim content from ParserComp.y - 12/06/2017 11:12:51
+  // Verbatim content from ParserComp.y - 12/06/2017 14:23:57
     
     public Montage montage = new Montage();
 
-  // End verbatim content from ParserComp.y - 12/06/2017 11:12:51
+  // End verbatim content from ParserComp.y - 12/06/2017 14:23:57
 
 #pragma warning disable 649
   private static Dictionary<int, string> aliases;
@@ -202,64 +202,64 @@ public class Parser: ShiftReduceParser<ValueType, LexLocation>
 { CurrentSemanticValue.listAffectation=ValueStack[ValueStack.Depth-2].listAffectation; CurrentSemanticValue.listAffectation.Add(ValueStack[ValueStack.Depth-1].affectation);  }
         break;
       case 11: // affectation -> var, ASSIGN, expression, SEMICOLON
-{  CurrentSemanticValue.affectation = new Affectation(ValueStack[ValueStack.Depth-4].variable, ValueStack[ValueStack.Depth-2].expression); }
+{ ValueStack[ValueStack.Depth-2].expression.CheckValidity(LocationStack[LocationStack.Depth-4].StartLine); CurrentSemanticValue.affectation = new Affectation(ValueStack[ValueStack.Depth-4].variable, ValueStack[ValueStack.Depth-2].expression); }
         break;
       case 12: // expression -> expression, PLUS, expression
-{ Console.WriteLine("PLUS"); CurrentSemanticValue.expression = new Expression(ExpressionSymbole.PLUS, ValueStack[ValueStack.Depth-3].expression, ValueStack[ValueStack.Depth-1].expression); }
+{ /*Console.WriteLine("PLUS");*/	CurrentSemanticValue.expression = new Expression(ExpressionSymbole.PLUS, ValueStack[ValueStack.Depth-3].expression, ValueStack[ValueStack.Depth-1].expression); }
         break;
       case 13: // expression -> expression, MUL, expression
-{ Console.WriteLine("MUL"); CurrentSemanticValue.expression = new Expression(ExpressionSymbole.MUL, ValueStack[ValueStack.Depth-3].expression, ValueStack[ValueStack.Depth-1].expression);}
+{ /*Console.WriteLine("MUL");*/		CurrentSemanticValue.expression = new Expression(ExpressionSymbole.MUL, ValueStack[ValueStack.Depth-3].expression, ValueStack[ValueStack.Depth-1].expression);}
         break;
       case 14: // expression -> expression, DIV, expression
-{ Console.WriteLine("DIV"); CurrentSemanticValue.expression = new Expression(ExpressionSymbole.DIV, ValueStack[ValueStack.Depth-3].expression, ValueStack[ValueStack.Depth-1].expression); }
+{ /*Console.WriteLine("DIV");*/		CurrentSemanticValue.expression = new Expression(ExpressionSymbole.DIV, ValueStack[ValueStack.Depth-3].expression, ValueStack[ValueStack.Depth-1].expression); }
         break;
       case 15: // expression -> expression, MINUS, expression
-{ Console.WriteLine("MINUS"); CurrentSemanticValue.expression = new Expression(ExpressionSymbole.MINUS, ValueStack[ValueStack.Depth-3].expression, ValueStack[ValueStack.Depth-1].expression); }
+{ /*Console.WriteLine("MINUS");*/	CurrentSemanticValue.expression = new Expression(ExpressionSymbole.MINUS, ValueStack[ValueStack.Depth-3].expression, ValueStack[ValueStack.Depth-1].expression); }
         break;
       case 16: // expression -> expression, AND, expression
-{ Console.WriteLine("AND"); CurrentSemanticValue.expression = new Expression(ExpressionSymbole.AND, ValueStack[ValueStack.Depth-3].expression, ValueStack[ValueStack.Depth-1].expression); }
+{ /*Console.WriteLine("AND");*/		CurrentSemanticValue.expression = new Expression(ExpressionSymbole.AND, ValueStack[ValueStack.Depth-3].expression, ValueStack[ValueStack.Depth-1].expression); }
         break;
       case 17: // expression -> expression, OR, expression
-{ Console.WriteLine("OR"); CurrentSemanticValue.expression = new Expression(ExpressionSymbole.OR, ValueStack[ValueStack.Depth-3].expression, ValueStack[ValueStack.Depth-1].expression); }
+{ /*Console.WriteLine("OR");*/		CurrentSemanticValue.expression = new Expression(ExpressionSymbole.OR, ValueStack[ValueStack.Depth-3].expression, ValueStack[ValueStack.Depth-1].expression); }
         break;
       case 18: // expression -> NOT, expression
-{ Console.WriteLine("NOT");CurrentSemanticValue.expression = new Expression(ExpressionSymbole.NOT, ValueStack[ValueStack.Depth-1].expression); }
+{ /*Console.WriteLine("NOT");*/		CurrentSemanticValue.expression = new Expression(ExpressionSymbole.NOT, ValueStack[ValueStack.Depth-1].expression); }
         break;
       case 19: // expression -> expression, EGALE, expression
-{ Console.WriteLine("EGALE");CurrentSemanticValue.expression = new Expression(ExpressionSymbole.EGALE, ValueStack[ValueStack.Depth-3].expression, ValueStack[ValueStack.Depth-1].expression); }
+{ /*Console.WriteLine("EGALE");*/	CurrentSemanticValue.expression = new Expression(ExpressionSymbole.EGALE, ValueStack[ValueStack.Depth-3].expression, ValueStack[ValueStack.Depth-1].expression); }
         break;
       case 20: // expression -> expression, INF, expression
-{ Console.WriteLine("INF");CurrentSemanticValue.expression = new Expression(ExpressionSymbole.INF, ValueStack[ValueStack.Depth-3].expression, ValueStack[ValueStack.Depth-1].expression); }
+{ /*Console.WriteLine("INF");*/		CurrentSemanticValue.expression = new Expression(ExpressionSymbole.INF, ValueStack[ValueStack.Depth-3].expression, ValueStack[ValueStack.Depth-1].expression); }
         break;
       case 21: // expression -> expression, INFEGALE, expression
-{ Console.WriteLine("INFEGALE");CurrentSemanticValue.expression = new Expression(ExpressionSymbole.INFEGALE, ValueStack[ValueStack.Depth-3].expression, ValueStack[ValueStack.Depth-1].expression); }
+{ /*Console.WriteLine("INFEGALE");*/ CurrentSemanticValue.expression = new Expression(ExpressionSymbole.INFEGALE, ValueStack[ValueStack.Depth-3].expression, ValueStack[ValueStack.Depth-1].expression); }
         break;
       case 22: // expression -> expression, SUP, expression
-{ Console.WriteLine("SUP");CurrentSemanticValue.expression = new Expression(ExpressionSymbole.SUP, ValueStack[ValueStack.Depth-3].expression, ValueStack[ValueStack.Depth-1].expression); }
+{ /*Console.WriteLine("SUP");*/		CurrentSemanticValue.expression = new Expression(ExpressionSymbole.SUP, ValueStack[ValueStack.Depth-3].expression, ValueStack[ValueStack.Depth-1].expression); }
         break;
       case 23: // expression -> expression, SUPEGALE, expression
-{ Console.WriteLine("SUPEGALE");CurrentSemanticValue.expression = new Expression(ExpressionSymbole.SUPEGALE, ValueStack[ValueStack.Depth-3].expression, ValueStack[ValueStack.Depth-1].expression); }
+{ /*Console.WriteLine("SUPEGALE");*/ CurrentSemanticValue.expression = new Expression(ExpressionSymbole.SUPEGALE, ValueStack[ValueStack.Depth-3].expression, ValueStack[ValueStack.Depth-1].expression); }
         break;
       case 24: // expression -> PARENTOPEN, expression, PARENTCLOSE
-{ Console.WriteLine("PARENT"); CurrentSemanticValue.expression = new Expression(ExpressionSymbole.PARENT, ValueStack[ValueStack.Depth-2].expression); }
+{ /*Console.WriteLine("PARENT");*/	CurrentSemanticValue.expression = new Expression(ExpressionSymbole.PARENT, ValueStack[ValueStack.Depth-2].expression); }
         break;
       case 25: // expression -> var
-{ Console.WriteLine("var :" +ValueStack[ValueStack.Depth-1].variable ); montage.IsInSymboleTable(ValueStack[ValueStack.Depth-1].variable.name, LocationStack[LocationStack.Depth-1].StartLine, LocationStack[LocationStack.Depth-1].StartColumn ); CurrentSemanticValue.expression = ValueStack[ValueStack.Depth-1].variable; }
+{ /*Console.WriteLine("var :" +$1 );*/ montage.IsInSymboleTable(ValueStack[ValueStack.Depth-1].variable.name, LocationStack[LocationStack.Depth-1].StartLine, LocationStack[LocationStack.Depth-1].StartColumn ); CurrentSemanticValue.expression = ValueStack[ValueStack.Depth-1].variable; }
         break;
       case 26: // expression -> constante
-{ Console.WriteLine("constante");  CurrentSemanticValue.expression = ValueStack[ValueStack.Depth-1].constante; }
+{ /*Console.WriteLine("constante");*/  CurrentSemanticValue.expression = ValueStack[ValueStack.Depth-1].constante; }
         break;
       case 27: // var -> ID
 { CurrentLocationSpan = LocationStack[LocationStack.Depth-1]; CurrentSemanticValue.variable = new VariableId(ValueStack[ValueStack.Depth-1].String); }
         break;
       case 28: // constante -> INTEGER
-{ Console.WriteLine("int :" + ValueStack[ValueStack.Depth-1].Integer ); CurrentSemanticValue.constante = new VariableInteger(ValueStack[ValueStack.Depth-1].Integer);}
+{ CurrentLocationSpan = LocationStack[LocationStack.Depth-1]; /*Console.WriteLine("int :" + $1 );*/		CurrentSemanticValue.constante = new VariableInteger(ValueStack[ValueStack.Depth-1].Integer);}
         break;
       case 29: // constante -> FLOAT
-{ Console.WriteLine("float :" + ValueStack[ValueStack.Depth-1].Float ); CurrentSemanticValue.constante = new VariableFloat(ValueStack[ValueStack.Depth-1].Float);}
+{ CurrentLocationSpan = LocationStack[LocationStack.Depth-1]; /*Console.WriteLine("float :" + $1 );*/		CurrentSemanticValue.constante = new VariableFloat(ValueStack[ValueStack.Depth-1].Float);}
         break;
       case 30: // constante -> STRING
-{ Console.WriteLine("string :" + ValueStack[ValueStack.Depth-1].String ); CurrentSemanticValue.constante = new VariableString(ValueStack[ValueStack.Depth-1].String);}
+{ CurrentLocationSpan = LocationStack[LocationStack.Depth-1]; /*Console.WriteLine("string :" + $1 );*/		CurrentSemanticValue.constante = new VariableString(ValueStack[ValueStack.Depth-1].String);}
         break;
     }
 #pragma warning restore 162, 1522

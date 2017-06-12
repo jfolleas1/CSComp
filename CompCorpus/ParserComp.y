@@ -86,32 +86,32 @@ listAffectation :	affectation						{ $$ = new List<Affectation>(); $$.Add($1);  
 				|   listAffectation affectation		{ $$=$1; $$.Add($2);  }
 				;
 
-affectation	:		var ASSIGN expression SEMICOLON				{  $$ = new Affectation($1, $3); }
+affectation	:		var ASSIGN expression SEMICOLON				{ $3.CheckValidity(@1.StartLine); $$ = new Affectation($1, $3); }
 					;
 
-expression  :       expression PLUS expression			{ Console.WriteLine("PLUS"); $$ = new Expression(ExpressionSymbole.PLUS, $1, $3); }
-            |       expression MUL expression			{ Console.WriteLine("MUL"); $$ = new Expression(ExpressionSymbole.MUL, $1, $3);}
-            |       expression DIV expression			{ Console.WriteLine("DIV"); $$ = new Expression(ExpressionSymbole.DIV, $1, $3); }
-            |       expression MINUS expression			{ Console.WriteLine("MINUS"); $$ = new Expression(ExpressionSymbole.MINUS, $1, $3); }
-			|       expression AND expression			{ Console.WriteLine("AND"); $$ = new Expression(ExpressionSymbole.AND, $1, $3); }
-            |       expression OR expression			{ Console.WriteLine("OR"); $$ = new Expression(ExpressionSymbole.OR, $1, $3); }
-            |       NOT expression						{ Console.WriteLine("NOT");$$ = new Expression(ExpressionSymbole.NOT, $2); }
-            |       expression EGALE expression			{ Console.WriteLine("EGALE");$$ = new Expression(ExpressionSymbole.EGALE, $1, $3); }
-            |       expression INF expression			{ Console.WriteLine("INF");$$ = new Expression(ExpressionSymbole.INF, $1, $3); }
-            |       expression INFEGALE expression		{ Console.WriteLine("INFEGALE");$$ = new Expression(ExpressionSymbole.INFEGALE, $1, $3); }
-            |       expression SUP expression			{ Console.WriteLine("SUP");$$ = new Expression(ExpressionSymbole.SUP, $1, $3); }
-            |       expression SUPEGALE expression		{ Console.WriteLine("SUPEGALE");$$ = new Expression(ExpressionSymbole.SUPEGALE, $1, $3); }
-			|		PARENTOPEN expression PARENTCLOSE	{ Console.WriteLine("PARENT"); $$ = new Expression(ExpressionSymbole.PARENT, $2); }
-            |       var									{ Console.WriteLine("var :" +$1 ); montage.IsInSymboleTable($1.name, @1.StartLine, @1.StartColumn ); $$ = $1; }
-            |       constante							{ Console.WriteLine("constante");  $$ = $1; }
+expression  :       expression PLUS expression			{ /*Console.WriteLine("PLUS");*/	$$ = new Expression(ExpressionSymbole.PLUS, $1, $3); }
+            |       expression MUL expression			{ /*Console.WriteLine("MUL");*/		$$ = new Expression(ExpressionSymbole.MUL, $1, $3);}
+            |       expression DIV expression			{ /*Console.WriteLine("DIV");*/		$$ = new Expression(ExpressionSymbole.DIV, $1, $3); }
+            |       expression MINUS expression			{ /*Console.WriteLine("MINUS");*/	$$ = new Expression(ExpressionSymbole.MINUS, $1, $3); }
+			|       expression AND expression			{ /*Console.WriteLine("AND");*/		$$ = new Expression(ExpressionSymbole.AND, $1, $3); }
+            |       expression OR expression			{ /*Console.WriteLine("OR");*/		$$ = new Expression(ExpressionSymbole.OR, $1, $3); }
+            |       NOT expression						{ /*Console.WriteLine("NOT");*/		$$ = new Expression(ExpressionSymbole.NOT, $2); }
+            |       expression EGALE expression			{ /*Console.WriteLine("EGALE");*/	$$ = new Expression(ExpressionSymbole.EGALE, $1, $3); }
+            |       expression INF expression			{ /*Console.WriteLine("INF");*/		$$ = new Expression(ExpressionSymbole.INF, $1, $3); }
+            |       expression INFEGALE expression		{ /*Console.WriteLine("INFEGALE");*/ $$ = new Expression(ExpressionSymbole.INFEGALE, $1, $3); }
+            |       expression SUP expression			{ /*Console.WriteLine("SUP");*/		$$ = new Expression(ExpressionSymbole.SUP, $1, $3); }
+            |       expression SUPEGALE expression		{ /*Console.WriteLine("SUPEGALE");*/ $$ = new Expression(ExpressionSymbole.SUPEGALE, $1, $3); }
+			|		PARENTOPEN expression PARENTCLOSE	{ /*Console.WriteLine("PARENT");*/	$$ = new Expression(ExpressionSymbole.PARENT, $2); }
+            |       var									{ /*Console.WriteLine("var :" +$1 );*/ montage.IsInSymboleTable($1.name, @1.StartLine, @1.StartColumn ); $$ = $1; }
+            |       constante							{ /*Console.WriteLine("constante");*/  $$ = $1; }
             ;
 
 var     :   ID      { @$ = @1; $$ = new VariableId($1); }
         ;
 
-constante   :   INTEGER		{ Console.WriteLine("int :" + $1 ); $$ = new VariableInteger($1);}
-			|	FLOAT		{ Console.WriteLine("float :" + $1 ); $$ = new VariableFloat($1);}
-			|	STRING		{ Console.WriteLine("string :" + $1 ); $$ = new VariableString($1);}
+constante   :   INTEGER		{ @$ = @1; /*Console.WriteLine("int :" + $1 );*/		$$ = new VariableInteger($1);}
+			|	FLOAT		{ @$ = @1; /*Console.WriteLine("float :" + $1 );*/		$$ = new VariableFloat($1);}
+			|	STRING		{ @$ = @1; /*Console.WriteLine("string :" + $1 );*/		$$ = new VariableString($1);}
             ;
 
 %%

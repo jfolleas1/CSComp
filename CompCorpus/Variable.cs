@@ -23,9 +23,10 @@ namespace RunTime
 
         public VariableType type { get; }
 
-        public Variable(VariableType type)
+        public Variable(VariableType type, ExpressionType dataType)
         {
             this.type = type;
+            base.dataType = dataType;
         }
 
         public override void Print(int level)
@@ -43,7 +44,7 @@ namespace RunTime
     {
         public long value { get; }
 
-        public VariableInteger(long value) : base(VariableType.INTEGER)
+        public VariableInteger(long value) : base(VariableType.INTEGER, ExpressionType.NUMERICALE)
         {
             this.value = value;
         }
@@ -65,7 +66,7 @@ namespace RunTime
     {
         public double value { get; }
 
-        public VariableFloat(double value) : base(VariableType.FLOAT)
+        public VariableFloat(double value) : base(VariableType.FLOAT, ExpressionType.NUMERICALE)
         {
             this.value = value;
         }
@@ -88,7 +89,7 @@ namespace RunTime
     {
         public string value { get; }
 
-        public VariableString(string value) : base(VariableType.STRING)
+        public VariableString(string value) : base(VariableType.STRING, ExpressionType.STRING)
         {
             this.value = value;
         }
@@ -110,7 +111,7 @@ namespace RunTime
     {
         public string name { get; }
 
-        public VariableId(string name) : base(VariableType.ID)
+        public VariableId(string name) : base(VariableType.ID, ExpressionType.STRING)
         {
             this.name = name;
         }

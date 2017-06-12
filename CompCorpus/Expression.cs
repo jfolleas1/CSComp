@@ -29,20 +29,91 @@ namespace RunTime
         public AbstractExpression expression1 { get; }
         public AbstractExpression expression2 { get; }
 
+        
+
         public Expression(ExpressionSymbole symb, AbstractExpression exp1, AbstractExpression exp2)
         {
             this.symbole = symb;
             this.expression1 = exp1;
             this.expression2 = exp2;
+            base.dataType = ComputeExpressionType();
         }
 
         public Expression(ExpressionSymbole symb, AbstractExpression exp1)
         {
-            Console.WriteLine("Constrction Expression unaire ");
             this.symbole = symb;
             this.expression1 = exp1;
             this.expression2 = null;
+            base.dataType = ComputeExpressionType();
         }
+
+        
+
+        public ExpressionType ComputeExpressionType()
+        {
+            ExpressionType exp1Type = expression1.dataType;
+            ExpressionType exp2Type = ExpressionType.INVALIDE;
+            if ( expression2 != null)
+            {
+                exp2Type = expression2.dataType;
+            }
+
+
+            ExpressionType myType = ExpressionType.INVALIDE;
+            switch (symbole)
+            {
+                case ExpressionSymbole.PLUS:
+                    if (exp1Type == exp2Type && exp1Type != ExpressionType.BOOL)
+                    {
+                        myType = exp1Type;
+                    }
+                    break;
+                case ExpressionSymbole.MUL:
+                case ExpressionSymbole.MINUS:
+                case ExpressionSymbole.DIV:
+                    if (exp2Type == ExpressionType.NUMERICALE && exp1Type == ExpressionType.NUMERICALE)
+                    {
+                        myType = exp1Type;
+                    }
+                    break;
+                case ExpressionSymbole.AND:
+                case ExpressionSymbole.OR:
+                    if (exp2Type == ExpressionType.BOOL && exp1Type == ExpressionType.BOOL)
+                    {
+                        myType = ExpressionType.BOOL;
+                    }
+                    break;
+                case ExpressionSymbole.NOT:
+                    if (exp1Type == ExpressionType.BOOL)
+                    {
+                        myType = ExpressionType.BOOL;
+                    }
+                    break;
+                case ExpressionSymbole.EGALE:
+                    if (exp1Type == exp2Type)
+                    {
+                        myType = ExpressionType.BOOL;
+                    }
+                    break;
+                case ExpressionSymbole.INF:
+                case ExpressionSymbole.INFEGALE:
+                case ExpressionSymbole.SUP:
+                case ExpressionSymbole.SUPEGALE:
+                    if (exp2Type == ExpressionType.NUMERICALE && exp1Type == ExpressionType.NUMERICALE)
+                    {
+                        myType = ExpressionType.BOOL;
+                    }
+                    break;
+                case ExpressionSymbole.PARENT:
+                    myType = exp1Type;
+                    break;
+                default:
+                    myType = ExpressionType.INVALIDE;
+                    break;
+            }
+            return myType;
+        }
+
 
         public override void Print(int level)
         {
