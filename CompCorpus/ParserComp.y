@@ -5,10 +5,11 @@
 
 %{
     
-    public Montage program = null;
+    public Montage montage = new Montage();
+
 %}
 
-%start program
+%start montage
 
 %union {
         public string String;
@@ -47,7 +48,7 @@
 
 //types
 
-%type<expression> program
+%type<expression> montage
 %type<affectation> affectation
 %type<expression> expression
 %type<constante> constante
@@ -68,8 +69,8 @@
 
 %% // Grammar rules section
 
-program		:	 /*nothing*/		{ Console.WriteLine("programme vide "); }
-			|	defActeTitle listAffectation		{ Console.WriteLine("listAffectation");  program = new Montage($1,$2); }
+montage		:	 /*nothing*/		{ Console.WriteLine("montage vide "); }
+			|	defActeTitle listAffectation		{  montage.nameOfTheMontage=$1; montage.listOfCalculExpressions=$2; }
 			;
 
 defActeTitle	:	TITREACTEKW BRACEOPEN deadText BRACECLOSE		{ $$ = $3; }
@@ -81,11 +82,11 @@ deadText		:	DEADWORD						{ $$ = $1; }
 				|	deadText ID						{ $$ = $1 + " " + $2; }
 				;
 
-listAffectation :	affectation						{ $$ = new List<Affectation>(); $$.Add($1); Console.WriteLine("Affectation du bout"); }
-				|   listAffectation affectation		{ $$=$1; $$.Add($2); Console.WriteLine(" liste Affectation "); }
+listAffectation :	affectation						{ $$ = new List<Affectation>(); $$.Add($1);  }
+				|   listAffectation affectation		{ $$=$1; $$.Add($2);  }
 				;
 
-affectation	:		var ASSIGN expression SEMICOLON				{  Console.WriteLine("affection") ; $$ = new Affectation($1, $3); }
+affectation	:		var ASSIGN expression SEMICOLON				{  $$ = new Affectation($1, $3); }
 					;
 
 expression  :       expression PLUS expression			{ Console.WriteLine("PLUS"); $$ = new Expression(ExpressionSymbole.PLUS, $1, $3); }
@@ -101,11 +102,11 @@ expression  :       expression PLUS expression			{ Console.WriteLine("PLUS"); $$
             |       expression SUP expression			{ Console.WriteLine("SUP");$$ = new Expression(ExpressionSymbole.SUP, $1, $3); }
             |       expression SUPEGALE expression		{ Console.WriteLine("SUPEGALE");$$ = new Expression(ExpressionSymbole.SUPEGALE, $1, $3); }
 			|		PARENTOPEN expression PARENTCLOSE	{ Console.WriteLine("PARENT"); $$ = new Expression(ExpressionSymbole.PARENT, $2); }
-            |       var									{ Console.WriteLine("var"); $$ = $1; }
+            |       var									{ Console.WriteLine("var :" +$1 ); montage.IsInSymboleTable($1.name, @1.StartLine, @1.StartColumn ); $$ = $1; }
             |       constante							{ Console.WriteLine("constante");  $$ = $1; }
             ;
 
-var     :   ID      { Console.WriteLine("var :" +$1 ); $$ = new VariableId($1); }
+var     :   ID      { @$ = @1; $$ = new VariableId($1); }
         ;
 
 constante   :   INTEGER		{ Console.WriteLine("int :" + $1 ); $$ = new VariableInteger($1);}

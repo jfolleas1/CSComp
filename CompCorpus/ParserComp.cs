@@ -4,9 +4,9 @@
 
 // GPPG version 1.5.2
 // Machine:  FIDF3675368
-// DateTime: 09/06/2017 11:48:35
+// DateTime: 12/06/2017 11:13:03
 // UserName: j.folleas
-// Input file <ParserComp.y - 09/06/2017 10:48:45>
+// Input file <ParserComp.y - 12/06/2017 11:12:51>
 
 // options: no-lines gplex
 
@@ -59,10 +59,11 @@ public class ScanObj {
 [GeneratedCodeAttribute( "Gardens Point Parser Generator", "1.5.2")]
 public class Parser: ShiftReduceParser<ValueType, LexLocation>
 {
-  // Verbatim content from ParserComp.y - 09/06/2017 10:48:45
+  // Verbatim content from ParserComp.y - 12/06/2017 11:12:51
     
-    public Montage program = null;
-  // End verbatim content from ParserComp.y - 09/06/2017 10:48:45
+    public Montage montage = new Montage();
+
+  // End verbatim content from ParserComp.y - 12/06/2017 11:12:51
 
 #pragma warning disable 649
   private static Dictionary<int, string> aliases;
@@ -70,7 +71,7 @@ public class Parser: ShiftReduceParser<ValueType, LexLocation>
   private static Rule[] rules = new Rule[31];
   private static State[] states = new State[52];
   private static string[] nonTerms = new string[] {
-      "program", "affectation", "expression", "constante", "var", "listAffectation", 
+      "montage", "affectation", "expression", "constante", "var", "listAffectation", 
       "defActeTitle", "deadText", "$accept", };
 
   static Parser() {
@@ -173,11 +174,11 @@ public class Parser: ShiftReduceParser<ValueType, LexLocation>
 #pragma warning disable 162, 1522
     switch (action)
     {
-      case 2: // program -> /* empty */
-{ Console.WriteLine("programme vide "); }
+      case 2: // montage -> /* empty */
+{ Console.WriteLine("montage vide "); }
         break;
-      case 3: // program -> defActeTitle, listAffectation
-{ Console.WriteLine("listAffectation");  program = new Montage(ValueStack[ValueStack.Depth-2].String,ValueStack[ValueStack.Depth-1].listAffectation); }
+      case 3: // montage -> defActeTitle, listAffectation
+{  montage.nameOfTheMontage=ValueStack[ValueStack.Depth-2].String; montage.listOfCalculExpressions=ValueStack[ValueStack.Depth-1].listAffectation; }
         break;
       case 4: // defActeTitle -> TITREACTEKW, BRACEOPEN, deadText, BRACECLOSE
 { CurrentSemanticValue.String = ValueStack[ValueStack.Depth-2].String; }
@@ -195,13 +196,13 @@ public class Parser: ShiftReduceParser<ValueType, LexLocation>
 { CurrentSemanticValue.String = ValueStack[ValueStack.Depth-2].String + " " + ValueStack[ValueStack.Depth-1].String; }
         break;
       case 9: // listAffectation -> affectation
-{ CurrentSemanticValue.listAffectation = new List<Affectation>(); CurrentSemanticValue.listAffectation.Add(ValueStack[ValueStack.Depth-1].affectation); Console.WriteLine("Affectation du bout"); }
+{ CurrentSemanticValue.listAffectation = new List<Affectation>(); CurrentSemanticValue.listAffectation.Add(ValueStack[ValueStack.Depth-1].affectation);  }
         break;
       case 10: // listAffectation -> listAffectation, affectation
-{ CurrentSemanticValue.listAffectation=ValueStack[ValueStack.Depth-2].listAffectation; CurrentSemanticValue.listAffectation.Add(ValueStack[ValueStack.Depth-1].affectation); Console.WriteLine(" liste Affectation "); }
+{ CurrentSemanticValue.listAffectation=ValueStack[ValueStack.Depth-2].listAffectation; CurrentSemanticValue.listAffectation.Add(ValueStack[ValueStack.Depth-1].affectation);  }
         break;
       case 11: // affectation -> var, ASSIGN, expression, SEMICOLON
-{  Console.WriteLine("affection") ; CurrentSemanticValue.affectation = new Affectation(ValueStack[ValueStack.Depth-4].variable, ValueStack[ValueStack.Depth-2].expression); }
+{  CurrentSemanticValue.affectation = new Affectation(ValueStack[ValueStack.Depth-4].variable, ValueStack[ValueStack.Depth-2].expression); }
         break;
       case 12: // expression -> expression, PLUS, expression
 { Console.WriteLine("PLUS"); CurrentSemanticValue.expression = new Expression(ExpressionSymbole.PLUS, ValueStack[ValueStack.Depth-3].expression, ValueStack[ValueStack.Depth-1].expression); }
@@ -243,13 +244,13 @@ public class Parser: ShiftReduceParser<ValueType, LexLocation>
 { Console.WriteLine("PARENT"); CurrentSemanticValue.expression = new Expression(ExpressionSymbole.PARENT, ValueStack[ValueStack.Depth-2].expression); }
         break;
       case 25: // expression -> var
-{ Console.WriteLine("var"); CurrentSemanticValue.expression = ValueStack[ValueStack.Depth-1].variable; }
+{ Console.WriteLine("var :" +ValueStack[ValueStack.Depth-1].variable ); montage.IsInSymboleTable(ValueStack[ValueStack.Depth-1].variable.name, LocationStack[LocationStack.Depth-1].StartLine, LocationStack[LocationStack.Depth-1].StartColumn ); CurrentSemanticValue.expression = ValueStack[ValueStack.Depth-1].variable; }
         break;
       case 26: // expression -> constante
 { Console.WriteLine("constante");  CurrentSemanticValue.expression = ValueStack[ValueStack.Depth-1].constante; }
         break;
       case 27: // var -> ID
-{ Console.WriteLine("var :" +ValueStack[ValueStack.Depth-1].String ); CurrentSemanticValue.variable = new VariableId(ValueStack[ValueStack.Depth-1].String); }
+{ CurrentLocationSpan = LocationStack[LocationStack.Depth-1]; CurrentSemanticValue.variable = new VariableId(ValueStack[ValueStack.Depth-1].String); }
         break;
       case 28: // constante -> INTEGER
 { Console.WriteLine("int :" + ValueStack[ValueStack.Depth-1].Integer ); CurrentSemanticValue.constante = new VariableInteger(ValueStack[ValueStack.Depth-1].Integer);}

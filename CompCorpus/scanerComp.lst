@@ -4,13 +4,14 @@
 // ==========================================================================
 //  Version:  1.2.2
 //  Machine:  FIDF3675368
-//  DateTime: 09/06/2017 09:59:55
+//  DateTime: 12/06/2017 10:23:14
 //  UserName: j.folleas
 // ==========================================================================
 
 
 // appel des using avec le % pour les bout de code driect en C#
 
+%using QUT.Gppg;
 
 %namespace Analyser
 
@@ -40,12 +41,15 @@ Integer [0-9]+
 Float [0-9]+,[0-9]+
 CharString \"(\\.|[^\\"])*\"
 
-DeadWord	(\w)+
+DeadWord	[^ \t\n${}()+-/*(&&)(||)!(==)(<=)(<)(>=)(>)(:=);]+
 
 %%
 
 [ \r\t]			{ /*ignore*/ }
-"\n"			{ currentLine++; }
+"\n"			{ currentLine++; Console.WriteLine(currentLine); yylloc = new LexLocation(tokLin+1,tokCol+1,tokELin,tokECol; }
+// Error: Missing matching construct <')'> 
+// Error: Parser error <Syntax error, unexpected }> 
+// -------------------------------------------------
 //
 // Start of Rules
 //
@@ -84,17 +88,11 @@ DeadWord	(\w)+
 
 
 {Integer}              { Int64.TryParse (yytext, NumberStyles.Integer, CultureInfo.CurrentCulture, out yylval.Integer);  return (int)Tokens.INTEGER;}
-{Float}                {double.TryParse (yytext, NumberStyles.Float, CultureInfo.CurrentCulture, out yylval.Float); Console.WriteLine("LEX: " + yytext); return (int)Tokens.FLOAT;}
+{Float}                {double.TryParse (yytext, NumberStyles.Float, CultureInfo.CurrentCulture, out yylval.Float); return (int)Tokens.FLOAT;}
 {CharString}           {yylval.String = yytext; return (int)Tokens.STRING;}
 {Identifier}           {yylval.String = yytext; return (int)Tokens.ID;}
-//^^^^^^^^^^
-// Warning: This pattern always overrides "{DeadWord}" 
-// ----------------------------------------------------
 
-{DeadWord}				{yylval.String = yytext; Console.WriteLine("DW space: "+yytext); return (int)Tokens.DEADWORD;}
-//^^^^^^^^
-// Warning: This pattern always overridden by "{Identifier}" 
-// ----------------------------------------------------------
+{DeadWord}				{yylval.String = yytext; return (int)Tokens.DEADWORD;}
 
 
 %% //User-code Section// ==========================================================================

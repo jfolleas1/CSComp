@@ -1,5 +1,6 @@
 // appel des using avec le % pour les bout de code driect en C#
 
+%using QUT.Gppg;
 
 %namespace Analyser
 
@@ -33,8 +34,8 @@ DeadWord	[^ \t\n${}()+-/*(&&)(||)!(==)(<=)(<)(>=)(>)(:=);]+
 
 %%
 
-[ \r\t]			{ /*ignore*/ }
-"\n"			{ currentLine++; }
+[ \n\r\t]			{ /*ignore*/ yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); }
+
 //
 // Start of Rules
 //
@@ -42,42 +43,42 @@ DeadWord	[^ \t\n${}()+-/*(&&)(||)!(==)(<=)(<)(>=)(>)(:=);]+
 %{ //user-code that will be executed before getting the next token
 %}
 
-"$Titre"				{return (int)Tokens.TITREACTEKW;}
-"$true"                 {return (int)Tokens.TRUE; }
-"$false"                {return (int)Tokens.FALSE;}
-"$dollar"				{return (int)Tokens.DOLLAR;}
+"$Titre"				{yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.TITREACTEKW;}
+"$true"                 {yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.TRUE; }
+"$false"                {yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.FALSE;}
+"$dollar"				{yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.DOLLAR;}
 
-"+"                     {return (int)Tokens.PLUS;}
-"-"                     {return (int)Tokens.MINUS;}
-"/"                     {return (int)Tokens.DIV;}
-"*"                     {return (int)Tokens.MUL;}
+"+"                     {yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.PLUS;}
+"-"                     {yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.MINUS;}
+"/"                     {yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.DIV;}
+"*"                     {yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.MUL;}
 
-"("						{return (int)Tokens.PARENTOPEN;}
-")"						{return (int)Tokens.PARENTCLOSE;}
-"{"						{return (int)Tokens.BRACEOPEN;}
-"}"						{return (int)Tokens.BRACECLOSE;}
+"("						{yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.PARENTOPEN;}
+")"						{yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.PARENTCLOSE;}
+"{"						{yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.BRACEOPEN;}
+"}"						{yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.BRACECLOSE;}
 
-"&&"                    {return (int)Tokens.AND;}
-"||"                    {return (int)Tokens.OR;}
-"!"                     {return (int)Tokens.NOT;}
-"=="                    {return (int)Tokens.EGALE;}
-"<"                     {return (int)Tokens.INF;}
-"<="                    {return (int)Tokens.INFEGALE;}
-">"                     {return (int)Tokens.SUP;}
-">="                    {return (int)Tokens.SUPEGALE;}
+"&&"                    {yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.AND;}
+"||"                    {yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.OR;}
+"!"                     {yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.NOT;}
+"=="                    {yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.EGALE;}
+"<"                     {yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.INF;}
+"<="                    {yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.INFEGALE;}
+">"                     {yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.SUP;}
+">="                    {yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.SUPEGALE;}
 
-":="					{return (int)Tokens.ASSIGN;}
+":="					{yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.ASSIGN;}
 
-";"						{return (int)Tokens.SEMICOLON; }
+";"						{yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.SEMICOLON; }
 
 
 
-{Integer}              { Int64.TryParse (yytext, NumberStyles.Integer, CultureInfo.CurrentCulture, out yylval.Integer);  return (int)Tokens.INTEGER;}
-{Float}                {double.TryParse (yytext, NumberStyles.Float, CultureInfo.CurrentCulture, out yylval.Float); Console.WriteLine("LEX: " + yytext); return (int)Tokens.FLOAT;}
-{CharString}           {yylval.String = yytext; return (int)Tokens.STRING;}
-{Identifier}           {yylval.String = yytext; return (int)Tokens.ID;}
+{Integer}              {yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol);  Int64.TryParse (yytext, NumberStyles.Integer, CultureInfo.CurrentCulture, out yylval.Integer);  return (int)Tokens.INTEGER;}
+{Float}                {yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); double.TryParse (yytext, NumberStyles.Float, CultureInfo.CurrentCulture, out yylval.Float); return (int)Tokens.FLOAT;}
+{CharString}           {yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); yylval.String = yytext; return (int)Tokens.STRING;}
+{Identifier}           {yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); yylval.String = yytext; return (int)Tokens.ID;}
 
-{DeadWord}				{yylval.String = yytext; Console.WriteLine("DW space: "+yytext); return (int)Tokens.DEADWORD;}
+{DeadWord}				{yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); yylval.String = yytext; return (int)Tokens.DEADWORD;}
 
 
 %% //User-code Section

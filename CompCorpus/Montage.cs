@@ -6,9 +6,56 @@ namespace RunTime
 {
     public class Montage
     {
-        public string nameOfTheMontage { get;  }
-        public List<Affectation> listOfCalculExpressions { get; }
+        public Dictionary<string, string> symboleTabe { get; set; }
+        public string nameOfTheMontage { get; set; }
+        public List<Affectation> listOfCalculExpressions { get; set; }
 
+
+        public void AddSymboleFromFile(string filename)
+        {
+            Console.WriteLine("AddSymboleFromFile");
+            try
+            {   // Open the text file using a stream reader.
+                using (StreamReader sr = new StreamReader(filename))
+                {
+                    // Read the stream to a string, and write the string to the console.
+                    string line;
+                    while ((line = sr.ReadLine()) != null)
+                    {
+                        String[] substrings = line.Split(' ');
+                        if (substrings.Length == 2)
+                        {
+                            symboleTabe.Add(substrings[0], substrings[1]);
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("The file could not be read:");
+                Console.WriteLine(e.Message);
+            }
+        }
+
+        public bool IsInSymboleTable(string symbole, int line, int column)
+        {
+            if (!symboleTabe.ContainsKey(symbole))
+            {
+                Console.WriteLine("La variable " + symbole +"à la ligne "+ line + " et colonne " + column+ " n'est pas définie.");
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        public Montage()
+        {
+            listOfCalculExpressions = new List<Affectation>();
+            nameOfTheMontage = "";
+            symboleTabe = new Dictionary<string, string>();
+        }
 
         public Montage(string name, List<Affectation> myListOfCalculExpressions)
         {

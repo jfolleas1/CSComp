@@ -1,27 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.IO;
 using System.Text;
 using System.Threading.Tasks;
-using System.IO;
 using Analyser;
 using RunTime;
 
-
-namespace CompCorpus
+namespace UnitTest
 {
-   
-    public static class Program
+    class MainTest
     {
-
-        static public void Main(string[] args)
+        static public void TestMain(string[] args)
         {
-            if (args.Length == 4)
+            if (args.Length == 3)
             {
                 string sourceFileName = args[0];
                 string targetFilehtmlName = args[1];
                 string targetFileJSName = args[2];
-                string dataStructurePath = args[3];
 
                 FileStream file = null;
                 Scanner scn = null;
@@ -31,21 +26,13 @@ namespace CompCorpus
                 try
                 {
                     file = new FileStream(sourceFileName, FileMode.Open);
-                    Console.WriteLine(file.Name);
                     scn = new Scanner(file);
                     parser = new Parser(scn);
-                    //parser.program = new Montage();
-                    parser.montage.AddSymboleFromFile(dataStructurePath);
-
                     parser.Parse();
 
                     montage = parser.montage;
-                    Console.WriteLine("FIN DE LECTURE DU CODE ");
-                    Console.WriteLine();
-
                     if (montage != null)
                     {
-                        montage.PrintFutureFiles();
                         montage.WriteInFiles(targetFilehtmlName, targetFileJSName);
                     }
 
@@ -59,7 +46,6 @@ namespace CompCorpus
                     file.Close();
                 }
             }
-            Console.ReadLine();
         }
     }
 }

@@ -1,12 +1,13 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
-using CompCorpus;
+
 
 
 
 namespace UnitTest
 {
+
     [TestClass]
     public class TestOnExpressions
     {
@@ -24,7 +25,7 @@ namespace UnitTest
             string resJSFilePath = @"C:\Users\j.folleas\Desktop\Tests\res\" + fileName + ".js";
             string[] args = { srcFilePath, trgHtmlFilePath, trgJSFilePath };
             
-            Program.TestMain(args);
+            MainTest.TestMain(args);
             try
             {   // Open the text file using a stream reader.
                 String linetrgHtml;
