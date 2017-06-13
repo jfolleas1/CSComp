@@ -63,7 +63,7 @@ namespace UnitTest
             }
 
 
-            Assert.AreEqual(sameFiles, true);
+            Assert.AreEqual(true, sameFiles);
         }
     }
 }

@@ -145,6 +145,28 @@ namespace RunTime
 
         }
 
+
+        public string DataFromFile(string filename)
+        {
+            Console.WriteLine("AddDataFromFile");
+            string text = "";
+            try
+            {   // Open the text file using a stream reader.
+                using (StreamReader sr = new StreamReader(filename))
+                {
+                    // Read the stream to a string, and write the string to the console
+                    text = sr.ReadToEnd();
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("The file could not be read:");
+                Console.WriteLine(e.Message);
+            }
+            return text;
+        }
+
+
         public void WriteInFiles( string targetFilehtmlName, string targetFileJSName)
         {
 
@@ -199,6 +221,10 @@ namespace RunTime
                 string beginOfTheJSDoc = "var app = angular.module('myActe', []);\n" +
                                     "app.controller('myCtrl', function($scope) { \n\n";
                 myStreamWriter.Write(beginOfTheJSDoc);
+
+                //write the declaration of variables in data base
+                string varInDataBaseDec = DataFromFile(@"C:\Users\j.folleas\Desktop\settings\DataBase.txt");
+                myStreamWriter.Write(varInDataBaseDec+"\n\n\n");
 
                 //add the differents expressions in functions
                 foreach (Affectation aff in listOfCalculExpressions)

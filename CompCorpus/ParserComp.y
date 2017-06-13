@@ -39,6 +39,7 @@
 
 %token SEMICOLON
 
+%token SEPARATOR
 
 %token <String> ID
 %token <String> STRING
@@ -56,6 +57,9 @@
 %type<listAffectation> listAffectation
 %type<String> defActeTitle
 %type<String> deadText
+%type<String> declaredVariableName
+%type<String> declaredVariableType
+
 // Priority
 
 %left AND OR 
@@ -65,12 +69,13 @@
 
 %left PLUS MINUS
 %left DIV MUL
+%left ID
 
 
 %% // Grammar rules section
 
-montage		:	 /*nothing*/		{ Console.WriteLine("montage vide "); }
-			|	defActeTitle listAffectation		{  montage.nameOfTheMontage=$1; montage.listOfCalculExpressions=$2; }
+montage		:	  /*Empty*/													{ Console.WriteLine(" Empty programe "); }
+			|	defActeTitle listDeclaration SEPARATOR listAffectation		{  montage.nameOfTheMontage=$1; montage.listOfCalculExpressions=$4; }
 			;
 
 defActeTitle	:	TITREACTEKW BRACEOPEN deadText BRACECLOSE		{ $$ = $3; }
@@ -82,7 +87,22 @@ deadText		:	DEADWORD						{ $$ = $1; }
 				|	deadText ID						{ $$ = $1 + " " + $2; }
 				;
 
-listAffectation :	affectation						{ $$ = new List<Affectation>(); $$.Add($1);  }
+listDeclaration :	/*Empty*/						{ Console.WriteLine("Empty Dec");  }
+				|   listDeclaration declaration		{ Console.WriteLine("declaration");  }
+				;
+
+declaration		:	declaredVariableName  declaredVariableType SEMICOLON				{Console.WriteLine(" DEC :" + $1 + " " + $2 + " ;"); }
+				;
+
+declaredVariableName	:	ID		{ $$ = $1; }
+						;
+
+declaredVariableType	:	ID		{ $$ = $1; }
+						;
+
+							
+
+listAffectation :	/*Empty*/						{ $$ = new List<Affectation>();  }
 				|   listAffectation affectation		{ $$=$1; $$.Add($2);  }
 				;
 
