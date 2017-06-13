@@ -47,13 +47,14 @@ namespace RunTime
             symboleTabe.Add(varName, typeString);
         }
 
+        public void AddSymbole(Affectation aff)
+        {
+           AddSymbole(aff.variableName.name, ("L"+aff.expression.dataType.ToString()));
+        }
+
         public void AddSymbole(Declaration dec )
         {
-            if (symboleTabe.ContainsKey(dec.name))
-            {
-                symboleTabe.Remove(dec.name);
-            }
-            symboleTabe.Add(dec.name, dec.type.ToString());
+            AddSymbole(dec.name, dec.type.ToString());
         }
 
         public bool IsValideTypeString(string typeString, int line, int column)
