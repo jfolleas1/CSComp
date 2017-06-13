@@ -95,7 +95,7 @@ listDeclaration :	/*Empty*/						{ $$ = new List<Declaration>(); }
 				|   listDeclaration declaration		{ $$=$1; $$.Add($2); }
 				;
 
-declaration		:	declaredVariableName  declaredVariableType SEMICOLON				{ $$ = new Declaration($1, $2); montage.IsValideTypeString($2,@2.StartLine, @2.StartColumn); }
+declaration		:	declaredVariableName  declaredVariableType SEMICOLON				{ $$ = new Declaration($1, $2); montage.IsValideTypeString($2,@2.StartLine, @2.StartColumn); montage.AddSymbole($$); }
 				;
 
 declaredVariableName	:	ID		{ $$ = $1; }

@@ -47,6 +47,15 @@ namespace RunTime
             symboleTabe.Add(varName, typeString);
         }
 
+        public void AddSymbole(Declaration dec )
+        {
+            if (symboleTabe.ContainsKey(dec.name))
+            {
+                symboleTabe.Remove(dec.name);
+            }
+            symboleTabe.Add(dec.name, dec.type.ToString());
+        }
+
         public bool IsValideTypeString(string typeString, int line, int column)
         {
             ExpressionType type;
