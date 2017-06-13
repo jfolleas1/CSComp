@@ -110,7 +110,7 @@ listAffectation :	/*Empty*/						{ $$ = new List<Affectation>();  }
 				|   listAffectation affectation		{ $$=$1; $$.Add($2);  }
 				;
 
-affectation	:		var ASSIGN expression SEMICOLON				{ $$ = new Affectation($1, $3); $3.CheckValidity(@1.StartLine); montage.AddSymbole($$);  }
+affectation	:		var ASSIGN expression SEMICOLON				{ $$ = new Affectation($1, $3); $3.CheckValidity(@1.StartLine); montage.CheckAffectationIsValid($3.dataType, $1.name ,@1.StartLine);  montage.AddSymbole($$);  }
 					;
 
 expression  :       expression PLUS expression			{ /*Console.WriteLine("PLUS");*/	$$ = new Expression(ExpressionSymbole.PLUS, $1, $3); }

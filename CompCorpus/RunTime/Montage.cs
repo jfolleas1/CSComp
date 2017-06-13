@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using CompCorpus.RunTime.error;
 
 namespace RunTime
 {
@@ -10,6 +11,18 @@ namespace RunTime
         public string nameOfTheMontage { get; set; }
         public List<Affectation> listOfCalculExpressions { get; set; }
         public List<Declaration> listOfDeclarations { get; set; }
+        public List<Error> errorList { get; }
+
+
+        public Montage()
+        {
+            listOfCalculExpressions = new List<Affectation>();
+            listOfDeclarations = new List<Declaration>();
+            nameOfTheMontage = "";
+            symboleTabe = new Dictionary<string, string>();
+            errorList = new List<Error>();
+
+        }
 
 
         public void AddSymboleFromFile(string filename)
@@ -62,13 +75,41 @@ namespace RunTime
             ExpressionType type;
             if (!Enum.TryParse(typeString, out type) || (type == ExpressionType.INVALIDE))
             {
-                Console.WriteLine("ERREUR : La type " + typeString + " à la ligne " +
-                        line + " et colonne " + column + " n'est pas un type valide.");
+                errorList.Add(new Error(ErrorType.INVALIDE_TYPE, typeString, line, column));
                 return false;
             }
             else
             {
                 return true;
+            }
+        }
+
+        public bool IsInSymboleTable(string symbole, int line, int column)
+        {
+            if (!symboleTabe.ContainsKey(symbole))
+            {
+                errorList.Add(new Error(ErrorType.UNKNOW_VARIABLE, symbole, line, column));
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        public void CheckAffectationIsValid(ExpressionType type, string symbole, int line)
+        {
+            if (type == ExpressionType.INVALIDE)
+            {
+                errorList.Add(new Error(ErrorType.INVALIDE_OPERATION, symbole, line, 0));
+            }
+        }
+
+        public void PrintErrors()
+        {
+            foreach (Error err in errorList)
+            {
+                Console.WriteLine(err.GetMessage());
             }
         }
 
@@ -80,33 +121,7 @@ namespace RunTime
             return value;
         }
 
-        public bool IsInSymboleTable(string symbole, int line, int column)
-        {
-            if (!symboleTabe.ContainsKey(symbole))
-            {
-                Console.WriteLine("ERREUR : La variable " + symbole +" à la ligne "+ line + " et colonne " + column+ " n'est pas définie.");
-                return false;
-            }
-            else
-            {
-                return true;
-            }
-        }
-
-        public Montage()
-        {
-            listOfCalculExpressions = new List<Affectation>();
-            listOfDeclarations = new List<Declaration>();
-            nameOfTheMontage = "";
-            symboleTabe = new Dictionary<string, string>();
-        }
-
-        public Montage(string name, List<Affectation> myListOfCalculExpressions, List<Declaration> myListOfDeclarations)
-        {
-            listOfCalculExpressions = myListOfCalculExpressions;
-            listOfDeclarations = myListOfDeclarations;
-            nameOfTheMontage = name;
-        }
+        
 
         public static string GetLocalFileName(string fileName)
         {
