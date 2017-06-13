@@ -1,25 +1,26 @@
 
 // ==========================================================================
-//  GPPG error listing for yacc source file <ParserComp.y - 09/06/2017 10:47:53>
+//  GPPG error listing for yacc source file <ParserComp.y - 13/06/2017 14:15:55>
 // ==========================================================================
 //  Version:  1.5.2
 //  Machine:  FIDF3675368
-//  DateTime: 09/06/2017 10:48:10
+//  DateTime: 13/06/2017 14:16:48
 //  UserName: j.folleas
 // ==========================================================================
 
 
 %using RunTime;
 
-%namespace Analyser
-%output=ParserComp.cs
+%namespace Analyzer
+%output=Analyzer\ParserComp.cs
 
 %{
     
-    public Montage program = null;
+    public Montage montage = new Montage();
+
 %}
 
-%start program
+%start montage
 
 %union {
         public string String;
@@ -29,6 +30,8 @@
 		public AbstractExpression expression;
 		public Variable constante;
 		public VariableId variable ;
+		public Declaration declaration ;
+		public List<Declaration> listDeclaration ;
 		public List<Affectation> listAffectation ;
 }
 
@@ -49,6 +52,7 @@
 
 %token SEMICOLON
 
+%token SEPARATOR
 
 %token <String> ID
 %token <String> STRING
@@ -58,7 +62,7 @@
 
 //types
 
-%type<expression> program
+%type<expression> montage
 %type<affectation> affectation
 %type<expression> expression
 %type<constante> constante
@@ -66,6 +70,14 @@
 %type<listAffectation> listAffectation
 %type<String> defActeTitle
 %type<String> deadText
+%type<String> declaredVariableName
+%type<String> declaredVariableType
+%type<declaration> declaration
+%type<listDeclaration> listDeclaration;
+//-----------------------------------^^
+// Error: Bad separator character in list
+// --------------------------------------
+
 // Priority
 
 %left AND OR 
@@ -75,16 +87,13 @@
 
 %left PLUS MINUS
 %left DIV MUL
+%left ID
 
 
 %% // Grammar rules section
 
-program		:	 /*nothing*/		{ Console.WriteLine(programme vide "); }
-//-----------------------^---------------------------------
-// Error: Position of unmatched brace
-// Error: Literal string terminated by EOL
-// ---------------------------------------
-			|	defActeTitle listAffectation		{ Console.WriteLine("listAffectation");  program = new Montage($1,$2); }
+montage		:	  /*Empty*/													{ Console.WriteLine(" Empty programe "); }
+			|	defActeTitle listDeclaration SEPARATOR listAffectation		{  montage.nameOfTheMontage=$1; montage.listOfCalculExpressions=$4; }
 			;
 
 defActeTitle	:	TITREACTEKW BRACEOPEN deadText BRACECLOSE		{ $$ = $3; }
@@ -96,51 +105,57 @@ deadText		:	DEADWORD						{ $$ = $1; }
 				|	deadText ID						{ $$ = $1 + " " + $2; }
 				;
 
-listAffectation :	affectation						{ $$ = new List<Affectation>(); $$.Add($1); Console.WriteLine("Affectation du bout"); }
-				|   listAffectation affectation		{ $$=$1; $$.Add($2); Console.WriteLine(" liste Affectation "); }
+listDeclaration :	/*Empty*/						{ $$ = new List<Affectation>();  }
+				|   listDeclaration declaration		{  $$=$1; $$.Add($2);  }
 				;
 
-affectation	:		var ASSIGN expression SEMICOLON				{  Console.WriteLine("affection") ; $$ = new Affectation($1, $3); }
+declaration		:	declaredVariableName  declaredVariableType SEMICOLON				{ $$ = new Declaration($1, $2); Console.WriteLine("DEC :::  "+$$.Write()); }
+				;
+
+declaredVariableName	:	ID		{ $$ = $1; }
+						;
+
+declaredVariableType	:	ID		{ $$ = $1; }
+						;
+
+							
+
+listAffectation :	/*Empty*/						{ $$ = new List<Affectation>();  }
+				|   listAffectation affectation		{ $$=$1; $$.Add($2);  }
+				;
+
+affectation	:		var ASSIGN expression SEMICOLON				{ $3.CheckValidity(@1.StartLine); montage.AddSymbole($1.name, ("L" + $3.dataType.ToString())); $$ = new Affectation($1, $3); }
 					;
 
-expression  :       expression PLUS expression			{ Console.WriteLine("PLUS"); $$ = new Expression(ExpressionSymbole.PLUS, $1, $3); }
-            |       expression MUL expression			{ Console.WriteLine("MUL"); $$ = new Expression(ExpressionSymbole.MUL, $1, $3);}
-            |       expression DIV expression			{ Console.WriteLine("DIV"); $$ = new Expression(ExpressionSymbole.DIV, $1, $3); }
-            |       expression MINUS expression			{ Console.WriteLine("MINUS"); $$ = new Expression(ExpressionSymbole.MINUS, $1, $3); }
-			|       expression AND expression			{ Console.WriteLine("AND"); $$ = new Expression(ExpressionSymbole.AND, $1, $3); }
-            |       expression OR expression			{ Console.WriteLine("OR"); $$ = new Expression(ExpressionSymbole.OR, $1, $3); }
-            |       NOT expression						{ Console.WriteLine("NOT");$$ = new Expression(ExpressionSymbole.NOT, $2); }
-            |       expression EGALE expression			{ Console.WriteLine("EGALE");$$ = new Expression(ExpressionSymbole.EGALE, $1, $3); }
-            |       expression INF expression			{ Console.WriteLine("INF");$$ = new Expression(ExpressionSymbole.INF, $1, $3); }
-            |       expression INFEGALE expression		{ Console.WriteLine("INFEGALE");$$ = new Expression(ExpressionSymbole.INFEGALE, $1, $3); }
-            |       expression SUP expression			{ Console.WriteLine("SUP");$$ = new Expression(ExpressionSymbole.SUP, $1, $3); }
-            |       expression SUPEGALE expression		{ Console.WriteLine("SUPEGALE");$$ = new Expression(ExpressionSymbole.SUPEGALE, $1, $3); }
-			|		PARENTOPEN expression PARENTCLOSE	{ Console.WriteLine("PARENT"); $$ = new Expression(ExpressionSymbole.PARENT, $2); }
-            |       var									{ Console.WriteLine("var"); $$ = $1; }
-            |       constante							{ Console.WriteLine("constante");  $$ = $1; }
+expression  :       expression PLUS expression			{ /*Console.WriteLine("PLUS");*/	$$ = new Expression(ExpressionSymbole.PLUS, $1, $3); }
+            |       expression MUL expression			{ /*Console.WriteLine("MUL");*/		$$ = new Expression(ExpressionSymbole.MUL, $1, $3);}
+            |       expression DIV expression			{ /*Console.WriteLine("DIV");*/		$$ = new Expression(ExpressionSymbole.DIV, $1, $3); }
+            |       expression MINUS expression			{ /*Console.WriteLine("MINUS");*/	$$ = new Expression(ExpressionSymbole.MINUS, $1, $3); }
+			|       expression AND expression			{ /*Console.WriteLine("AND");*/		$$ = new Expression(ExpressionSymbole.AND, $1, $3); }
+            |       expression OR expression			{ /*Console.WriteLine("OR");*/		$$ = new Expression(ExpressionSymbole.OR, $1, $3); }
+            |       NOT expression						{ /*Console.WriteLine("NOT");*/		$$ = new Expression(ExpressionSymbole.NOT, $2); }
+            |       expression EGALE expression			{ /*Console.WriteLine("EGALE");*/	$$ = new Expression(ExpressionSymbole.EGALE, $1, $3); }
+            |       expression INF expression			{ /*Console.WriteLine("INF");*/		$$ = new Expression(ExpressionSymbole.INF, $1, $3); }
+            |       expression INFEGALE expression		{ /*Console.WriteLine("INFEGALE");*/ $$ = new Expression(ExpressionSymbole.INFEGALE, $1, $3); }
+            |       expression SUP expression			{ /*Console.WriteLine("SUP");*/		$$ = new Expression(ExpressionSymbole.SUP, $1, $3); }
+            |       expression SUPEGALE expression		{ /*Console.WriteLine("SUPEGALE");*/ $$ = new Expression(ExpressionSymbole.SUPEGALE, $1, $3); }
+			|		PARENTOPEN expression PARENTCLOSE	{ /*Console.WriteLine("PARENT");*/	$$ = new Expression(ExpressionSymbole.PARENT, $2); }
+            |       var									{ /*Console.WriteLine("var :" +$1 );*/ montage.IsInSymboleTable($1.name, @1.StartLine, @1.StartColumn ); $$ = $1; }
+            |       constante							{ /*Console.WriteLine("constante");*/  $$ = $1; }
             ;
 
-var     :   ID      { Console.WriteLine("var :" +$1 ); $$ = new VariableId($1); }
+var     :   ID      { @$ = @1; $$ = new VariableId($1, montage.GetVarTypeString($1)); }
         ;
 
-constante   :   INTEGER		{ Console.WriteLine("int :" + $1 ); $$ = new VariableInteger($1);}
-			|	FLOAT		{ Console.WriteLine("float :" + $1 ); $$ = new VariableFloat($1);}
-			|	STRING		{ Console.WriteLine("string :" + $1 ); $$ = new VariableString($1);}
+constante   :   INTEGER		{ @$ = @1; /*Console.WriteLine("int :" + $1 );*/		$$ = new VariableInteger($1);}
+			|	FLOAT		{ @$ = @1; /*Console.WriteLine("float :" + $1 );*/		$$ = new VariableFloat($1);}
+			|	STRING		{ @$ = @1; /*Console.WriteLine("string :" + $1 );*/		$$ = new VariableString($1);}
             ;
 
 %%
-// Error: Premature termination of Code Block
-// Error: Syntax error, unexpected %%, expecting codeEnd, or error
-// ---------------------------------------------------------------
 
 // No argument CTOR. By deafult Parser's ctor requires scanner as param.
 public Parser(Scanner scn) : base(scn) {}
-//----------^^----------^^------^^--^^
-// Error: This character is invalid in this context
-// Error: This character is invalid in this context
-// Error: This character is invalid in this context
-// Error: This character is invalid in this context
-// ------------------------------------------------
 
 // ==========================================================================
 

@@ -2,7 +2,7 @@
 
 %using QUT.Gppg;
 
-%namespace Analyser
+%namespace Analyzer
 
 %option stack, minimize, parser, verbose, persistbuffer, unicode, compressNext, embedbuffers
 

@@ -33,7 +33,7 @@ namespace RunTime
             myAffectationString += this.variableName.name;
             myAffectationString += " = function() \n { \n \t return ";
             myAffectationString += this.expression.Write();
-            myAffectationString += "; \n } \n\n";
+            myAffectationString += "; \n }";
             return myAffectationString;
         }
 

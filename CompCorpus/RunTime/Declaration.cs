@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace RunTime
 {
     
-    class Declaration
+    public class Declaration
     {
         public string name { get; }
         public ExpressionType type { get; }
@@ -21,12 +21,14 @@ namespace RunTime
         private ExpressionType GetTypeFromString(string typeString)
         {
             ExpressionType myType = ExpressionType.INVALIDE;
-            if (!Enum.TryParse(typeString, out myType))
-            {
-                Console.WriteLine("message d'erreru pour invalide type a le declaration");
-            }
-   
+            if(!Enum.TryParse(typeString, out myType))
+                myType = ExpressionType.INVALIDE;
             return myType;
+        }
+
+        public string Write()
+        {
+            return "$scope."+name+"; // de type : "+type.ToString();
         }
     }
 }

@@ -1,7 +1,7 @@
 %using RunTime;
 
-%namespace Analyser
-%output=ParserComp.cs
+%namespace Analyzer
+%output=Analyzer\ParserComp.cs
 
 %{
     
@@ -19,6 +19,8 @@
 		public AbstractExpression expression;
 		public Variable constante;
 		public VariableId variable ;
+		public Declaration declaration ;
+		public List<Declaration> listDeclaration ;
 		public List<Affectation> listAffectation ;
 }
 
@@ -59,6 +61,8 @@
 %type<String> deadText
 %type<String> declaredVariableName
 %type<String> declaredVariableType
+%type<declaration> declaration
+%type<listDeclaration> listDeclaration
 
 // Priority
 
@@ -75,7 +79,7 @@
 %% // Grammar rules section
 
 montage		:	  /*Empty*/													{ Console.WriteLine(" Empty programe "); }
-			|	defActeTitle listDeclaration SEPARATOR listAffectation		{  montage.nameOfTheMontage=$1; montage.listOfCalculExpressions=$4; }
+			|	defActeTitle listDeclaration SEPARATOR listAffectation		{  montage.nameOfTheMontage=$1; montage.listOfDeclarations=$2; montage.listOfCalculExpressions=$4;  }
 			;
 
 defActeTitle	:	TITREACTEKW BRACEOPEN deadText BRACECLOSE		{ $$ = $3; }
@@ -87,11 +91,11 @@ deadText		:	DEADWORD						{ $$ = $1; }
 				|	deadText ID						{ $$ = $1 + " " + $2; }
 				;
 
-listDeclaration :	/*Empty*/						{ Console.WriteLine("Empty Dec");  }
-				|   listDeclaration declaration		{ Console.WriteLine("declaration");  }
+listDeclaration :	/*Empty*/						{ $$ = new List<Declaration>(); }
+				|   listDeclaration declaration		{ $$=$1; $$.Add($2); }
 				;
 
-declaration		:	declaredVariableName  declaredVariableType SEMICOLON				{Console.WriteLine(" DEC :" + $1 + " " + $2 + " ;"); }
+declaration		:	declaredVariableName  declaredVariableType SEMICOLON				{ $$ = new Declaration($1, $2); Console.WriteLine("DEC :::  "+$$.Write()); }
 				;
 
 declaredVariableName	:	ID		{ $$ = $1; }

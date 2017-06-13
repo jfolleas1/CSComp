@@ -9,6 +9,7 @@ namespace RunTime
         public Dictionary<string, string> symboleTabe { get; set; }
         public string nameOfTheMontage { get; set; }
         public List<Affectation> listOfCalculExpressions { get; set; }
+        public List<Declaration> listOfDeclarations { get; set; }
 
 
         public void AddSymboleFromFile(string filename)
@@ -70,13 +71,15 @@ namespace RunTime
         public Montage()
         {
             listOfCalculExpressions = new List<Affectation>();
+            listOfDeclarations = new List<Declaration>();
             nameOfTheMontage = "";
             symboleTabe = new Dictionary<string, string>();
         }
 
-        public Montage(string name, List<Affectation> myListOfCalculExpressions)
+        public Montage(string name, List<Affectation> myListOfCalculExpressions, List<Declaration> myListOfDeclarations)
         {
             listOfCalculExpressions = myListOfCalculExpressions;
+            listOfDeclarations = myListOfDeclarations;
             nameOfTheMontage = name;
         }
 
@@ -226,10 +229,19 @@ namespace RunTime
                 string varInDataBaseDec = DataFromFile(@"C:\Users\j.folleas\Desktop\settings\DataBase.txt");
                 myStreamWriter.Write(varInDataBaseDec+"\n\n\n");
 
+
+                //add the differents declarations
+                foreach (Declaration dec in listOfDeclarations)
+                {
+                    myStreamWriter.Write(dec.Write());
+                    myStreamWriter.Write(" \n\n");
+                }
+
                 //add the differents expressions in functions
                 foreach (Affectation aff in listOfCalculExpressions)
                 {
                     myStreamWriter.Write(aff.Write());
+                    myStreamWriter.Write(" \n\n");
                 }
 
 

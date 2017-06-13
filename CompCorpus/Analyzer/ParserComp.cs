@@ -4,9 +4,9 @@
 
 // GPPG version 1.5.2
 // Machine:  FIDF3675368
-// DateTime: 13/06/2017 09:28:05
+// DateTime: 13/06/2017 14:25:13
 // UserName: j.folleas
-// Input file <ParserComp.y - 13/06/2017 09:24:08>
+// Input file <ParserComp.y - 13/06/2017 14:25:09>
 
 // options: no-lines gplex
 
@@ -18,7 +18,7 @@ using System.Text;
 using QUT.Gppg;
 using RunTime;
 
-namespace Analyser
+namespace Analyzer
 {
 public enum Tokens {error=2,EOF=3,TITREACTEKW=4,TRUE=5,FALSE=6,
     DOLLAR=7,PLUS=8,MINUS=9,MUL=10,DIV=11,PARENTOPEN=12,
@@ -36,6 +36,8 @@ public struct ValueType
 		public AbstractExpression expression;
 		public Variable constante;
 		public VariableId variable ;
+		public Declaration declaration ;
+		public List<Declaration> listDeclaration ;
 		public List<Affectation> listAffectation ;
 }
 // Abstract base class for GPLEX scanners
@@ -60,11 +62,11 @@ public class ScanObj {
 [GeneratedCodeAttribute( "Gardens Point Parser Generator", "1.5.2")]
 public class Parser: ShiftReduceParser<ValueType, LexLocation>
 {
-  // Verbatim content from ParserComp.y - 13/06/2017 09:24:08
+  // Verbatim content from ParserComp.y - 13/06/2017 14:25:09
     
     public Montage montage = new Montage();
 
-  // End verbatim content from ParserComp.y - 13/06/2017 09:24:08
+  // End verbatim content from ParserComp.y - 13/06/2017 14:25:09
 
 #pragma warning disable 649
   private static Dictionary<int, string> aliases;
@@ -74,14 +76,14 @@ public class Parser: ShiftReduceParser<ValueType, LexLocation>
   private static string[] nonTerms = new string[] {
       "montage", "affectation", "expression", "constante", "var", "listAffectation", 
       "defActeTitle", "deadText", "declaredVariableName", "declaredVariableType", 
-      "$accept", "listDeclaration", "declaration", };
+      "declaration", "listDeclaration", "$accept", };
 
   static Parser() {
     states[0] = new State(new int[]{4,51,3,-2},new int[]{-1,1,-7,3});
     states[1] = new State(new int[]{3,2});
     states[2] = new State(-1);
     states[3] = new State(-9,new int[]{-12,4});
-    states[4] = new State(new int[]{26,5,27,50},new int[]{-13,45,-9,46});
+    states[4] = new State(new int[]{26,5,27,50},new int[]{-11,45,-9,46});
     states[5] = new State(-14,new int[]{-6,6});
     states[6] = new State(new int[]{27,40,3,-3},new int[]{-2,7,-5,8});
     states[7] = new State(-15);
@@ -139,7 +141,7 @@ public class Parser: ShiftReduceParser<ValueType, LexLocation>
 
     for (int sNo = 0; sNo < states.Length; sNo++) states[sNo].number = sNo;
 
-    rules[1] = new Rule(-11, new int[]{-1,3});
+    rules[1] = new Rule(-13, new int[]{-1,3});
     rules[2] = new Rule(-1, new int[]{});
     rules[3] = new Rule(-1, new int[]{-7,-12,26,-6});
     rules[4] = new Rule(-7, new int[]{4,14,-8,15});
@@ -148,8 +150,8 @@ public class Parser: ShiftReduceParser<ValueType, LexLocation>
     rules[7] = new Rule(-8, new int[]{-8,31});
     rules[8] = new Rule(-8, new int[]{-8,27});
     rules[9] = new Rule(-12, new int[]{});
-    rules[10] = new Rule(-12, new int[]{-12,-13});
-    rules[11] = new Rule(-13, new int[]{-9,-10,25});
+    rules[10] = new Rule(-12, new int[]{-12,-11});
+    rules[11] = new Rule(-11, new int[]{-9,-10,25});
     rules[12] = new Rule(-9, new int[]{27});
     rules[13] = new Rule(-10, new int[]{27});
     rules[14] = new Rule(-6, new int[]{});
@@ -192,7 +194,7 @@ public class Parser: ShiftReduceParser<ValueType, LexLocation>
 { Console.WriteLine(" Empty programe "); }
         break;
       case 3: // montage -> defActeTitle, listDeclaration, SEPARATOR, listAffectation
-{  montage.nameOfTheMontage=ValueStack[ValueStack.Depth-4].String; montage.listOfCalculExpressions=ValueStack[ValueStack.Depth-1].listAffectation; }
+{  montage.nameOfTheMontage=ValueStack[ValueStack.Depth-4].String; montage.listOfDeclarations=ValueStack[ValueStack.Depth-3].listDeclaration; montage.listOfCalculExpressions=ValueStack[ValueStack.Depth-1].listAffectation;  }
         break;
       case 4: // defActeTitle -> TITREACTEKW, BRACEOPEN, deadText, BRACECLOSE
 { CurrentSemanticValue.String = ValueStack[ValueStack.Depth-2].String; }
@@ -210,13 +212,13 @@ public class Parser: ShiftReduceParser<ValueType, LexLocation>
 { CurrentSemanticValue.String = ValueStack[ValueStack.Depth-2].String + " " + ValueStack[ValueStack.Depth-1].String; }
         break;
       case 9: // listDeclaration -> /* empty */
-{ Console.WriteLine("Empty Dec");  }
+{ CurrentSemanticValue.listDeclaration = new List<Declaration>(); }
         break;
       case 10: // listDeclaration -> listDeclaration, declaration
-{ Console.WriteLine("declaration");  }
+{ CurrentSemanticValue.listDeclaration=ValueStack[ValueStack.Depth-2].listDeclaration; CurrentSemanticValue.listDeclaration.Add(ValueStack[ValueStack.Depth-1].declaration); }
         break;
       case 11: // declaration -> declaredVariableName, declaredVariableType, SEMICOLON
-{Console.WriteLine(" DEC :" + ValueStack[ValueStack.Depth-3].String + " " + ValueStack[ValueStack.Depth-2].String + " ;"); }
+{ CurrentSemanticValue.declaration = new Declaration(ValueStack[ValueStack.Depth-3].String, ValueStack[ValueStack.Depth-2].String); Console.WriteLine("DEC :::  "+CurrentSemanticValue.declaration.Write()); }
         break;
       case 12: // declaredVariableName -> ID
 { CurrentSemanticValue.String = ValueStack[ValueStack.Depth-1].String; }
