@@ -54,6 +54,7 @@ namespace CompCorpus
 
                         //montage.PrintFutureFiles();
                         montage.WriteInFiles(targetFilehtmlName, targetFileJSName);
+                        System.Diagnostics.Process.Start(targetFilehtmlName);
                     }
 
                 }
