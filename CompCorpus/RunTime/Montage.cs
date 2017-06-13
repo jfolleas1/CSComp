@@ -58,7 +58,7 @@ namespace RunTime
         {
             if (!symboleTabe.ContainsKey(symbole))
             {
-                Console.WriteLine("ERREUR : La variable " + symbole +"à la ligne "+ line + " et colonne " + column+ " n'est pas définie.");
+                Console.WriteLine("ERREUR : La variable " + symbole +" à la ligne "+ line + " et colonne " + column+ " n'est pas définie.");
                 return false;
             }
             else

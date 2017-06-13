@@ -44,15 +44,15 @@ namespace CompCorpus
 
                     if (montage != null)
                     {
-                        montage.Print();
-                        Console.WriteLine("///////////////////////////////////////////////////////");
-                        Console.WriteLine();
-                        Console.WriteLine();
-                        Console.WriteLine();
-                        Console.WriteLine();
-                        Console.WriteLine("///////////////////////////////////////////////////////");
+                        //montage.Print();
+                        //Console.WriteLine("///////////////////////////////////////////////////////");
+                        //Console.WriteLine();
+                        //Console.WriteLine();
+                        //Console.WriteLine();
+                        //Console.WriteLine();
+                        //Console.WriteLine("///////////////////////////////////////////////////////");
 
-                        montage.PrintFutureFiles();
+                        //montage.PrintFutureFiles();
                         montage.WriteInFiles(targetFilehtmlName, targetFileJSName);
                     }
 
