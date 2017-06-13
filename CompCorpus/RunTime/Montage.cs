@@ -38,13 +38,28 @@ namespace RunTime
             }
         }
 
-        public void AddSymbole(string varName, string type)
+        public void AddSymbole(string varName, string typeString)
         {
             if (symboleTabe.ContainsKey(varName))
             {
                 symboleTabe.Remove(varName);
             }
-            symboleTabe.Add(varName, type);
+            symboleTabe.Add(varName, typeString);
+        }
+
+        public bool IsValideTypeString(string typeString, int line, int column)
+        {
+            ExpressionType type;
+            if (!Enum.TryParse(typeString, out type) || (type == ExpressionType.INVALIDE))
+            {
+                Console.WriteLine("ERREUR : La type " + typeString + " à la ligne " +
+                        line + " et colonne " + column + " n'est pas un type valide.");
+                return false;
+            }
+            else
+            {
+                return true;
+            }
         }
 
         public string GetVarTypeString(string varName)

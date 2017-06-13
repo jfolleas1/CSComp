@@ -4,9 +4,9 @@
 
 // GPPG version 1.5.2
 // Machine:  FIDF3675368
-// DateTime: 13/06/2017 14:25:13
+// DateTime: 13/06/2017 14:54:10
 // UserName: j.folleas
-// Input file <ParserComp.y - 13/06/2017 14:25:09>
+// Input file <ParserComp.y - 13/06/2017 14:53:32>
 
 // options: no-lines gplex
 
@@ -62,11 +62,11 @@ public class ScanObj {
 [GeneratedCodeAttribute( "Gardens Point Parser Generator", "1.5.2")]
 public class Parser: ShiftReduceParser<ValueType, LexLocation>
 {
-  // Verbatim content from ParserComp.y - 13/06/2017 14:25:09
+  // Verbatim content from ParserComp.y - 13/06/2017 14:53:32
     
     public Montage montage = new Montage();
 
-  // End verbatim content from ParserComp.y - 13/06/2017 14:25:09
+  // End verbatim content from ParserComp.y - 13/06/2017 14:53:32
 
 #pragma warning disable 649
   private static Dictionary<int, string> aliases;
@@ -218,13 +218,13 @@ public class Parser: ShiftReduceParser<ValueType, LexLocation>
 { CurrentSemanticValue.listDeclaration=ValueStack[ValueStack.Depth-2].listDeclaration; CurrentSemanticValue.listDeclaration.Add(ValueStack[ValueStack.Depth-1].declaration); }
         break;
       case 11: // declaration -> declaredVariableName, declaredVariableType, SEMICOLON
-{ CurrentSemanticValue.declaration = new Declaration(ValueStack[ValueStack.Depth-3].String, ValueStack[ValueStack.Depth-2].String); Console.WriteLine("DEC :::  "+CurrentSemanticValue.declaration.Write()); }
+{ CurrentSemanticValue.declaration = new Declaration(ValueStack[ValueStack.Depth-3].String, ValueStack[ValueStack.Depth-2].String); montage.IsValideTypeString(ValueStack[ValueStack.Depth-2].String,LocationStack[LocationStack.Depth-2].StartLine, LocationStack[LocationStack.Depth-2].StartColumn); }
         break;
       case 12: // declaredVariableName -> ID
 { CurrentSemanticValue.String = ValueStack[ValueStack.Depth-1].String; }
         break;
       case 13: // declaredVariableType -> ID
-{ CurrentSemanticValue.String = ValueStack[ValueStack.Depth-1].String; }
+{ CurrentLocationSpan=LocationStack[LocationStack.Depth-1]; CurrentSemanticValue.String = ValueStack[ValueStack.Depth-1].String; }
         break;
       case 14: // listAffectation -> /* empty */
 { CurrentSemanticValue.listAffectation = new List<Affectation>();  }

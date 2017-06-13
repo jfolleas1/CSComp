@@ -95,13 +95,13 @@ listDeclaration :	/*Empty*/						{ $$ = new List<Declaration>(); }
 				|   listDeclaration declaration		{ $$=$1; $$.Add($2); }
 				;
 
-declaration		:	declaredVariableName  declaredVariableType SEMICOLON				{ $$ = new Declaration($1, $2); Console.WriteLine("DEC :::  "+$$.Write()); }
+declaration		:	declaredVariableName  declaredVariableType SEMICOLON				{ $$ = new Declaration($1, $2); montage.IsValideTypeString($2,@2.StartLine, @2.StartColumn); }
 				;
 
 declaredVariableName	:	ID		{ $$ = $1; }
 						;
 
-declaredVariableType	:	ID		{ $$ = $1; }
+declaredVariableType	:	ID		{ @$=@1; $$ = $1; }
 						;
 
 							
