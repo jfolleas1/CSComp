@@ -4,9 +4,9 @@
 
 // GPPG version 1.5.2
 // Machine:  FIDF3675368
-// DateTime: 15/06/2017 11:26:30
+// DateTime: 15/06/2017 14:37:35
 // UserName: j.folleas
-// Input file <ParserComp.y - 15/06/2017 11:25:38>
+// Input file <ParserComp.y - 15/06/2017 14:37:17>
 
 // options: no-lines gplex
 
@@ -63,11 +63,11 @@ public class ScanObj {
 [GeneratedCodeAttribute( "Gardens Point Parser Generator", "1.5.2")]
 public class Parser: ShiftReduceParser<ValueType, LexLocation>
 {
-  // Verbatim content from ParserComp.y - 15/06/2017 11:25:38
+  // Verbatim content from ParserComp.y - 15/06/2017 14:37:17
     
     public Montage montage = new Montage();
 
-  // End verbatim content from ParserComp.y - 15/06/2017 11:25:38
+  // End verbatim content from ParserComp.y - 15/06/2017 14:37:17
 
 #pragma warning disable 649
   private static Dictionary<int, string> aliases;
@@ -126,8 +126,8 @@ public class Parser: ShiftReduceParser<ValueType, LexLocation>
     states[43] = new State(-35);
     states[44] = new State(-36);
     states[45] = new State(-10);
-    states[46] = new State(new int[]{14,49,27,54},new int[]{-10,47});
-    states[47] = new State(new int[]{25,48});
+    states[46] = new State(new int[]{27,54},new int[]{-10,47});
+    states[47] = new State(new int[]{25,48,14,49});
     states[48] = new State(-11);
     states[49] = new State(-9,new int[]{-12,50});
     states[50] = new State(new int[]{15,51,27,53},new int[]{-11,45,-9,46});
@@ -157,7 +157,7 @@ public class Parser: ShiftReduceParser<ValueType, LexLocation>
     rules[9] = new Rule(-12, new int[]{});
     rules[10] = new Rule(-12, new int[]{-12,-11});
     rules[11] = new Rule(-11, new int[]{-9,-10,25});
-    rules[12] = new Rule(-11, new int[]{-9,14,-12,15,25});
+    rules[12] = new Rule(-11, new int[]{-9,-10,14,-12,15,25});
     rules[13] = new Rule(-9, new int[]{27});
     rules[14] = new Rule(-10, new int[]{27});
     rules[15] = new Rule(-6, new int[]{});
@@ -226,9 +226,9 @@ public class Parser: ShiftReduceParser<ValueType, LexLocation>
       case 11: // declaration -> declaredVariableName, declaredVariableType, SEMICOLON
 { CurrentSemanticValue.declaration = new Declaration(ValueStack[ValueStack.Depth-3].String, ValueStack[ValueStack.Depth-2].String); montage.IsValideTypeString(ValueStack[ValueStack.Depth-2].String,LocationStack[LocationStack.Depth-2].StartLine, LocationStack[LocationStack.Depth-2].StartColumn); montage.AddSymbole(CurrentSemanticValue.declaration); }
         break;
-      case 12: // declaration -> declaredVariableName, BRACEOPEN, listDeclaration, BRACECLOSE, 
-               //                SEMICOLON
-{ Console.WriteLine(" Declaration d'objet avec"); foreach(Declaration dec in ValueStack[ValueStack.Depth-3].listDeclaration){ Console.WriteLine("\t"+ dec.Write()); } }
+      case 12: // declaration -> declaredVariableName, declaredVariableType, BRACEOPEN, 
+               //                listDeclaration, BRACECLOSE, SEMICOLON
+{ CurrentSemanticValue.declaration = new DeclarationStruct(ValueStack[ValueStack.Depth-6].String, ValueStack[ValueStack.Depth-5].String, ValueStack[ValueStack.Depth-3].listDeclaration); Console.WriteLine(" Declaration d'objet avec"); foreach(Declaration dec in ValueStack[ValueStack.Depth-3].listDeclaration){ Console.WriteLine("\t"+ dec.Write()); } }
         break;
       case 13: // declaredVariableName -> ID
 { CurrentSemanticValue.String = ValueStack[ValueStack.Depth-1].String; }

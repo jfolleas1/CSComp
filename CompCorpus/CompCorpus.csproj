@@ -45,7 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="RunTime\declaration\DeclarationObj.cs" />
+    <Compile Include="RunTime\declaration\DeclarationStruct.cs" />
     <Compile Include="RunTime\error\Error.cs" />
     <Compile Include="RunTime\ExpresionsClass\AbstractExpression.cs" />
     <Compile Include="RunTime\ExpresionsClass\Affectation.cs" />

@@ -19,24 +19,36 @@ namespace CompCorpus.RunTime.declaration
             type = GetTypeFromString(typeString);
         }
 
+        public Declaration(string name, ExpressionType type)
+        {
+            this.name = name;
+            this.type = type;
+        }
+
         private ExpressionType GetTypeFromString(string typeString)
         {     
             ExpressionType myType = ExpressionType.INVALIDE;
-            if(!Enum.TryParse(typeString, out myType) || (typeString == "STRUCT"))
+            if(!Enum.TryParse(typeString, out myType) || (typeString == "STRUCT") || (typeString == "LISTSTRUCT"))
                 myType = ExpressionType.INVALIDE;
             return myType;
         }
 
-        public virtual string Write(bool notInStruct = true)
+        public virtual string Write(bool notInStruct = true, int nbTab = 0)
         {
+            string text =  "";
             if (notInStruct)
             {
-                return "$scope." + name + "; // de type : " + type.ToString();
+                text = "$scope." + name + "; // de type : " + type.ToString();
             }
             else
             {
-                return "$scope." + name + ":" + GetDefaultValueForType() + ",";
+                for (int i = 0; i < nbTab; i++)
+                {
+                    text += "\t";
+                }
+                text += name + ":" + GetDefaultValueForType() + ",";
             }
+            return text;
         }
 
         private string GetDefaultValueForType()
@@ -61,5 +73,9 @@ namespace CompCorpus.RunTime.declaration
             }
             return defaultValue;
         }
+
+        
+
+
     }
 }
