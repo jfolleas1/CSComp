@@ -4,9 +4,9 @@
 
 // GPPG version 1.5.2
 // Machine:  FIDF3675368
-// DateTime: 15/06/2017 10:51:54
+// DateTime: 15/06/2017 11:26:30
 // UserName: j.folleas
-// Input file <ParserComp.y - 15/06/2017 10:51:49>
+// Input file <ParserComp.y - 15/06/2017 11:25:38>
 
 // options: no-lines gplex
 
@@ -16,9 +16,10 @@ using System.CodeDom.Compiler;
 using System.Globalization;
 using System.Text;
 using QUT.Gppg;
-using RunTime;
+using CompCorpus.RunTime;
+using CompCorpus.RunTime.declaration;
 
-namespace Analyzer
+namespace CompCorpus.Analyzer
 {
 public enum Tokens {error=2,EOF=3,TITREACTEKW=4,TRUE=5,FALSE=6,
     DOLLAR=7,PLUS=8,MINUS=9,MUL=10,DIV=11,PARENTOPEN=12,
@@ -62,11 +63,11 @@ public class ScanObj {
 [GeneratedCodeAttribute( "Gardens Point Parser Generator", "1.5.2")]
 public class Parser: ShiftReduceParser<ValueType, LexLocation>
 {
-  // Verbatim content from ParserComp.y - 15/06/2017 10:51:49
+  // Verbatim content from ParserComp.y - 15/06/2017 11:25:38
     
     public Montage montage = new Montage();
 
-  // End verbatim content from ParserComp.y - 15/06/2017 10:51:49
+  // End verbatim content from ParserComp.y - 15/06/2017 11:25:38
 
 #pragma warning disable 649
   private static Dictionary<int, string> aliases;

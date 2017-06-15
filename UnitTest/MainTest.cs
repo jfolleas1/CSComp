@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
-using Analyzer;
-using RunTime;
+using CompCorpus.Analyzer;
+using CompCorpus.RunTime;
 using System.Linq;
 
 namespace UnitTest

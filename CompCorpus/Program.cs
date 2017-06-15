@@ -4,8 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
-using Analyzer;
-using RunTime;
+using CompCorpus.Analyzer;
+using CompCorpus.RunTime;
 
 
 namespace CompCorpus

@@ -1,6 +1,7 @@
-%using RunTime;
+%using CompCorpus.RunTime;
+%using CompCorpus.RunTime.declaration;
 
-%namespace Analyzer
+%namespace CompCorpus.Analyzer
 %output=Analyzer\ParserComp.cs
 
 %{

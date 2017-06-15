@@ -1,7 +1,8 @@
 ﻿using System;
 using System.IO;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using RunTime;
+using CompCorpus.RunTime.declaration;
+using CompCorpus.RunTime;
 
 namespace UnitTest
 {

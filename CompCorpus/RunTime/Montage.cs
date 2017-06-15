@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.IO;
 using CompCorpus.RunTime.error;
+using CompCorpus.RunTime.declaration;
 
-namespace RunTime
+namespace CompCorpus.RunTime
 {
     public class Montage
     {

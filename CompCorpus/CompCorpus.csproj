@@ -45,10 +45,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="RunTime\declaration\DeclarationObj.cs" />
     <Compile Include="RunTime\error\Error.cs" />
     <Compile Include="RunTime\ExpresionsClass\AbstractExpression.cs" />
     <Compile Include="RunTime\ExpresionsClass\Affectation.cs" />
-    <Compile Include="RunTime\Declaration.cs" />
+    <Compile Include="RunTime\declaration\Declaration.cs" />
     <Compile Include="RunTime\ExpresionsClass\Expression.cs" />
     <Compile Include="RunTime\Montage.cs" />
     <Compile Include="Analyzer\ParserComp.cs" />

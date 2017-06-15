@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RunTime
+namespace CompCorpus.RunTime
 {
     public class Affectation
     {

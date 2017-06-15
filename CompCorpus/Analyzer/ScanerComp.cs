@@ -6,9 +6,9 @@
 //
 //  GPLEX Version:  1.2.2
 //  Machine:  FIDF3675368
-//  DateTime: 15/06/2017 11:04:05
+//  DateTime: 15/06/2017 11:26:31
 //  UserName: j.folleas
-//  GPLEX input file <ScanerComp.lex - 15/06/2017 11:03:59>
+//  GPLEX input file <ScanerComp.lex - 15/06/2017 11:11:22>
 //  GPLEX frame file <embedded resource>
 //
 //  Option settings: unicode, verbose, parser, stack, minimize
@@ -35,7 +35,7 @@ using System.Diagnostics.CodeAnalysis;
 
 using QUT.Gppg;
 
-namespace Analyzer
+namespace CompCorpus.Analyzer
 {   
     /// <summary>
     /// Summary Canonical example of GPLEX automaton

@@ -4,15 +4,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RunTime
+namespace CompCorpus.RunTime
 {
 
     public enum ExpressionType
     {
+        INVALIDE,
         NUMERICALE,
         STRING,
         BOOL,
-        INVALIDE,
+        STRUCT,
+       
     };
 
     public abstract class AbstractExpression

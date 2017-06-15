@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
 using CompCorpus.RunTime.error;
-using Analyzer;
-using RunTime;
+using CompCorpus.Analyzer;
+using CompCorpus.RunTime;
 
 namespace UnitTest
 {
