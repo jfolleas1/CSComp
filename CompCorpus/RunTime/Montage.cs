@@ -71,6 +71,14 @@ namespace CompCorpus.RunTime
             AddSymbole(dec.name, dec.type.ToString());
         }
 
+        public void AddSymbole(List< Tuple <string,string>> ls)
+        {
+            foreach (Tuple<string, string> tp in ls)
+            {
+                AddSymbole(tp.Item1,tp.Item2);
+            }
+        }
+
         public bool IsValideTypeString(string typeString, int line, int column)
         {
             ExpressionType type;

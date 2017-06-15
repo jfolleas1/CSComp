@@ -97,7 +97,7 @@ listDeclaration :	/*Empty*/						{ $$ = new List<Declaration>(); }
 				;
 
 declaration		:	declaredVariableName  declaredVariableType SEMICOLON											{ $$ = new Declaration($1, $2); montage.IsValideTypeString($2,@2.StartLine, @2.StartColumn); montage.AddSymbole($$); }
-				|	declaredVariableName declaredVariableType BRACEOPEN listDeclaration BRACECLOSE SEMICOLON		{ $$ = new DeclarationStruct($1, $2, $4); Console.WriteLine(" Declaration d'objet avec"); foreach(Declaration dec in $4){ Console.WriteLine("\t"+ dec.Write()); } }
+				|	declaredVariableName declaredVariableType BRACEOPEN listDeclaration BRACECLOSE SEMICOLON		{ $$ = new DeclarationStruct($1, $2, $4); montage.IsValideTypeString($2,@2.StartLine, @2.StartColumn); montage.AddSymbole($$.GetSymboles()); }
 				;
 
 declaredVariableName	:	ID		{ $$ = $1; }

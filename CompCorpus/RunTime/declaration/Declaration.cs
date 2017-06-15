@@ -74,7 +74,13 @@ namespace CompCorpus.RunTime.declaration
             return defaultValue;
         }
 
-        
+        public virtual List< Tuple <string,string>> GetSymboles(string baseSymbole = "")
+        {
+            baseSymbole += "." + name;
+            List<Tuple<string, string>> ls = new List<Tuple<string, string>>();
+            ls.Add(new Tuple<string, string>(baseSymbole, type.ToString()));
+            return ls;
+        }
 
 
     }

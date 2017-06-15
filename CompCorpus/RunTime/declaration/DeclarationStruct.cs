@@ -39,7 +39,15 @@ namespace CompCorpus.RunTime.declaration
             {
                 text += "\t";
             }
-            text += name + " = ";
+            text += name;
+            if (notInStruct)
+            {
+                text += " = ";
+            }
+            else
+            {
+                text += " : ";
+            }
             if (base.type == ExpressionType.LISTSTRUCT)
             {
                 text += "[";
@@ -63,6 +71,31 @@ namespace CompCorpus.RunTime.declaration
                 text += ";";
             }
             return text;
+        }
+
+        public override List<Tuple<string, string>> GetSymboles(string baseSymbole = "")
+        {
+            bool firstLevel = (baseSymbole == "");
+            if(!firstLevel)
+            {
+                baseSymbole += ".";
+            }
+            baseSymbole += name;
+            List<Tuple<string, string>> ls = new List<Tuple<string, string>>();
+            ls.Add(new Tuple<string, string>(baseSymbole, type.ToString()));
+            foreach (Declaration dec in declarationList)
+            {
+                ls.AddRange(dec.GetSymboles(baseSymbole));
+            }
+            //if(firstLevel)
+            //{
+            //    Console.WriteLine(" Declaration d'objet avec :");
+            //    foreach (Tuple<string, string> tp in ls)
+            //    {
+            //        Console.WriteLine(tp.Item1 + " : " + tp.Item2);
+            //    }
+            //}
+            return ls;
         }
     }
 }

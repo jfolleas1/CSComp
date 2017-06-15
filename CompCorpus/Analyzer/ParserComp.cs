@@ -4,9 +4,9 @@
 
 // GPPG version 1.5.2
 // Machine:  FIDF3675368
-// DateTime: 15/06/2017 14:37:35
+// DateTime: 15/06/2017 16:00:06
 // UserName: j.folleas
-// Input file <ParserComp.y - 15/06/2017 14:37:17>
+// Input file <ParserComp.y - 15/06/2017 16:00:03>
 
 // options: no-lines gplex
 
@@ -63,11 +63,11 @@ public class ScanObj {
 [GeneratedCodeAttribute( "Gardens Point Parser Generator", "1.5.2")]
 public class Parser: ShiftReduceParser<ValueType, LexLocation>
 {
-  // Verbatim content from ParserComp.y - 15/06/2017 14:37:17
+  // Verbatim content from ParserComp.y - 15/06/2017 16:00:03
     
     public Montage montage = new Montage();
 
-  // End verbatim content from ParserComp.y - 15/06/2017 14:37:17
+  // End verbatim content from ParserComp.y - 15/06/2017 16:00:03
 
 #pragma warning disable 649
   private static Dictionary<int, string> aliases;
@@ -228,7 +228,7 @@ public class Parser: ShiftReduceParser<ValueType, LexLocation>
         break;
       case 12: // declaration -> declaredVariableName, declaredVariableType, BRACEOPEN, 
                //                listDeclaration, BRACECLOSE, SEMICOLON
-{ CurrentSemanticValue.declaration = new DeclarationStruct(ValueStack[ValueStack.Depth-6].String, ValueStack[ValueStack.Depth-5].String, ValueStack[ValueStack.Depth-3].listDeclaration); Console.WriteLine(" Declaration d'objet avec"); foreach(Declaration dec in ValueStack[ValueStack.Depth-3].listDeclaration){ Console.WriteLine("\t"+ dec.Write()); } }
+{ CurrentSemanticValue.declaration = new DeclarationStruct(ValueStack[ValueStack.Depth-6].String, ValueStack[ValueStack.Depth-5].String, ValueStack[ValueStack.Depth-3].listDeclaration); montage.IsValideTypeString(ValueStack[ValueStack.Depth-5].String,LocationStack[LocationStack.Depth-5].StartLine, LocationStack[LocationStack.Depth-5].StartColumn); montage.AddSymbole(CurrentSemanticValue.declaration.GetSymboles()); }
         break;
       case 13: // declaredVariableName -> ID
 { CurrentSemanticValue.String = ValueStack[ValueStack.Depth-1].String; }
