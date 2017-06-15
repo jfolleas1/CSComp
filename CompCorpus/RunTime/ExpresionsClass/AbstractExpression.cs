@@ -24,15 +24,5 @@ namespace RunTime
         }
         public abstract void Print(int level);
         public abstract string Write();
-
-        public void CheckValidity(int line)
-        {
-            if (this.dataType == ExpressionType.INVALIDE)
-            {
-                Console.WriteLine("ERREUR: l'expression ligne : " + line + " est invalide. L'une des opération n'est pas autorisée");
-            }
-        }
-
-
     }
 }

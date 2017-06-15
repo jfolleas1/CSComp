@@ -6,9 +6,9 @@
 //
 //  GPLEX Version:  1.2.2
 //  Machine:  FIDF3675368
-//  DateTime: 13/06/2017 14:17:26
+//  DateTime: 14/06/2017 09:19:22
 //  UserName: j.folleas
-//  GPLEX input file <ScanerComp.lex - 13/06/2017 14:11:26>
+//  GPLEX input file <ScanerComp.lex - 14/06/2017 09:19:11>
 //  GPLEX frame file <embedded resource>
 //
 //  Option settings: unicode, verbose, parser, stack, minimize
@@ -137,7 +137,7 @@ namespace Analyzer
 
     Ce code va Ãªtre copier dans le ficher d'output
 	*/
-	public static int currentLine = 1; 
+
 
 	public override void yyerror(string format, params object[] args) // remember to add override back
 	{

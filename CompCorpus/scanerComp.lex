@@ -12,7 +12,7 @@
 
     Ce code va être copier dans le ficher d'output
 	*/
-	public static int currentLine = 1; 
+
 
 	public override void yyerror(string format, params object[] args) // remember to add override back
 	{

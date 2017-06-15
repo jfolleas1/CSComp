@@ -95,7 +95,8 @@ listDeclaration :	/*Empty*/						{ $$ = new List<Declaration>(); }
 				|   listDeclaration declaration		{ $$=$1; $$.Add($2); }
 				;
 
-declaration		:	declaredVariableName  declaredVariableType SEMICOLON				{ $$ = new Declaration($1, $2); montage.IsValideTypeString($2,@2.StartLine, @2.StartColumn); montage.AddSymbole($$); }
+declaration		:	declaredVariableName  declaredVariableType SEMICOLON					{ $$ = new Declaration($1, $2); montage.IsValideTypeString($2,@2.StartLine, @2.StartColumn); montage.AddSymbole($$); }
+				|	declaredVariableName BRACEOPEN listDeclaration BRACECLOSE SEMICOLON		{ Console.WriteLine(" Declaration d'objet avec"); foreach(Declaration dec in $3){ Console.WriteLine("\t"+ dec.Write()); } }
 				;
 
 declaredVariableName	:	ID		{ $$ = $1; }
@@ -110,7 +111,7 @@ listAffectation :	/*Empty*/						{ $$ = new List<Affectation>();  }
 				|   listAffectation affectation		{ $$=$1; $$.Add($2);  }
 				;
 
-affectation	:		var ASSIGN expression SEMICOLON				{ $$ = new Affectation($1, $3); $3.CheckValidity(@1.StartLine); montage.CheckAffectationIsValid($3.dataType, $1.name ,@1.StartLine);  montage.AddSymbole($$);  }
+affectation	:		var ASSIGN expression SEMICOLON				{ $$ = new Affectation($1, $3); montage.CheckAffectationIsValid($3.dataType, $1.name ,@1.StartLine);  montage.AddSymbole($$);  }
 					;
 
 expression  :       expression PLUS expression			{ /*Console.WriteLine("PLUS");*/	$$ = new Expression(ExpressionSymbole.PLUS, $1, $3); }

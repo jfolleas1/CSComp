@@ -28,6 +28,16 @@ namespace CompCorpus.RunTime.error
             this.column = column;
         }
 
+        public bool Equals(Error err)
+        {
+            bool test = true;
+            test &= (this.type == err.type);
+            test &= (this.data == err.data);
+            test &= (this.line == err.line);
+            test &= (this.column == err.column);
+            return test;
+        }
+
         public string GetMessage()
         {
             string message = "ERREUR: lig: "+line+", col: "+column;

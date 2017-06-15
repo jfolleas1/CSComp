@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Analyzer;
 using RunTime;
+using System.Linq;
 
 namespace UnitTest
 {
@@ -34,7 +35,7 @@ namespace UnitTest
                     parser.Parse();
 
                     montage = parser.montage;
-                    if (montage != null)
+                    if (montage != null && !montage.errorList.Any() )
                     {
                         montage.WriteInFiles(targetFilehtmlName, targetFileJSName);
                     }

@@ -42,7 +42,7 @@ namespace CompCorpus
                     Console.WriteLine("FIN DE LECTURE DU CODE ");
                     Console.WriteLine();
 
-                    if (montage != null)
+                    if (montage != null && !montage.errorList.Any())
                     {
                         //montage.Print();
                         //Console.WriteLine("///////////////////////////////////////////////////////");
@@ -51,11 +51,13 @@ namespace CompCorpus
                         //Console.WriteLine();
                         //Console.WriteLine();
                         //Console.WriteLine("///////////////////////////////////////////////////////");
-
                         //montage.PrintFutureFiles();
-                        montage.PrintErrors();
                         montage.WriteInFiles(targetFilehtmlName, targetFileJSName);
-                        //System.Diagnostics.Process.Start(targetFilehtmlName);
+                        System.Diagnostics.Process.Start(targetFilehtmlName);
+                    }
+                    else
+                    {
+                        montage.PrintErrors();
                     }
 
                 }
