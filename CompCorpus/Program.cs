@@ -42,7 +42,7 @@ namespace CompCorpus
                     Console.WriteLine("FIN DE LECTURE DU CODE ");
                     Console.WriteLine();
 
-                    if (montage != null && !montage.errorList.Any())
+                    if (montage != null && !montage.errorList.Any() && !scn.hasErrors)
                     {
                         //montage.Print();
                         //Console.WriteLine("///////////////////////////////////////////////////////");

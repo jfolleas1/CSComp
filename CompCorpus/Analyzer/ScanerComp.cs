@@ -6,9 +6,9 @@
 //
 //  GPLEX Version:  1.2.2
 //  Machine:  FIDF3675368
-//  DateTime: 14/06/2017 09:19:22
+//  DateTime: 15/06/2017 11:04:05
 //  UserName: j.folleas
-//  GPLEX input file <ScanerComp.lex - 14/06/2017 09:19:11>
+//  GPLEX input file <ScanerComp.lex - 15/06/2017 11:03:59>
 //  GPLEX frame file <embedded resource>
 //
 //  Option settings: unicode, verbose, parser, stack, minimize
@@ -138,10 +138,11 @@ namespace Analyzer
     Ce code va Ãªtre copier dans le ficher d'output
 	*/
 
-
+	public bool hasErrors = false ;
 	public override void yyerror(string format, params object[] args) // remember to add override back
 	{
 		System.Console.Error.WriteLine("Error: line {0} - column {1} " + format, yyline, yycol);
+		hasErrors = true ;
 	}
 #endregion user code
 
