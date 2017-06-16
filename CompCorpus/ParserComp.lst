@@ -1,16 +1,17 @@
 
 // ==========================================================================
-//  GPPG error listing for yacc source file <ParserComp.y - 16/06/2017 13:28:16>
+//  GPPG error listing for yacc source file <ParserComp.y - 16/06/2017 15:56:58>
 // ==========================================================================
 //  Version:  1.5.2
 //  Machine:  FIDF3675368
-//  DateTime: 16/06/2017 13:28:37
+//  DateTime: 16/06/2017 15:57:04
 //  UserName: j.folleas
 // ==========================================================================
 
 
 %using CompCorpus.RunTime;
 %using CompCorpus.RunTime.declaration;
+%using CompCorpus.RunTime.Bricks;
 
 %namespace CompCorpus.Analyzer
 %output=Analyzer\ParserComp.cs
@@ -34,6 +35,8 @@
 		public Declaration declaration ;
 		public List<Declaration> listDeclaration ;
 		public List<Affectation> listAffectation ;
+		public Brick brick ;
+		public List<Brick> listBrick ;
 }
 
 // Defining Tokens
@@ -78,6 +81,12 @@
 %type<listDeclaration> listDeclaration
 
 %type<String> textBloc
+%type<String> textBlocElement
+
+%type<brick> brick
+%type<listBrick> document
+%type<listBrick> listBrick
+
 
 // Priority
 
@@ -92,9 +101,19 @@
 
 
 %% // Grammar rules section
+// Warning: NonTerminal symbol "brick" is unreachable
+// Warning: NonTerminal symbol "listBrick" is unreachable
+// Error: NonTerminal symbol "listbrick" has no productions
+// Warning: NonTerminal symbol "textBlocElement" is unreachable
+// Error: There are 1 non-terminating NonTerminal Symbols
+   //  {listbrick}
+// Warning: Terminating listbrick fixes the following size-1 NonTerminal set
+   // {listbrick}
+// Warning: NonTerminal symbol "textBloc" is unreachable
+// -------------------------------------------------------------------------
 
 montage		:	  /*Empty*/																{ Console.WriteLine(" Empty programe "); }
-			|	defActeTitle listDeclaration SEPARATOR listAffectation document 		{  montage.nameOfTheMontage=$1; montage.listOfDeclarations=$2; montage.listOfCalculExpressions=$4;  }
+			|	defActeTitle listDeclaration SEPARATOR listAffectation document 		{  montage.nameOfTheMontage=$1; montage.listOfDeclarations=$2; montage.listOfCalculExpressions=$4; /*montage.listOfBricks=$5;*/ }
 			;
 
 defActeTitle	:	TITREACTEKW BRACEOPEN deadText BRACECLOSE		{ $$ = $3; }
@@ -160,25 +179,29 @@ constante   :   INTEGER		{ @$ = @1; /*Console.WriteLine("int :" + $1 );*/		$$ = 
 			|	STRING		{ @$ = @1; /*Console.WriteLine("string :" + $1 );*/		$$ = new VariableString($1);}
             ;
 
-document	: /* Empty */			{ }
-			| SEPARATOR listbrick		{}
+
+
+
+document	: /* Empty */					{ $$ = null; /*$$=null;*/ }
+			| SEPARATOR listbrick			{ $$ = null; /*$$ = $2;*/ }
 			;
 
-listbrick	:  /* Empty */			{ Console.WriteLint("Empty Liste of brick"); }
-			| listbrick brick		{ Console.WriteLine("Brick"); }
+listBrick	:  /* Empty */			{ $$ = new List<Brick>();  }
+			| listBrick brick		{ $$ = $1; }
 			;
 
-brick		: textBloc				{ Console.WriteLine("Texte bloc : " + $1); }
+brick		: textBloc				{ $$ = new DeadText($1); }
 			;
 
-textBloc	: DEADWORD				{ $$ = $1; }
-			| ID					{ $$ = $1; }
-			| textBloc DEADWORD		{ $$ = $1; $$ += $2; }
-			| textBloc ID			{ $$ = $1; $$ += $2; }
+textBloc	: textBlocElement				{ $$ = $1; }
+			| textBloc textBlocElement		{ $$ = $1; $$ += (" " + $2); }
+			;
+
+textBlocElement		: DEADWORD		{ $$ = $1; }
+					| ID			{ $$ = $1; }
+					;
 
 %%
-// Error: Syntax error, unexpected %%
-// ----------------------------------
 
 // No argument CTOR. By deafult Parser's ctor requires scanner as param.
 public Parser(Scanner scn) : base(scn) {}

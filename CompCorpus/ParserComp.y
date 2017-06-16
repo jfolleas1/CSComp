@@ -1,5 +1,6 @@
 %using CompCorpus.RunTime;
 %using CompCorpus.RunTime.declaration;
+%using CompCorpus.RunTime.Bricks;
 
 %namespace CompCorpus.Analyzer
 %output=Analyzer\ParserComp.cs
@@ -23,6 +24,8 @@
 		public Declaration declaration ;
 		public List<Declaration> listDeclaration ;
 		public List<Affectation> listAffectation ;
+		public Brick brick ;
+		public List<Brick> listBrick ;
 }
 
 // Defining Tokens
@@ -69,6 +72,11 @@
 %type<String> textBloc
 %type<String> textBlocElement
 
+%type<brick> brick
+%type<listBrick> document
+%type<listBrick> listBrick
+
+
 // Priority
 
 %left AND OR 
@@ -84,7 +92,7 @@
 %% // Grammar rules section
 
 montage		:	  /*Empty*/																{ Console.WriteLine(" Empty programe "); }
-			|	defActeTitle listDeclaration SEPARATOR listAffectation document 		{  montage.nameOfTheMontage=$1; montage.listOfDeclarations=$2; montage.listOfCalculExpressions=$4;  }
+			|	defActeTitle listDeclaration SEPARATOR listAffectation document 		{  montage.nameOfTheMontage=$1; montage.listOfDeclarations=$2; montage.listOfCalculExpressions=$4; montage.listOfBricks=$5; }
 			;
 
 defActeTitle	:	TITREACTEKW BRACEOPEN deadText BRACECLOSE		{ $$ = $3; }
@@ -150,16 +158,18 @@ constante   :   INTEGER		{ @$ = @1; /*Console.WriteLine("int :" + $1 );*/		$$ = 
 			|	STRING		{ @$ = @1; /*Console.WriteLine("string :" + $1 );*/		$$ = new VariableString($1);}
             ;
 
-document	: /* Empty */			{ }
-			| SEPARATOR listbrick		{}
+
+
+
+document	: /* Empty */					{ $$=null; }
+			| SEPARATOR listBrick			{ $$ = $2; }
 			;
 
-listbrick	:  /* Empty */			{ Console.WriteLine("Empty Liste of brick"); }
-			| listbrick brick		{ Console.WriteLine("Brick"); }
+listBrick	:  /* Empty */			{ $$ = new List<Brick>();  }
+			| listBrick brick		{ $$ = $1; $$.Add($2); }
 			;
 
-brick		: textBloc				{ Console.WriteLine("Texte bloc : " + $1); }
-			| INTEGER		{}
+brick		: textBloc				{ $$ = new DeadText($1); }
 			;
 
 textBloc	: textBlocElement				{ $$ = $1; }

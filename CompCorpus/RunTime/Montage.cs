@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using CompCorpus.RunTime.error;
 using CompCorpus.RunTime.declaration;
+using CompCorpus.RunTime.Bricks;
 
 namespace CompCorpus.RunTime
 {
@@ -12,6 +13,7 @@ namespace CompCorpus.RunTime
         public string nameOfTheMontage { get; set; }
         public List<Affectation> listOfCalculExpressions { get; set; }
         public List<Declaration> listOfDeclarations { get; set; }
+        public List<Brick> listOfBricks { get; set; }
         public List<Error> errorList { get; }
 
 
@@ -185,6 +187,11 @@ namespace CompCorpus.RunTime
 
             // what will be written in the html document
 
+            foreach (Brick bk in listOfBricks)
+            {
+                Console.Write(bk.Write());
+            }
+
             string endOfTheDoc = "\n</div>\n\n<script src=\"targetFileNameController.js\"></script>\n</body>\n</html>\n\n";
             Console.Write(endOfTheDoc);
 
@@ -267,6 +274,10 @@ namespace CompCorpus.RunTime
                 monStreamWriter.Write(beginOfTheHtmlDoc);
 
                 // what will be written in the html document
+                foreach (Brick bk in listOfBricks)
+                {
+                    monStreamWriter.Write(bk.Write());
+                }
 
                 string endOfTheDoc = "\n</div>\n\n<script src=\""+ GetLocalFileName(targetFileJSName) +"\"></script>\n</body>\n</html>\n\n";
                 monStreamWriter.Write(endOfTheDoc);
