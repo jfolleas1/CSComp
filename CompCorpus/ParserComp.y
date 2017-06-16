@@ -178,6 +178,13 @@ textBloc	: textBlocElement				{ $$ = $1; }
 
 textBlocElement		: DEADWORD		{ $$ = $1; }
 					| ID			{ $$ = $1; }
+					| DOLLAR		{ $$ = "$"; }
+					| PARENTOPEN	{ $$ = "("; }
+					| PARENTCLOSE	{ $$ = ")"; }
+					| SEMICOLON		{ $$ = ";"; }
+					| INTEGER		{ $$ = $1.ToString(); }
+					| FLOAT			{ $$ = $1.ToString(); }
+					| STRING		{ $$ = $1; }
 					;
 
 %%
