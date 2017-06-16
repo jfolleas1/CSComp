@@ -96,14 +96,14 @@ listDeclaration :	/*Empty*/						{ $$ = new List<Declaration>(); }
 				|   listDeclaration declaration		{ $$=$1; $$.Add($2); }
 				;
 
-declaration		:	declaredVariableName  declaredVariableType SEMICOLON											{ $$ = new Declaration($1, $2); montage.IsValideTypeString($2,@2.StartLine, @2.StartColumn); montage.AddSymbole($$); }
+declaration		:	declaredVariableName  declaredVariableType SEMICOLON											{ $$ = new Declaration($1, $2); montage.IsValideTypeString($2.ToUpper(),@2.StartLine, @2.StartColumn); montage.AddSymbole($$); }
 				|	declaredVariableName declaredVariableType BRACEOPEN listDeclaration BRACECLOSE SEMICOLON		{ $$ = new DeclarationStruct($1, $2, $4); montage.IsValideTypeString($2,@2.StartLine, @2.StartColumn); montage.AddSymbole($$.GetSymboles()); }
 				;
 
 declaredVariableName	:	ID		{ $$ = $1; }
 						;
 
-declaredVariableType	:	ID		{ @$=@1; $$ = $1; }
+declaredVariableType	:	ID		{ @$=@1; $$ = $1.ToUpper(); }
 						;
 
 							

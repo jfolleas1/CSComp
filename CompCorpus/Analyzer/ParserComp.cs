@@ -4,9 +4,9 @@
 
 // GPPG version 1.5.2
 // Machine:  FIDF3675368
-// DateTime: 15/06/2017 16:00:06
+// DateTime: 16/06/2017 10:44:00
 // UserName: j.folleas
-// Input file <ParserComp.y - 15/06/2017 16:00:03>
+// Input file <ParserComp.y - 16/06/2017 10:43:57>
 
 // options: no-lines gplex
 
@@ -63,11 +63,11 @@ public class ScanObj {
 [GeneratedCodeAttribute( "Gardens Point Parser Generator", "1.5.2")]
 public class Parser: ShiftReduceParser<ValueType, LexLocation>
 {
-  // Verbatim content from ParserComp.y - 15/06/2017 16:00:03
+  // Verbatim content from ParserComp.y - 16/06/2017 10:43:57
     
     public Montage montage = new Montage();
 
-  // End verbatim content from ParserComp.y - 15/06/2017 16:00:03
+  // End verbatim content from ParserComp.y - 16/06/2017 10:43:57
 
 #pragma warning disable 649
   private static Dictionary<int, string> aliases;
@@ -224,7 +224,7 @@ public class Parser: ShiftReduceParser<ValueType, LexLocation>
 { CurrentSemanticValue.listDeclaration=ValueStack[ValueStack.Depth-2].listDeclaration; CurrentSemanticValue.listDeclaration.Add(ValueStack[ValueStack.Depth-1].declaration); }
         break;
       case 11: // declaration -> declaredVariableName, declaredVariableType, SEMICOLON
-{ CurrentSemanticValue.declaration = new Declaration(ValueStack[ValueStack.Depth-3].String, ValueStack[ValueStack.Depth-2].String); montage.IsValideTypeString(ValueStack[ValueStack.Depth-2].String,LocationStack[LocationStack.Depth-2].StartLine, LocationStack[LocationStack.Depth-2].StartColumn); montage.AddSymbole(CurrentSemanticValue.declaration); }
+{ CurrentSemanticValue.declaration = new Declaration(ValueStack[ValueStack.Depth-3].String, ValueStack[ValueStack.Depth-2].String); montage.IsValideTypeString(ValueStack[ValueStack.Depth-2].String.ToUpper(),LocationStack[LocationStack.Depth-2].StartLine, LocationStack[LocationStack.Depth-2].StartColumn); montage.AddSymbole(CurrentSemanticValue.declaration); }
         break;
       case 12: // declaration -> declaredVariableName, declaredVariableType, BRACEOPEN, 
                //                listDeclaration, BRACECLOSE, SEMICOLON
@@ -234,7 +234,7 @@ public class Parser: ShiftReduceParser<ValueType, LexLocation>
 { CurrentSemanticValue.String = ValueStack[ValueStack.Depth-1].String; }
         break;
       case 14: // declaredVariableType -> ID
-{ CurrentLocationSpan=LocationStack[LocationStack.Depth-1]; CurrentSemanticValue.String = ValueStack[ValueStack.Depth-1].String; }
+{ CurrentLocationSpan=LocationStack[LocationStack.Depth-1]; CurrentSemanticValue.String = ValueStack[ValueStack.Depth-1].String.ToUpper(); }
         break;
       case 15: // listAffectation -> /* empty */
 { CurrentSemanticValue.listAffectation = new List<Affectation>();  }
