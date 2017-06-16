@@ -66,6 +66,9 @@
 %type<declaration> declaration
 %type<listDeclaration> listDeclaration
 
+%type<String> textBloc
+%type<String> textBlocElement
+
 // Priority
 
 %left AND OR 
@@ -80,8 +83,8 @@
 
 %% // Grammar rules section
 
-montage		:	  /*Empty*/													{ Console.WriteLine(" Empty programe "); }
-			|	defActeTitle listDeclaration SEPARATOR listAffectation		{  montage.nameOfTheMontage=$1; montage.listOfDeclarations=$2; montage.listOfCalculExpressions=$4;  }
+montage		:	  /*Empty*/																{ Console.WriteLine(" Empty programe "); }
+			|	defActeTitle listDeclaration SEPARATOR listAffectation document 		{  montage.nameOfTheMontage=$1; montage.listOfDeclarations=$2; montage.listOfCalculExpressions=$4;  }
 			;
 
 defActeTitle	:	TITREACTEKW BRACEOPEN deadText BRACECLOSE		{ $$ = $3; }
@@ -146,6 +149,26 @@ constante   :   INTEGER		{ @$ = @1; /*Console.WriteLine("int :" + $1 );*/		$$ = 
 			|	FLOAT		{ @$ = @1; /*Console.WriteLine("float :" + $1 );*/		$$ = new VariableFloat($1);}
 			|	STRING		{ @$ = @1; /*Console.WriteLine("string :" + $1 );*/		$$ = new VariableString($1);}
             ;
+
+document	: /* Empty */			{ }
+			| SEPARATOR listbrick		{}
+			;
+
+listbrick	:  /* Empty */			{ Console.WriteLine("Empty Liste of brick"); }
+			| listbrick brick		{ Console.WriteLine("Brick"); }
+			;
+
+brick		: textBloc				{ Console.WriteLine("Texte bloc : " + $1); }
+			| INTEGER		{}
+			;
+
+textBloc	: textBlocElement				{ $$ = $1; }
+			| textBloc textBlocElement		{ $$ = $1; $$ += (" " + $2); }
+			;
+
+textBlocElement		: DEADWORD		{ $$ = $1; }
+					| ID			{ $$ = $1; }
+					;
 
 %%
 
