@@ -62,6 +62,7 @@
 %type<String> deadText
 %type<String> declaredVariableName
 %type<String> declaredVariableType
+%type<String> affectationType
 %type<declaration> declaration
 %type<listDeclaration> listDeclaration
 
@@ -96,15 +97,14 @@ listDeclaration :	/*Empty*/						{ $$ = new List<Declaration>(); }
 				|   listDeclaration declaration		{ $$=$1; $$.Add($2); }
 				;
 
-declaration		:	declaredVariableName  declaredVariableType SEMICOLON											{ $$ = new Declaration($1, $2); montage.IsValideTypeString($2.ToUpper(),@2.StartLine, @2.StartColumn); montage.AddSymbole($$); }
+declaration		:	declaredVariableName  declaredVariableType SEMICOLON											{ $$ = new Declaration($1, $2); montage.IsValideTypeString($2,@2.StartLine, @2.StartColumn); montage.AddSymbole($$); }
 				|	declaredVariableName declaredVariableType BRACEOPEN listDeclaration BRACECLOSE SEMICOLON		{ $$ = new DeclarationStruct($1, $2, $4); montage.IsValideTypeString($2,@2.StartLine, @2.StartColumn); montage.AddSymbole($$.GetSymboles()); }
 				;
 
 declaredVariableName	:	ID		{ $$ = $1; }
 						;
 
-declaredVariableType	:	ID		{ @$=@1; $$ = $1.ToUpper(); }
-						;
+
 
 							
 
@@ -112,8 +112,15 @@ listAffectation :	/*Empty*/						{ $$ = new List<Affectation>();  }
 				|   listAffectation affectation		{ $$=$1; $$.Add($2);  }
 				;
 
-affectation	:		var ASSIGN expression SEMICOLON				{ $$ = new Affectation($1, $3); montage.CheckAffectationIsValid($3.dataType, $1.name ,@1.StartLine);  montage.AddSymbole($$);  }
-					;
+affectation	:		var affectationType ASSIGN expression SEMICOLON				{ $$ = new Affectation($1, $4); montage.CheckAffectationIsValid($4.dataType, $2, $1.name ,@1.StartLine);  montage.AddSymbole($$);  }
+			;
+
+affectationType			:	declaredVariableType		{ @$=@1; $$ = $1; }
+						| /*Empty*/						{ $$=null; }
+						;
+
+declaredVariableType	:	ID		{ @$=@1; $$ = $1.ToUpper(); }
+						;
 
 expression  :       expression PLUS expression			{ /*Console.WriteLine("PLUS");*/	$$ = new Expression(ExpressionSymbole.PLUS, $1, $3); }
             |       expression MUL expression			{ /*Console.WriteLine("MUL");*/		$$ = new Expression(ExpressionSymbole.MUL, $1, $3);}

@@ -11,6 +11,7 @@ namespace CompCorpus.RunTime.error
         INVALIDE_OPERATION,
         INVALIDE_TYPE,
         UNKNOW_VARIABLE,
+        INCOMPATIBLE_AFFECTATION,
     }
 
     public class Error
@@ -52,6 +53,9 @@ namespace CompCorpus.RunTime.error
                     break;
                 case ErrorType.UNKNOW_VARIABLE:
                     message += " la variable "+data+" est utilisée mais est inconnue.";
+                    break;
+                case ErrorType.INCOMPATIBLE_AFFECTATION:
+                    message += " l'affectation est impossible pour la variable " + data ;
                     break;
                 default:
                     break;

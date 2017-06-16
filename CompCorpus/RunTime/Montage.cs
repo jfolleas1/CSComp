@@ -106,12 +106,32 @@ namespace CompCorpus.RunTime
             }
         }
 
-        public void CheckAffectationIsValid(ExpressionType type, string symbole, int line)
+        public void CheckAffectationIsValid(ExpressionType type, string expectedTypeString, string symbole, int line)
         {
             if (type == ExpressionType.INVALIDE)
             {
                 errorList.Add(new Error(ErrorType.INVALIDE_OPERATION, symbole, line, 0));
             }
+            if (expectedTypeString != null)
+            {
+                CheckCorespondanceExpectedAndExpressionType(type, expectedTypeString, symbole, line);
+            }
+        }
+
+        private void CheckCorespondanceExpectedAndExpressionType(ExpressionType expressionType, string expectedTypeString, string symbole, int line)
+        {
+            ExpressionType expectedType;
+            if (!Enum.TryParse(expectedTypeString, out expectedType))
+            {
+                errorList.Add(new Error(ErrorType.INVALIDE_TYPE, expectedTypeString, line));
+            }
+            else if (expectedType != expressionType)
+            {
+                string data = symbole + " ( attendue : " + expectedTypeString + ", retourner : ";
+                data += expressionType.ToString() + " )";
+                errorList.Add(new Error(ErrorType.INCOMPATIBLE_AFFECTATION, data, line));
+            }
+
         }
 
         public void PrintErrors()

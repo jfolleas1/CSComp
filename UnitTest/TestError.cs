@@ -93,10 +93,23 @@ namespace UnitTest
             List<Error> resListError = new List<Error>();
             resListError.Add(new Error(ErrorType.UNKNOW_VARIABLE,"titi", 3, 9));
             bool test = (myListError.Count == 2);
-            Console.WriteLine(resListError.First().Equals(myListError.First()));
+            test &= (resListError.First().Equals(myListError.First()));
             Assert.AreEqual(true, test);
         }
 
+        [TestMethod]
+        public void TestErrorIncompatibleAffectation()
+        {
+            string fileName = "TestErrorIncompatibleAffectation";
+            string srcFilePath = @"C:\Users\j.folleas\Desktop\Tests\srcWithError\" + fileName + ".txt";
+            string[] args = { srcFilePath, "", "" };
+            List<Error> myListError = TestErrorMain(args);
+            List<Error> resListError = new List<Error>();
+            resListError.Add(new Error(ErrorType.INCOMPATIBLE_AFFECTATION, "titi ( attendue : STRING, retourner : NUMERICALE )", 3));
+            bool test = (myListError.Count == 1);
+            test &= (resListError.First().Equals(myListError.First()));
+            Assert.AreEqual(true, test);
+        }
 
         [TestMethod]
         public void TestMultipleError()
