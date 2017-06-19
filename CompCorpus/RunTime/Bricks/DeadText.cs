@@ -19,10 +19,10 @@ namespace CompCorpus.RunTime.Bricks
 
         public override string Write()
         {
-            string htmlText = "";
-            if(!paragraphOpen)
+            string htmlText = " ";
+            if (!paragraphOpen)
             {
-                htmlText += " <p>";
+                htmlText += "<p>";
             }
             htmlText += GetTextParse();
             return htmlText;

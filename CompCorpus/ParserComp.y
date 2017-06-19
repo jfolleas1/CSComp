@@ -48,6 +48,7 @@
 
 %token SEPARATOR
 %token CODEINDIC
+%token NOUVLIGNE NOUVPARAG
 
 %token <String> ID
 %token <String> STRING
@@ -189,6 +190,8 @@ textBlocElement		: DEADWORD		{ $$ = $1; }
 					| INTEGER		{ $$ = $1.ToString(); }
 					| FLOAT			{ $$ = $1.ToString(); }
 					| STRING		{ $$ = $1; }
+					| NOUVLIGNE		{ $$ = "$nouvligne"; }
+					| NOUVPARAG		{ $$ = "$nouvparag"; }
 					;
 
 callVar		: CODEINDIC BRACEOPEN ID BRACECLOSE			{ $$ = new VariableCall($3, montage.isLocalVar($3, @3.StartLine, @3.StartColumn), montage.GetVarTypeString($3)); }
