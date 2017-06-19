@@ -27,6 +27,7 @@
 		public Brick brick ;
 		public List<Brick> listBrick ;
 		public VariableCall variableCall;
+		public Title Title;
 }
 
 // Defining Tokens
@@ -55,6 +56,7 @@
 %token <Integer> INTEGER
 %token <Float> FLOAT
 %token <String> DEADWORD
+%token <String> TITLEID
 
 //types
 
@@ -79,6 +81,7 @@
 %type<listBrick> document
 %type<listBrick> listBrick
 %type<variableCall> callVar
+%type<Title> title
 
 
 // Priority
@@ -173,8 +176,9 @@ listBrick	:  /* Empty */			{ $$ = new List<Brick>();  }
 			| listBrick brick		{ $$ = $1; $$.Add($2); }
 			;
 
-brick		: textBloc				{ $$ = new DeadText($1, montage.paragraphOpen); montage.paragraphOpen = true; }
+brick		: textBloc				{ $$ = new DeadText($1, montage.paragraphOpen); montage.paragraphOpen = true;  Console.WriteLine("textBloc op " + montage.paragraphOpen ); }
 			| callVar				{ $$ = $1; }
+			| title					{ $$ = $1; montage.paragraphOpen = false; }
 			;
 
 textBloc	: textBlocElement				{ $$ = $1; }
@@ -195,6 +199,9 @@ textBlocElement		: DEADWORD		{ $$ = $1; }
 					;
 
 callVar		: CODEINDIC BRACEOPEN ID BRACECLOSE			{ $$ = new VariableCall($3, montage.isLocalVar($3, @3.StartLine, @3.StartColumn), montage.GetVarTypeString($3)); }
+			;
+
+title		: TITLEID BRACEOPEN textBloc BRACECLOSE				{  $$ = new Title($1, $3, montage.paragraphOpen); }
 			;
 
 %%
