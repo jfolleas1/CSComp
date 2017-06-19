@@ -1,10 +1,10 @@
 
 // ==========================================================================
-//  GPPG error listing for yacc source file <ParserComp.y - 16/06/2017 15:56:58>
+//  GPPG error listing for yacc source file <ParserComp.y - 19/06/2017 10:37:17>
 // ==========================================================================
 //  Version:  1.5.2
 //  Machine:  FIDF3675368
-//  DateTime: 16/06/2017 15:57:04
+//  DateTime: 19/06/2017 10:38:29
 //  UserName: j.folleas
 // ==========================================================================
 
@@ -101,19 +101,9 @@
 
 
 %% // Grammar rules section
-// Warning: NonTerminal symbol "brick" is unreachable
-// Warning: NonTerminal symbol "listBrick" is unreachable
-// Error: NonTerminal symbol "listbrick" has no productions
-// Warning: NonTerminal symbol "textBlocElement" is unreachable
-// Error: There are 1 non-terminating NonTerminal Symbols
-   //  {listbrick}
-// Warning: Terminating listbrick fixes the following size-1 NonTerminal set
-   // {listbrick}
-// Warning: NonTerminal symbol "textBloc" is unreachable
-// -------------------------------------------------------------------------
 
 montage		:	  /*Empty*/																{ Console.WriteLine(" Empty programe "); }
-			|	defActeTitle listDeclaration SEPARATOR listAffectation document 		{  montage.nameOfTheMontage=$1; montage.listOfDeclarations=$2; montage.listOfCalculExpressions=$4; /*montage.listOfBricks=$5;*/ }
+			|	defActeTitle listDeclaration SEPARATOR listAffectation document 		{  montage.nameOfTheMontage=$1; montage.listOfDeclarations=$2; montage.listOfCalculExpressions=$4; montage.listOfBricks=$5; }
 			;
 
 defActeTitle	:	TITREACTEKW BRACEOPEN deadText BRACECLOSE		{ $$ = $3; }
@@ -182,15 +172,16 @@ constante   :   INTEGER		{ @$ = @1; /*Console.WriteLine("int :" + $1 );*/		$$ = 
 
 
 
-document	: /* Empty */					{ $$ = null; /*$$=null;*/ }
-			| SEPARATOR listbrick			{ $$ = null; /*$$ = $2;*/ }
+document	: /* Empty */					{ $$=null; }
+			| SEPARATOR listBrick			{ $$ = $2; }
 			;
 
 listBrick	:  /* Empty */			{ $$ = new List<Brick>();  }
-			| listBrick brick		{ $$ = $1; }
+			| listBrick brick		{ $$ = $1; $$.Add($2); }
 			;
 
-brick		: textBloc				{ $$ = new DeadText($1); }
+brick		: textBloc				{ $$ = new DeadText($1, montage.paragraphOpen); montage.paragraphOpen = true; }
+			| callVar				{ $$ = new DeadText("callVar", montage.paragraphOpen);}
 			;
 
 textBloc	: textBlocElement				{ $$ = $1; }
@@ -199,9 +190,20 @@ textBloc	: textBlocElement				{ $$ = $1; }
 
 textBlocElement		: DEADWORD		{ $$ = $1; }
 					| ID			{ $$ = $1; }
+					| DOLLAR		{ $$ = "$"; }
+					| PARENTOPEN	{ $$ = "("; }
+					| PARENTCLOSE	{ $$ = ")"; }
+					| SEMICOLON		{ $$ = ";"; }
+					| INTEGER		{ $$ = $1.ToString(); }
+					| FLOAT			{ $$ = $1.ToString(); }
+					| STRING		{ $$ = $1; }
 					;
 
+callVar		: DOLLAR BRACEOPEN ID BRACECLOSE			{ Console.WriteLine(" Call of the var : " + $3);}
+
 %%
+// Error: Syntax error, unexpected %%
+// ----------------------------------
 
 // No argument CTOR. By deafult Parser's ctor requires scanner as param.
 public Parser(Scanner scn) : base(scn) {}

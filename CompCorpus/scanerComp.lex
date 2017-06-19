@@ -31,7 +31,7 @@ Integer [0-9]+
 Float [0-9]+,[0-9]+
 CharString \"(\\.|[^\\"])*\"
 
-DeadWord	[^ \t\n{}()+-/*(&&)(||)!(==)(<=)(<)(>=)(>)(:=);(%%)]+
+DeadWord	[^ \t\n{}\(\)\$+\-/*(&&)(||)!(==)(<=)(<)(>=)(>)(:=);(%%)]+
 
 %%
 
@@ -73,6 +73,8 @@ DeadWord	[^ \t\n{}()+-/*(&&)(||)!(==)(<=)(<)(>=)(>)(:=);(%%)]+
 ";"						{yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.SEMICOLON; }
 
 "%%"					{yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.SEPARATOR; }
+
+"$"						{yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.CODEINDIC; }
 
 {Integer}              {yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol);  Int64.TryParse (yytext, NumberStyles.Integer, CultureInfo.CurrentCulture, out yylval.Integer);  return (int)Tokens.INTEGER;}
 {Float}                {yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); double.TryParse (yytext, NumberStyles.Float, CultureInfo.CurrentCulture, out yylval.Float); return (int)Tokens.FLOAT;}

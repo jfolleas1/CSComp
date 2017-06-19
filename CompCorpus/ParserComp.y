@@ -26,6 +26,7 @@
 		public List<Affectation> listAffectation ;
 		public Brick brick ;
 		public List<Brick> listBrick ;
+		public VariableCall variableCall;
 }
 
 // Defining Tokens
@@ -46,6 +47,7 @@
 %token SEMICOLON
 
 %token SEPARATOR
+%token CODEINDIC
 
 %token <String> ID
 %token <String> STRING
@@ -75,6 +77,7 @@
 %type<brick> brick
 %type<listBrick> document
 %type<listBrick> listBrick
+%type<variableCall> callVar
 
 
 // Priority
@@ -170,6 +173,7 @@ listBrick	:  /* Empty */			{ $$ = new List<Brick>();  }
 			;
 
 brick		: textBloc				{ $$ = new DeadText($1, montage.paragraphOpen); montage.paragraphOpen = true; }
+			| callVar				{ $$ = $1; }
 			;
 
 textBloc	: textBlocElement				{ $$ = $1; }
@@ -186,6 +190,9 @@ textBlocElement		: DEADWORD		{ $$ = $1; }
 					| FLOAT			{ $$ = $1.ToString(); }
 					| STRING		{ $$ = $1; }
 					;
+
+callVar		: CODEINDIC BRACEOPEN ID BRACECLOSE			{ $$ = new VariableCall($3, montage.isLocalVar($3, @3.StartLine, @3.StartColumn)); }
+			;
 
 %%
 

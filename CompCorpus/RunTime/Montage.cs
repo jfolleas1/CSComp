@@ -82,6 +82,22 @@ namespace CompCorpus.RunTime
             }
         }
 
+        public bool isLocalVar(string varName, int line, int column)
+        {
+            if (IsInSymboleTable(varName, line, column))
+            {
+                string type;
+                symboleTabe.TryGetValue(varName, out type);
+                if (type == ("L" + ExpressionType.BOOL.ToString()) ||
+                    type == ("L" + ExpressionType.STRING.ToString()) ||
+                    type == ("L" + ExpressionType.NUMERICALE.ToString()) )
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         public bool IsValideTypeString(string typeString, int line, int column)
         {
             ExpressionType type;
