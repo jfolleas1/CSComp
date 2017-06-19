@@ -191,7 +191,7 @@ textBlocElement		: DEADWORD		{ $$ = $1; }
 					| STRING		{ $$ = $1; }
 					;
 
-callVar		: CODEINDIC BRACEOPEN ID BRACECLOSE			{ $$ = new VariableCall($3, montage.isLocalVar($3, @3.StartLine, @3.StartColumn)); }
+callVar		: CODEINDIC BRACEOPEN ID BRACECLOSE			{ $$ = new VariableCall($3, montage.isLocalVar($3, @3.StartLine, @3.StartColumn), montage.GetVarTypeString($3)); }
 			;
 
 %%

@@ -4,9 +4,9 @@
 
 // GPPG version 1.5.2
 // Machine:  FIDF3675368
-// DateTime: 19/06/2017 11:27:38
+// DateTime: 19/06/2017 13:11:04
 // UserName: j.folleas
-// Input file <ParserComp.y - 19/06/2017 11:27:29>
+// Input file <ParserComp.y - 19/06/2017 13:10:58>
 
 // options: no-lines gplex
 
@@ -67,11 +67,11 @@ public class ScanObj {
 [GeneratedCodeAttribute( "Gardens Point Parser Generator", "1.5.2")]
 public class Parser: ShiftReduceParser<ValueType, LexLocation>
 {
-  // Verbatim content from ParserComp.y - 19/06/2017 11:27:29
+  // Verbatim content from ParserComp.y - 19/06/2017 13:10:58
     
     public Montage montage = new Montage();
 
-  // End verbatim content from ParserComp.y - 19/06/2017 11:27:29
+  // End verbatim content from ParserComp.y - 19/06/2017 13:10:58
 
 #pragma warning disable 649
   private static Dictionary<int, string> aliases;
@@ -408,7 +408,7 @@ public class Parser: ShiftReduceParser<ValueType, LexLocation>
 { CurrentSemanticValue.String = ValueStack[ValueStack.Depth-1].String; }
         break;
       case 56: // callVar -> CODEINDIC, BRACEOPEN, ID, BRACECLOSE
-{ Console.WriteLine(" Call of the var : " + ValueStack[ValueStack.Depth-2].String); CurrentSemanticValue.variableCall = new VariableCall(ValueStack[ValueStack.Depth-2].String, montage.isLocalVar(ValueStack[ValueStack.Depth-2].String, LocationStack[LocationStack.Depth-2].StartLine, LocationStack[LocationStack.Depth-2].StartColumn)); }
+{ CurrentSemanticValue.variableCall = new VariableCall(ValueStack[ValueStack.Depth-2].String, montage.isLocalVar(ValueStack[ValueStack.Depth-2].String, LocationStack[LocationStack.Depth-2].StartLine, LocationStack[LocationStack.Depth-2].StartColumn), montage.GetVarTypeString(ValueStack[ValueStack.Depth-2].String)); }
         break;
     }
 #pragma warning restore 162, 1522

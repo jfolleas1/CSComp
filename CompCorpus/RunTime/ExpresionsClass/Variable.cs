@@ -117,7 +117,7 @@ namespace CompCorpus.RunTime
             ExpressionType type = ExpressionType.INVALIDE;
             switch (dataType)
             {
-                case "STRING":
+                case "STRING" :
                 case "LSTRING":
                     {
                         type = ExpressionType.STRING;
