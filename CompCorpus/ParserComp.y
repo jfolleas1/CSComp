@@ -82,6 +82,8 @@
 %type<listBrick> listBrick
 %type<variableCall> callVar
 %type<Title> title
+%type<String> titleContent
+%type<String> titleContentElement
 
 
 // Priority
@@ -181,6 +183,7 @@ brick		: textBloc				{ $$ = new DeadText($1, montage.paragraphOpen); montage.par
 			| title					{ $$ = $1; montage.paragraphOpen = false; }
 			;
 
+
 textBloc	: textBlocElement				{ $$ = $1; }
 			| textBloc textBlocElement		{ $$ = $1; $$ += (" " + $2); }
 			;
@@ -198,11 +201,31 @@ textBlocElement		: DEADWORD		{ $$ = $1; }
 					| NOUVPARAG		{ $$ = "$nouvparag"; }
 					;
 
+
+title		: TITLEID BRACEOPEN titleContent BRACECLOSE				{  $$ = new Title($1, $3, montage.paragraphOpen); }
+			;
+
+titleContent	: titleContentElement					{ $$ = $1; }
+				| titleContent titleContentElement		{ $$ = $1; $$ += $2; }
+				;
+
+titleContentElement		: DEADWORD		{ $$ = $1; }
+						| ID			{ $$ = $1; }
+						| DOLLAR		{ $$ = "$"; }
+						| PARENTOPEN	{ $$ = "("; }
+						| PARENTCLOSE	{ $$ = ")"; }
+						| SEMICOLON		{ $$ = ";"; }
+						| INTEGER		{ $$ = $1.ToString(); }
+						| FLOAT			{ $$ = $1.ToString(); }
+						| STRING		{ $$ = $1; }
+						| callVar		{ $$ = $1.Write(); }
+						;
+	
+
 callVar		: CODEINDIC BRACEOPEN ID BRACECLOSE			{ $$ = new VariableCall($3, montage.isLocalVar($3, @3.StartLine, @3.StartColumn), montage.GetVarTypeString($3)); }
 			;
 
-title		: TITLEID BRACEOPEN textBloc BRACECLOSE				{  $$ = new Title($1, $3, montage.paragraphOpen); }
-			;
+
 
 %%
 
