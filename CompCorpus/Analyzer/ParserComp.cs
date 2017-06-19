@@ -4,9 +4,9 @@
 
 // GPPG version 1.5.2
 // Machine:  FIDF3675368
-// DateTime: 16/06/2017 16:23:34
+// DateTime: 19/06/2017 10:21:24
 // UserName: j.folleas
-// Input file <ParserComp.y - 16/06/2017 16:21:58>
+// Input file <ParserComp.y - 19/06/2017 10:09:06>
 
 // options: no-lines gplex
 
@@ -66,11 +66,11 @@ public class ScanObj {
 [GeneratedCodeAttribute( "Gardens Point Parser Generator", "1.5.2")]
 public class Parser: ShiftReduceParser<ValueType, LexLocation>
 {
-  // Verbatim content from ParserComp.y - 16/06/2017 16:21:58
+  // Verbatim content from ParserComp.y - 19/06/2017 10:09:06
     
     public Montage montage = new Montage();
 
-  // End verbatim content from ParserComp.y - 16/06/2017 16:21:58
+  // End verbatim content from ParserComp.y - 19/06/2017 10:09:06
 
 #pragma warning disable 649
   private static Dictionary<int, string> aliases;
@@ -361,7 +361,7 @@ public class Parser: ShiftReduceParser<ValueType, LexLocation>
 { CurrentSemanticValue.listBrick = ValueStack[ValueStack.Depth-2].listBrick; CurrentSemanticValue.listBrick.Add(ValueStack[ValueStack.Depth-1].brick); }
         break;
       case 43: // brick -> textBloc
-{ CurrentSemanticValue.brick = new DeadText(ValueStack[ValueStack.Depth-1].String); }
+{ CurrentSemanticValue.brick = new DeadText(ValueStack[ValueStack.Depth-1].String, montage.paragraphOpen); montage.paragraphOpen = true; }
         break;
       case 44: // textBloc -> textBlocElement
 { CurrentSemanticValue.String = ValueStack[ValueStack.Depth-1].String; }

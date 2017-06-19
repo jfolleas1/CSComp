@@ -15,6 +15,7 @@ namespace CompCorpus.RunTime
         public List<Declaration> listOfDeclarations { get; set; }
         public List<Brick> listOfBricks { get; set; }
         public List<Error> errorList { get; }
+        public Boolean paragraphOpen { get; set; } = false;
 
 
         public Montage()
@@ -191,7 +192,11 @@ namespace CompCorpus.RunTime
             {
                 Console.Write(bk.Write());
             }
+            if (paragraphOpen)
+            {
+                Console.Write(" </p> \n");
 
+            }
             string endOfTheDoc = "\n</div>\n\n<script src=\"targetFileNameController.js\"></script>\n</body>\n</html>\n\n";
             Console.Write(endOfTheDoc);
 
@@ -277,6 +282,10 @@ namespace CompCorpus.RunTime
                 foreach (Brick bk in listOfBricks)
                 {
                     monStreamWriter.Write(bk.Write());
+                }
+                if (paragraphOpen)
+                {
+                    monStreamWriter.Write(" </p> \n");
                 }
 
                 string endOfTheDoc = "\n</div>\n\n<script src=\""+ GetLocalFileName(targetFileJSName) +"\"></script>\n</body>\n</html>\n\n";

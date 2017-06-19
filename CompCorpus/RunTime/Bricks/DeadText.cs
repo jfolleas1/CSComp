@@ -10,17 +10,21 @@ namespace CompCorpus.RunTime.Bricks
     public class DeadText : Brick
     {
         public string text { get; }
-        public DeadText(string text)
+        private bool paragraphOpen { get; set; }
+        public DeadText(string text, bool paragraphOpen)
         {
             this.text = text;
+            this.paragraphOpen = paragraphOpen;
         }
 
         public override string Write()
         {
             string htmlText = "";
-            htmlText += " <p>";
+            if(!paragraphOpen)
+            {
+                htmlText += " <p>";
+            }
             htmlText += GetTextParse();
-            htmlText += " </p> \n";
             return htmlText;
         }
 

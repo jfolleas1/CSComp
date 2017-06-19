@@ -169,7 +169,7 @@ listBrick	:  /* Empty */			{ $$ = new List<Brick>();  }
 			| listBrick brick		{ $$ = $1; $$.Add($2); }
 			;
 
-brick		: textBloc				{ $$ = new DeadText($1); }
+brick		: textBloc				{ $$ = new DeadText($1, montage.paragraphOpen); montage.paragraphOpen = true; }
 			;
 
 textBloc	: textBlocElement				{ $$ = $1; }
