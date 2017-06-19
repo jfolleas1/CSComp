@@ -11,8 +11,9 @@ namespace UnitTest
 {
     class MainTest
     {
-        static public void TestMain(string[] args)
+        static public bool TestMain(string[] args)
         {
+            bool filemodified = false ;
             if (args.Length == 3)
             {
                 string sourceFileName = args[0];
@@ -39,6 +40,7 @@ namespace UnitTest
                     if (montage != null && !montage.errorList.Any() )
                     {
                         montage.WriteInFiles(targetFilehtmlName, targetFileJSName);
+                        filemodified = true;
                     }
                     else
                     {
@@ -54,7 +56,9 @@ namespace UnitTest
                 {
                     file.Close();
                 }
+                
             }
+            return filemodified;
         }
     }
 }
