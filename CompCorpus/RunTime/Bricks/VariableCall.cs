@@ -20,7 +20,7 @@ namespace CompCorpus.RunTime.Bricks
 
         public override string Write()
         {
-            //<input type="text" ng-model="immeuble.nom" onkeypress="this.style.width = ((this.value.length) * 8) + 'px';">
+           
             string htmlText = "";
             if (local)
             {
@@ -40,8 +40,8 @@ namespace CompCorpus.RunTime.Bricks
 
         private string GetHtmlType()
         {
-            if (typeString == "L" + ExpressionType.NUMERICALE.ToString() ||
-                typeString == ExpressionType.NUMERICALE.ToString())
+            if (typeString == "L" + ExpressionType.NUMBER.ToString() ||
+                typeString == ExpressionType.NUMBER.ToString())
             {
                 return "number";
             }

@@ -4,9 +4,9 @@
 
 // GPPG version 1.5.2
 // Machine:  FIDF3675368
-// DateTime: 19/06/2017 15:25:02
+// DateTime: 19/06/2017 16:25:27
 // UserName: j.folleas
-// Input file <ParserComp.y - 19/06/2017 15:24:58>
+// Input file <ParserComp.y - 19/06/2017 16:25:10>
 
 // options: no-lines gplex
 
@@ -68,11 +68,11 @@ public class ScanObj {
 [GeneratedCodeAttribute( "Gardens Point Parser Generator", "1.5.2")]
 public class Parser: ShiftReduceParser<ValueType, LexLocation>
 {
-  // Verbatim content from ParserComp.y - 19/06/2017 15:24:58
+  // Verbatim content from ParserComp.y - 19/06/2017 16:25:10
     
     public Montage montage = new Montage();
 
-  // End verbatim content from ParserComp.y - 19/06/2017 15:24:58
+  // End verbatim content from ParserComp.y - 19/06/2017 16:25:10
 
 #pragma warning disable 649
   private static Dictionary<int, string> aliases;
@@ -394,7 +394,7 @@ public class Parser: ShiftReduceParser<ValueType, LexLocation>
 { CurrentLocationSpan = LocationStack[LocationStack.Depth-1]; /*Console.WriteLine("string :" + $1 );*/		CurrentSemanticValue.constante = new VariableString(ValueStack[ValueStack.Depth-1].String);}
         break;
       case 39: // document -> /* empty */
-{ CurrentSemanticValue.listBrick=null; }
+{ CurrentSemanticValue.listBrick=new List<Brick>(); }
         break;
       case 40: // document -> SEPARATOR, listBrick
 { CurrentSemanticValue.listBrick = ValueStack[ValueStack.Depth-1].listBrick; }
@@ -406,7 +406,7 @@ public class Parser: ShiftReduceParser<ValueType, LexLocation>
 { CurrentSemanticValue.listBrick = ValueStack[ValueStack.Depth-2].listBrick; CurrentSemanticValue.listBrick.Add(ValueStack[ValueStack.Depth-1].brick); }
         break;
       case 43: // brick -> textBloc
-{ CurrentSemanticValue.brick = new DeadText(ValueStack[ValueStack.Depth-1].String, montage.paragraphOpen); montage.paragraphOpen = true;  Console.WriteLine("textBloc op " + montage.paragraphOpen ); }
+{ CurrentSemanticValue.brick = new DeadText(ValueStack[ValueStack.Depth-1].String, montage.paragraphOpen); montage.paragraphOpen = true; }
         break;
       case 44: // brick -> callVar
 { CurrentSemanticValue.brick = ValueStack[ValueStack.Depth-1].variableCall; }

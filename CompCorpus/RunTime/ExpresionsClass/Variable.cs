@@ -44,7 +44,7 @@ namespace CompCorpus.RunTime
     {
         public long value { get; }
 
-        public VariableInteger(long value) : base(VariableType.INTEGER, ExpressionType.NUMERICALE)
+        public VariableInteger(long value) : base(VariableType.INTEGER, ExpressionType.NUMBER)
         {
             this.value = value;
         }
@@ -66,7 +66,7 @@ namespace CompCorpus.RunTime
     {
         public double value { get; }
 
-        public VariableFloat(double value) : base(VariableType.FLOAT, ExpressionType.NUMERICALE)
+        public VariableFloat(double value) : base(VariableType.FLOAT, ExpressionType.NUMBER)
         {
             this.value = value;
         }
@@ -123,10 +123,10 @@ namespace CompCorpus.RunTime
                         type = ExpressionType.STRING;
                         break;
                     }
-                case "NUMERICALE":
-                case "LNUMERICALE":
+                case "NUMBER":
+                case "LNUMBER":
                     {
-                        type = ExpressionType.NUMERICALE;
+                        type = ExpressionType.NUMBER;
                         break;
                     }
                 case "BOOL":
@@ -147,7 +147,7 @@ namespace CompCorpus.RunTime
         public VariableId(string name, string varType) : base(VariableType.ID, ComputeDataType(varType))
         {
             this.name = name;
-            local = ((varType == "LSTRING") || (varType == "LNUMERICALE") || (varType == "LBOOL"));
+            local = ((varType == "LSTRING") || (varType == "LNUMBER") || (varType == "LBOOL"));
 
         }
 

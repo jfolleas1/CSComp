@@ -90,7 +90,7 @@ namespace CompCorpus.RunTime
                 symboleTabe.TryGetValue(varName, out type);
                 if (type == ("L" + ExpressionType.BOOL.ToString()) ||
                     type == ("L" + ExpressionType.STRING.ToString()) ||
-                    type == ("L" + ExpressionType.NUMERICALE.ToString()) )
+                    type == ("L" + ExpressionType.NUMBER.ToString()) )
                 {
                     return true;
                 }
@@ -279,7 +279,7 @@ namespace CompCorpus.RunTime
                 }
 
                 StreamWriter monStreamWriter = new StreamWriter(targetFilehtmlName, true);
-
+                
                 //Ecriture du texte dans votre fichier 
                 string beginOfTheHtmlDoc = "<!DOCTYPE html> \n<html lang=\"fr - FR\"> \n" +
                     "<script src=\"https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js\"></script>\n" +
@@ -293,22 +293,25 @@ namespace CompCorpus.RunTime
                     "</head>\n\n<body>\n" +
                     "<div ng-app=\"myActe\" ng-controller=\"myCtrl\">\n";
                 monStreamWriter.Write(beginOfTheHtmlDoc);
-
+               
                 // what will be written in the html document
                 foreach (Brick bk in listOfBricks)
                 {
+                    
                     monStreamWriter.Write(bk.Write());
                 }
+                
                 if (paragraphOpen)
                 {
                     monStreamWriter.Write(" </p> \n");
                 }
-
+                
                 string endOfTheDoc = "\n</div>\n\n<script src=\""+ GetLocalFileName(targetFileJSName) +"\"></script>\n</body>\n</html>\n\n";
                 monStreamWriter.Write(endOfTheDoc);
 
                 // close the StreamWriter (realy important) 
                 monStreamWriter.Close();
+                
             }
             catch (Exception ex)
             {

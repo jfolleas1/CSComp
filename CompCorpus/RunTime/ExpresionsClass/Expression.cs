@@ -71,7 +71,7 @@ namespace CompCorpus.RunTime
                 case ExpressionSymbole.MUL:
                 case ExpressionSymbole.MINUS:
                 case ExpressionSymbole.DIV:
-                    if (exp2Type == ExpressionType.NUMERICALE && exp1Type == ExpressionType.NUMERICALE)
+                    if (exp2Type == ExpressionType.NUMBER && exp1Type == ExpressionType.NUMBER)
                     {
                         myType = exp1Type;
                     }
@@ -99,7 +99,7 @@ namespace CompCorpus.RunTime
                 case ExpressionSymbole.INFEGALE:
                 case ExpressionSymbole.SUP:
                 case ExpressionSymbole.SUPEGALE:
-                    if (exp2Type == ExpressionType.NUMERICALE && exp1Type == ExpressionType.NUMERICALE)
+                    if (exp2Type == ExpressionType.NUMBER && exp1Type == ExpressionType.NUMBER)
                     {
                         myType = ExpressionType.BOOL;
                     }

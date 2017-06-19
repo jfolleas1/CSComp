@@ -35,9 +35,14 @@ namespace UnitTest
                     parser.Parse();
 
                     montage = parser.montage;
+
                     if (montage != null && !montage.errorList.Any() )
                     {
                         montage.WriteInFiles(targetFilehtmlName, targetFileJSName);
+                    }
+                    else
+                    {
+                        montage.PrintErrors();
                     }
 
                 }

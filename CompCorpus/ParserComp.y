@@ -170,7 +170,7 @@ constante   :   INTEGER		{ @$ = @1; /*Console.WriteLine("int :" + $1 );*/		$$ = 
 
 
 
-document	: /* Empty */					{ $$=null; }
+document	: /* Empty */					{ $$=new List<Brick>(); }
 			| SEPARATOR listBrick			{ $$ = $2; }
 			;
 
@@ -178,7 +178,7 @@ listBrick	:  /* Empty */			{ $$ = new List<Brick>();  }
 			| listBrick brick		{ $$ = $1; $$.Add($2); }
 			;
 
-brick		: textBloc				{ $$ = new DeadText($1, montage.paragraphOpen); montage.paragraphOpen = true;  Console.WriteLine("textBloc op " + montage.paragraphOpen ); }
+brick		: textBloc				{ $$ = new DeadText($1, montage.paragraphOpen); montage.paragraphOpen = true; }
 			| callVar				{ $$ = $1; }
 			| title					{ $$ = $1; montage.paragraphOpen = false; }
 			;

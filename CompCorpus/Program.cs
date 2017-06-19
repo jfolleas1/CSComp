@@ -44,14 +44,6 @@ namespace CompCorpus
 
                     if (montage != null && !montage.errorList.Any() && !scn.hasErrors)
                     {
-                        //montage.Print();
-                        //Console.WriteLine("///////////////////////////////////////////////////////");
-                        //Console.WriteLine();
-                        //Console.WriteLine();
-                        //Console.WriteLine();
-                        //Console.WriteLine();
-                        //Console.WriteLine("///////////////////////////////////////////////////////");
-                        //montage.PrintFutureFiles();
                         montage.WriteInFiles(targetFilehtmlName, targetFileJSName);
                         System.Diagnostics.Process.Start(targetFilehtmlName);
                     }
