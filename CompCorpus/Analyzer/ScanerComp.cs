@@ -6,9 +6,9 @@
 //
 //  GPLEX Version:  1.2.2
 //  Machine:  FIDF3675368
-//  DateTime: 20/06/2017 13:47:21
+//  DateTime: 20/06/2017 15:45:47
 //  UserName: j.folleas
-//  GPLEX input file <ScanerComp.lex - 20/06/2017 13:26:33>
+//  GPLEX input file <ScanerComp.lex - 20/06/2017 15:25:34>
 //  GPLEX frame file <embedded resource>
 //
 //  Option settings: unicode, verbose, parser, stack, minimize

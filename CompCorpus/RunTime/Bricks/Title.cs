@@ -10,13 +10,11 @@ namespace CompCorpus.RunTime.Bricks
     {
         public int level { get; }
         public string text { get; }
-        private bool paragraphOpen { get; set; }
 
-        public Title(string codeKW, string text, bool myParagrapheOpen )
+        public Title(string codeKW, string text)
         {
             this.text = text;
             this.level = GetLevel(codeKW);
-            this.paragraphOpen = myParagrapheOpen;
         }
 
         private int GetLevel(string codeKW)
@@ -29,10 +27,6 @@ namespace CompCorpus.RunTime.Bricks
         public override string Write()
         {
             string htmlText = "";
-            if (paragraphOpen)
-            {
-                htmlText += "</p> \n";
-            }
             htmlText += "<h" + level + "> " +
                 text + "</h" + level + ">";
             return htmlText;
