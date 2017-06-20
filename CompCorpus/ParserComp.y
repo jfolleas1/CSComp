@@ -178,9 +178,9 @@ listBrick	:  /* Empty */			{ $$ = new List<Brick>();  }
 			| listBrick brick		{ $$ = $1; $$.Add($2); }
 			;
 
-brick		: textBloc				{ $$ = new DeadText($1, montage.paragraphOpen); montage.paragraphOpen = true; }
+brick		: textBloc				{ $$ = new DeadText($1);}
 			| callVar				{ $$ = $1; }
-			| title					{ $$ = $1; montage.paragraphOpen = false; }
+			| title					{ $$ = $1; }
 			;
 
 
@@ -202,7 +202,7 @@ textBlocElement		: DEADWORD		{ $$ = $1; }
 					;
 
 
-title		: TITLEID BRACEOPEN titleContent BRACECLOSE				{  $$ = new Title($1, $3, montage.paragraphOpen); }
+title		: TITLEID BRACEOPEN titleContent BRACECLOSE				{  $$ = new Title($1, $3); }
 			;
 
 titleContent	: titleContentElement					{ $$ = $1; }

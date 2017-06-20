@@ -10,20 +10,14 @@ namespace CompCorpus.RunTime.Bricks
     public class DeadText : Brick
     {
         public string text { get; }
-        private bool paragraphOpen { get; set; }
-        public DeadText(string text, bool paragraphOpen)
+        public DeadText(string text)
         {
             this.text = text;
-            this.paragraphOpen = paragraphOpen;
         }
 
         public override string Write()
         {
             string htmlText = " ";
-            if (!paragraphOpen)
-            {
-                htmlText += "<p>";
-            }
             htmlText += GetTextParse();
             return htmlText;
         }
@@ -32,7 +26,7 @@ namespace CompCorpus.RunTime.Bricks
         {
             Dictionary<string, string> rules = new Dictionary<string, string>();
             rules.Add(@"\$nouvligne", @"<br/>");
-            rules.Add(@"\$nouvparag", @"</p> <p>");
+            rules.Add(@"\$nouvparag", @"<p> </p>");
             string parsedText = this.text;
             foreach (var item in rules)
             {

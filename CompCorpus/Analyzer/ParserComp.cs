@@ -4,9 +4,9 @@
 
 // GPPG version 1.5.2
 // Machine:  FIDF3675368
-// DateTime: 20/06/2017 11:16:14
+// DateTime: 20/06/2017 15:18:42
 // UserName: j.folleas
-// Input file <ParserComp.y - 20/06/2017 11:16:07>
+// Input file <ParserComp.y - 20/06/2017 15:18:26>
 
 // options: no-lines gplex
 
@@ -68,11 +68,11 @@ public class ScanObj {
 [GeneratedCodeAttribute( "Gardens Point Parser Generator", "1.5.2")]
 public class Parser: ShiftReduceParser<ValueType, LexLocation>
 {
-  // Verbatim content from ParserComp.y - 20/06/2017 11:16:07
+  // Verbatim content from ParserComp.y - 20/06/2017 15:18:26
     
     public Montage montage = new Montage();
 
-  // End verbatim content from ParserComp.y - 20/06/2017 11:16:07
+  // End verbatim content from ParserComp.y - 20/06/2017 15:18:26
 
 #pragma warning disable 649
   private static Dictionary<int, string> aliases;
@@ -406,13 +406,13 @@ public class Parser: ShiftReduceParser<ValueType, LexLocation>
 { CurrentSemanticValue.listBrick = ValueStack[ValueStack.Depth-2].listBrick; CurrentSemanticValue.listBrick.Add(ValueStack[ValueStack.Depth-1].brick); }
         break;
       case 43: // brick -> textBloc
-{ CurrentSemanticValue.brick = new DeadText(ValueStack[ValueStack.Depth-1].String, montage.paragraphOpen); montage.paragraphOpen = true; }
+{ CurrentSemanticValue.brick = new DeadText(ValueStack[ValueStack.Depth-1].String);}
         break;
       case 44: // brick -> callVar
 { CurrentSemanticValue.brick = ValueStack[ValueStack.Depth-1].variableCall; }
         break;
       case 45: // brick -> title
-{ CurrentSemanticValue.brick = ValueStack[ValueStack.Depth-1].Title; montage.paragraphOpen = false; }
+{ CurrentSemanticValue.brick = ValueStack[ValueStack.Depth-1].Title; }
         break;
       case 46: // textBloc -> textBlocElement
 { CurrentSemanticValue.String = ValueStack[ValueStack.Depth-1].String; }
@@ -454,7 +454,7 @@ public class Parser: ShiftReduceParser<ValueType, LexLocation>
 { CurrentSemanticValue.String = "$nouvparag"; }
         break;
       case 59: // title -> TITLEID, BRACEOPEN, titleContent, BRACECLOSE
-{  CurrentSemanticValue.Title = new Title(ValueStack[ValueStack.Depth-4].String, ValueStack[ValueStack.Depth-2].String, montage.paragraphOpen); }
+{  CurrentSemanticValue.Title = new Title(ValueStack[ValueStack.Depth-4].String, ValueStack[ValueStack.Depth-2].String); }
         break;
       case 60: // titleContent -> titleContentElement
 { CurrentSemanticValue.String = ValueStack[ValueStack.Depth-1].String; }
