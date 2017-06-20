@@ -206,7 +206,7 @@ title		: TITLEID BRACEOPEN titleContent BRACECLOSE				{  $$ = new Title($1, $3, 
 			;
 
 titleContent	: titleContentElement					{ $$ = $1; }
-				| titleContent titleContentElement		{ $$ = $1; $$ += $2; }
+				| titleContent titleContentElement		{ $$ = $1; $$ += (" " + $2); }
 				;
 
 titleContentElement		: DEADWORD		{ $$ = $1; }
@@ -224,6 +224,7 @@ titleContentElement		: DEADWORD		{ $$ = $1; }
 
 callVar		: CODEINDIC BRACEOPEN ID BRACECLOSE			{ $$ = new VariableCall($3, montage.isLocalVar($3, @3.StartLine, @3.StartColumn), montage.GetVarTypeString($3)); }
 			;
+
 
 
 

@@ -299,6 +299,7 @@ namespace CompCorpus.RunTime
                 {
                     
                     monStreamWriter.Write(bk.Write());
+                    monStreamWriter.Write("\n");
                 }
                 
                 if (paragraphOpen)
