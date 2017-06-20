@@ -13,6 +13,10 @@ namespace CompCorpus
    
     public static class Program
     {
+        public static int toto()
+        {
+            return 1;
+        }
 
         static public void Main(string[] args)
         {
