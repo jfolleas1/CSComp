@@ -32,7 +32,7 @@ Float [0-9]+,[0-9]+
 CharString \"(\\.|[^\\"])*\"
 TitleId ($titre)[1-6]
 
-DeadWord	[^ \t\n{}\(\)\$+\-/*(&&)(||)!(==)(<=)(<)(>=)(>)(:=);(%%)]+
+DeadWord	[^ ,\t\n{}\(\)\$+\-/*(&&)(||)!(==)(<=)(<)(>=)(>)(:=);(%%)]+
 
 %%
 
@@ -51,6 +51,9 @@ DeadWord	[^ \t\n{}\(\)\$+\-/*(&&)(||)!(==)(<=)(<)(>=)(>)(:=);(%%)]+
 "$dollar"				{yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.DOLLAR;}
 "$nouvligne"            {yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.NOUVLIGNE;}
 "$nouvparag"			{yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.NOUVPARAG;}
+
+{TitleId}				{yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); yylval.String = yytext; return (int)Tokens.TITLEID;}
+"$choix"				{yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.CHOIXCKW;}
 
 
 "+"                     {yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.PLUS;}
@@ -75,6 +78,7 @@ DeadWord	[^ \t\n{}\(\)\$+\-/*(&&)(||)!(==)(<=)(<)(>=)(>)(:=);(%%)]+
 ":="					{yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.ASSIGN;}
 
 ";"						{yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.SEMICOLON; }
+","						{yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.COMMA; }
 
 "%%"					{yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.SEPARATOR; }
 
@@ -84,7 +88,6 @@ DeadWord	[^ \t\n{}\(\)\$+\-/*(&&)(||)!(==)(<=)(<)(>=)(>)(:=);(%%)]+
 {Float}					{yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); double.TryParse (yytext, NumberStyles.Float, CultureInfo.CurrentCulture, out yylval.Float); return (int)Tokens.FLOAT;}
 {CharString}			{yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); yylval.String = yytext; return (int)Tokens.STRING;}
 {Identifier}			{yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); yylval.String = yytext; return (int)Tokens.ID;}
-{TitleId}				{yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); yylval.String = yytext; return (int)Tokens.TITLEID;}
 
 {DeadWord}				{yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); yylval.String = yytext; return (int)Tokens.DEADWORD;}
 

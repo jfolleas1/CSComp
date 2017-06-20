@@ -45,11 +45,13 @@
 
 %token ASSIGN
 
-%token SEMICOLON
+%token SEMICOLON COMMA
 
 %token SEPARATOR
 %token CODEINDIC
 %token NOUVLIGNE NOUVPARAG
+
+%token CHOIXCKW
 
 %token <String> ID
 %token <String> STRING
@@ -84,6 +86,9 @@
 %type<Title> title
 %type<String> titleContent
 %type<String> titleContentElement
+%type<String> choice
+%type<String> listProposition
+%type<String> proposition
 
 
 // Priority
@@ -181,6 +186,7 @@ listBrick	:  /* Empty */			{ $$ = new List<Brick>();  }
 brick		: textBloc				{ $$ = new DeadText($1, montage.paragraphOpen); montage.paragraphOpen = true; }
 			| callVar				{ $$ = $1; }
 			| title					{ $$ = $1; montage.paragraphOpen = false; }
+			| choice				{ $$ = new DeadText($1, montage.paragraphOpen); montage.paragraphOpen = true;}
 			;
 
 
@@ -194,6 +200,7 @@ textBlocElement		: DEADWORD		{ $$ = $1; }
 					| PARENTOPEN	{ $$ = "("; }
 					| PARENTCLOSE	{ $$ = ")"; }
 					| SEMICOLON		{ $$ = ";"; }
+					| COMMA			{ $$ = ","; }
 					| INTEGER		{ $$ = $1.ToString(); }
 					| FLOAT			{ $$ = $1.ToString(); }
 					| STRING		{ $$ = $1; }
@@ -215,6 +222,7 @@ titleContentElement		: DEADWORD		{ $$ = $1; }
 						| PARENTOPEN	{ $$ = "("; }
 						| PARENTCLOSE	{ $$ = ")"; }
 						| SEMICOLON		{ $$ = ";"; }
+						| COMMA			{ $$ = ","; }
 						| INTEGER		{ $$ = $1.ToString(); }
 						| FLOAT			{ $$ = $1.ToString(); }
 						| STRING		{ $$ = $1; }
@@ -226,7 +234,15 @@ callVar		: CODEINDIC BRACEOPEN ID BRACECLOSE			{ $$ = new VariableCall($3, monta
 			;
 
 
+choice		: CHOIXCKW PARENTOPEN ID COMMA STRING PARENTCLOSE BRACEOPEN listProposition BRACECLOSE		{ $$ = ("Il y  a un choix " + $3 + " : " + $5 + " $nouvligne " + $8); }
+			;
 
+listProposition		: proposition							{ $$ = "proposition : " + $1; }
+					| listProposition proposition			{ $$=$1; $$ += ("$nouvligne proposition : " + $2); }
+					;
+
+proposition			: PARENTOPEN STRING PARENTCLOSE BRACEOPEN listBrick BRACECLOSE			{ $$ = $2; }
+					;
 
 %%
 
