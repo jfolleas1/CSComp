@@ -46,7 +46,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="RunTime\Bricks\Brick.cs" />
+    <Compile Include="RunTime\Bricks\Choice.cs" />
     <Compile Include="RunTime\Bricks\DeadText.cs" />
+    <Compile Include="RunTime\Bricks\Proposition.cs" />
     <Compile Include="RunTime\Bricks\Title.cs" />
     <Compile Include="RunTime\Bricks\VariableCall.cs" />
     <Compile Include="RunTime\declaration\DeclarationStruct.cs" />

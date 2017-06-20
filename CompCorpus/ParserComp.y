@@ -28,6 +28,10 @@
 		public List<Brick> listBrick ;
 		public VariableCall variableCall;
 		public Title Title;
+		public Proposition proposition;
+		public List<Proposition> listProposition;
+		public Choice choice;
+
 }
 
 // Defining Tokens
@@ -82,13 +86,19 @@
 %type<brick> brick
 %type<listBrick> document
 %type<listBrick> listBrick
+
+
 %type<variableCall> callVar
+
+
 %type<Title> title
 %type<String> titleContent
 %type<String> titleContentElement
-%type<String> choice
-%type<String> listProposition
-%type<String> proposition
+
+
+%type<choice> choice
+%type<listProposition> listProposition
+%type<proposition> proposition
 
 
 // Priority
