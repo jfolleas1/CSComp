@@ -4,9 +4,9 @@
 
 // GPPG version 1.5.2
 // Machine:  FIDF3675368
-// DateTime: 20/06/2017 13:51:14
+// DateTime: 20/06/2017 14:33:26
 // UserName: j.folleas
-// Input file <ParserComp.y - 20/06/2017 13:51:11>
+// Input file <ParserComp.y - 20/06/2017 14:33:24>
 
 // options: no-lines gplex
 
@@ -46,6 +46,10 @@ public struct ValueType
 		public List<Brick> listBrick ;
 		public VariableCall variableCall;
 		public Title Title;
+		public Proposition proposition;
+		public List<Proposition> listProposition;
+		public Choice choice;
+
 }
 // Abstract base class for GPLEX scanners
 [GeneratedCodeAttribute( "Gardens Point Parser Generator", "1.5.2")]
@@ -69,11 +73,11 @@ public class ScanObj {
 [GeneratedCodeAttribute( "Gardens Point Parser Generator", "1.5.2")]
 public class Parser: ShiftReduceParser<ValueType, LexLocation>
 {
-  // Verbatim content from ParserComp.y - 20/06/2017 13:51:11
+  // Verbatim content from ParserComp.y - 20/06/2017 14:33:24
     
     public Montage montage = new Montage();
 
-  // End verbatim content from ParserComp.y - 20/06/2017 13:51:11
+  // End verbatim content from ParserComp.y - 20/06/2017 14:33:24
 
 #pragma warning disable 649
   private static Dictionary<int, string> aliases;
@@ -443,7 +447,7 @@ public class Parser: ShiftReduceParser<ValueType, LexLocation>
 { CurrentSemanticValue.brick = ValueStack[ValueStack.Depth-1].Title; montage.paragraphOpen = false; }
         break;
       case 46: // brick -> choice
-{ CurrentSemanticValue.brick = new DeadText(ValueStack[ValueStack.Depth-1].String, montage.paragraphOpen); montage.paragraphOpen = true;}
+{ CurrentSemanticValue.brick = new DeadText(" Choix , voir la sortie de console ", montage.paragraphOpen); montage.paragraphOpen = true;}
         break;
       case 47: // textBloc -> textBlocElement
 { CurrentSemanticValue.String = ValueStack[ValueStack.Depth-1].String; }
@@ -534,17 +538,17 @@ public class Parser: ShiftReduceParser<ValueType, LexLocation>
         break;
       case 76: // choice -> CHOIXCKW, PARENTOPEN, ID, COMMA, STRING, PARENTCLOSE, BRACEOPEN, 
                //           listProposition, BRACECLOSE
-{ CurrentSemanticValue.String = ("Il y  a un choix " + ValueStack[ValueStack.Depth-7].String + " : " + ValueStack[ValueStack.Depth-5].String + " $nouvligne " + ValueStack[ValueStack.Depth-2].String); }
+{ CurrentSemanticValue.choice = new Choice(ValueStack[ValueStack.Depth-7].String, ValueStack[ValueStack.Depth-5].String, ValueStack[ValueStack.Depth-2].listProposition); CurrentSemanticValue.choice.Print(); }
         break;
       case 77: // listProposition -> proposition
-{ CurrentSemanticValue.String = "proposition : " + ValueStack[ValueStack.Depth-1].String; }
+{ CurrentSemanticValue.listProposition = new List<Proposition>(); CurrentSemanticValue.listProposition.Add(ValueStack[ValueStack.Depth-1].proposition); }
         break;
       case 78: // listProposition -> listProposition, proposition
-{ CurrentSemanticValue.String=ValueStack[ValueStack.Depth-2].String; CurrentSemanticValue.String += ("$nouvligne proposition : " + ValueStack[ValueStack.Depth-1].String); }
+{ CurrentSemanticValue.listProposition = ValueStack[ValueStack.Depth-2].listProposition; CurrentSemanticValue.listProposition.Add(ValueStack[ValueStack.Depth-1].proposition); }
         break;
       case 79: // proposition -> PARENTOPEN, STRING, PARENTCLOSE, BRACEOPEN, listBrick, 
                //                BRACECLOSE
-{ CurrentSemanticValue.String = ValueStack[ValueStack.Depth-5].String; }
+{ CurrentSemanticValue.proposition = new Proposition(ValueStack[ValueStack.Depth-5].String, ValueStack[ValueStack.Depth-2].listBrick); }
         break;
     }
 #pragma warning restore 162, 1522

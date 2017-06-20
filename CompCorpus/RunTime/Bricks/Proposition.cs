@@ -11,7 +11,7 @@ namespace CompCorpus.RunTime.Bricks
         public string textOfChoice { get; }
         public List<Brick> brickList { get; }
 
-        public Proposition(string textOfChoise, List<Brick> brickList)
+        public Proposition(string textOfChoice, List<Brick> brickList)
         {
             this.textOfChoice = textOfChoice;
             this.brickList = brickList;

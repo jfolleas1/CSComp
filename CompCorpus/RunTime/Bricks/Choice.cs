@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace CompCorpus.RunTime.Bricks
 {
-    public class Choise : Brick
+    public class Choice : Brick
     {
         public string varName { get; }
         public string textOfChoice { get; }
         public List<Proposition> propositionList { get;  }
 
-        public Choise(string varName, string textOfChoice, List<Proposition> propositionList)
+        public Choice(string varName, string textOfChoice, List<Proposition> propositionList)
         {
             this.varName = varName;
             this.textOfChoice = textOfChoice;

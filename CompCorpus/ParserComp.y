@@ -185,6 +185,9 @@ constante   :   INTEGER		{ @$ = @1; /*Console.WriteLine("int :" + $1 );*/		$$ = 
 
 
 
+
+
+
 document	: /* Empty */					{ $$=new List<Brick>(); }
 			| SEPARATOR listBrick			{ $$ = $2; }
 			;
@@ -196,7 +199,7 @@ listBrick	:  /* Empty */			{ $$ = new List<Brick>();  }
 brick		: textBloc				{ $$ = new DeadText($1, montage.paragraphOpen); montage.paragraphOpen = true; }
 			| callVar				{ $$ = $1; }
 			| title					{ $$ = $1; montage.paragraphOpen = false; }
-			| choice				{ $$ = new DeadText($1, montage.paragraphOpen); montage.paragraphOpen = true;}
+			| choice				{ $$ = new DeadText(" Choix , voir la sortie de console ", montage.paragraphOpen); montage.paragraphOpen = true;}
 			;
 
 
@@ -244,14 +247,14 @@ callVar		: CODEINDIC BRACEOPEN ID BRACECLOSE			{ $$ = new VariableCall($3, monta
 			;
 
 
-choice		: CHOIXCKW PARENTOPEN ID COMMA STRING PARENTCLOSE BRACEOPEN listProposition BRACECLOSE		{ $$ = ("Il y  a un choix " + $3 + " : " + $5 + " $nouvligne " + $8); }
+choice		: CHOIXCKW PARENTOPEN ID COMMA STRING PARENTCLOSE BRACEOPEN listProposition BRACECLOSE		{ $$ = new Choice($3, $5, $8); $$.Print(); }
 			;
 
-listProposition		: proposition							{ $$ = "proposition : " + $1; }
-					| listProposition proposition			{ $$=$1; $$ += ("$nouvligne proposition : " + $2); }
+listProposition		: proposition							{ $$ = new List<Proposition>(); $$.Add($1); }
+					| listProposition proposition			{ $$ = $1; $$.Add($2); }
 					;
 
-proposition			: PARENTOPEN STRING PARENTCLOSE BRACEOPEN listBrick BRACECLOSE			{ $$ = $2; }
+proposition			: PARENTOPEN STRING PARENTCLOSE BRACEOPEN listBrick BRACECLOSE			{ $$ = new Proposition($2, $5); }
 					;
 
 %%
