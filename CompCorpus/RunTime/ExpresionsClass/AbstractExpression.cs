@@ -15,6 +15,7 @@ namespace CompCorpus.RunTime
         BOOL,
         STRUCT,
         LISTSTRUCT,
+        UNKNOWVAR,
     };
 
     public abstract class AbstractExpression

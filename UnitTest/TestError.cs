@@ -92,7 +92,7 @@ namespace UnitTest
             List<Error> myListError = TestErrorMain(args);
             List<Error> resListError = new List<Error>();
             resListError.Add(new Error(ErrorType.UNKNOW_VARIABLE,"titi", 3, 9));
-            bool test = (myListError.Count == 2);
+            bool test = (myListError.Count == 1);
             test &= (resListError.First().Equals(myListError.First()));
             Assert.AreEqual(true, test);
         }

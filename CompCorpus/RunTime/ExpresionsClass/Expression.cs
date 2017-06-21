@@ -60,6 +60,8 @@ namespace CompCorpus.RunTime
 
 
             ExpressionType myType = ExpressionType.INVALIDE;
+
+            
             switch (symbole)
             {
                 case ExpressionSymbole.PLUS:
@@ -111,6 +113,18 @@ namespace CompCorpus.RunTime
                     myType = ExpressionType.INVALIDE;
                     break;
             }
+
+            // If one of the two expression has the unknowvar type  
+            // than we concider the operation correct
+            if (exp1Type == ExpressionType.UNKNOWVAR)
+            {
+                myType = exp2Type;
+            }
+            if (exp2Type == ExpressionType.UNKNOWVAR)
+            {
+                myType = exp1Type;
+            }
+
             return myType;
         }
 

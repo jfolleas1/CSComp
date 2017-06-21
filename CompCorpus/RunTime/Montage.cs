@@ -65,7 +65,10 @@ namespace CompCorpus.RunTime
 
         public void AddSymbole(Affectation aff)
         {
-           AddSymbole(aff.variableName.name, ("L"+aff.expression.dataType.ToString()));
+            if(aff.expression.dataType != ExpressionType.UNKNOWVAR )
+            {
+                AddSymbole(aff.variableName.name, ("L" + aff.expression.dataType.ToString()));
+            }
         }
 
         public void AddSymbole(Declaration dec )
@@ -126,13 +129,16 @@ namespace CompCorpus.RunTime
 
         public void CheckAffectationIsValid(ExpressionType type, string expectedTypeString, string symbole, int line)
         {
-            if (type == ExpressionType.INVALIDE)
-            {
-                errorList.Add(new Error(ErrorType.INVALIDE_OPERATION, symbole, line, 0));
-            }
-            if (expectedTypeString != null)
-            {
-                CheckCorespondanceExpectedAndExpressionType(type, expectedTypeString, symbole, line);
+            if( !(type == ExpressionType.UNKNOWVAR) )
+            {   // If the expression is an unknow var then the error is already know 
+                if (type == ExpressionType.INVALIDE)
+                {
+                    errorList.Add(new Error(ErrorType.INVALIDE_OPERATION, symbole, line, 0));
+                }
+                if (expectedTypeString != null)
+                {
+                    CheckCorespondanceExpectedAndExpressionType(type, expectedTypeString, symbole, line);
+                }
             }
         }
 
