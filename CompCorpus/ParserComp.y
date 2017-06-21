@@ -198,7 +198,7 @@ listBrick	:  /* Empty */			{ $$ = new List<Brick>();  }
 
 brick		: textBloc				{ $$ = new DeadText($1);}
 			| callVar				{ $$ = $1; }
-			| choice				{ $$ = new DeadText(" Choix , voir la sortie de console ");}
+			| choice				{ $$ = $1;}
 			| title					{ $$ = $1; }
 			;
 
@@ -247,7 +247,7 @@ callVar		: CODEINDIC BRACEOPEN ID BRACECLOSE			{ $$ = new VariableCall($3, monta
 			;
 
 
-choice		: CHOIXCKW PARENTOPEN ID COMMA STRING PARENTCLOSE BRACEOPEN listProposition BRACECLOSE		{ $$ = new Choice($3, $5, $8); $$.Print(); }
+choice		: CHOIXCKW PARENTOPEN ID COMMA STRING PARENTCLOSE BRACEOPEN listProposition BRACECLOSE		{ $$ = new Choice($3, $5, $8); }
 			;
 
 listProposition		: proposition							{ $$ = new List<Proposition>(); $$.Add($1); }

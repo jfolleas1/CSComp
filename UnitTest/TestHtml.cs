@@ -44,7 +44,7 @@ namespace UnitTest
         }
 
 
-        private void mainTestHtml(string fileName)
+        public static void mainTestHtml(string fileName)
         {
 
             bool sameFiles = true;

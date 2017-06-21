@@ -35,6 +35,21 @@ namespace CompCorpus.RunTime.Bricks
         public override string Write()
         {
             string htmlText = "";
+            htmlText += "<select class=\"pull-left\" ng-model=\"";
+            htmlText += varName;
+            htmlText += "\" ng-init=\"" + varName + "='" + propositionList.First<Proposition>().textOfChoice;
+            htmlText += "'\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"";
+            htmlText += textOfChoice.Substring(1, (textOfChoice.Length - 2));
+            htmlText += "\" > \n";
+            foreach (Proposition pr in propositionList)
+            {
+                htmlText += pr.WriteHtmlOption() + "\n";
+            }
+            htmlText += "</select>\n";
+            foreach (Proposition pr in propositionList)
+            {
+                htmlText += pr.Write(varName) + "\n";
+            }
             return htmlText;
         }
     }

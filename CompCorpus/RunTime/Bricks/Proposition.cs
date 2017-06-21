@@ -13,8 +13,13 @@ namespace CompCorpus.RunTime.Bricks
 
         public Proposition(string textOfChoice, List<Brick> brickList)
         {
-            this.textOfChoice = textOfChoice;
+            this.textOfChoice = textOfChoice.Substring(1, (textOfChoice.Length - 2));
             this.brickList = brickList;
+        }
+
+        public string textOfChoiceWithoutCote()
+        {
+            return textOfChoice;
         }
 
         public void Print()
@@ -26,9 +31,24 @@ namespace CompCorpus.RunTime.Bricks
             }
         }
 
-        public void Write()
+        public string WriteHtmlOption()
         {
-            throw new NotImplementedException();
+            string htmlText = "<option>";
+            htmlText += textOfChoice;
+            htmlText += "</option>";
+            return htmlText;
+        }
+
+        public string Write(string parentName)
+        {
+            string htmlText = "<span ng-show=\"" + parentName + "=='" + textOfChoice + "'\">";
+            foreach (Brick bk in brickList)
+            {
+                htmlText += bk.Write() + "\n";
+            }
+            htmlText += "</span>";
+            return htmlText;
+
         }
     }
 }

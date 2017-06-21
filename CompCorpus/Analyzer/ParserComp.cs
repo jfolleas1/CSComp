@@ -4,9 +4,9 @@
 
 // GPPG version 1.5.2
 // Machine:  FIDF3675368
-// DateTime: 20/06/2017 15:45:43
+// DateTime: 21/06/2017 14:46:03
 // UserName: j.folleas
-// Input file <ParserComp.y - 20/06/2017 15:45:38>
+// Input file <ParserComp.y - 21/06/2017 14:45:33>
 
 // options: no-lines gplex
 
@@ -73,11 +73,11 @@ public class ScanObj {
 [GeneratedCodeAttribute( "Gardens Point Parser Generator", "1.5.2")]
 public class Parser: ShiftReduceParser<ValueType, LexLocation>
 {
-  // Verbatim content from ParserComp.y - 20/06/2017 15:45:38
+  // Verbatim content from ParserComp.y - 21/06/2017 14:45:33
     
     public Montage montage = new Montage();
 
-  // End verbatim content from ParserComp.y - 20/06/2017 15:45:38
+  // End verbatim content from ParserComp.y - 21/06/2017 14:45:33
 
 #pragma warning disable 649
   private static Dictionary<int, string> aliases;
@@ -444,7 +444,7 @@ public class Parser: ShiftReduceParser<ValueType, LexLocation>
 { CurrentSemanticValue.brick = ValueStack[ValueStack.Depth-1].variableCall; }
         break;
       case 45: // brick -> choice
-{ CurrentSemanticValue.brick = new DeadText(" Choix , voir la sortie de console ");}
+{ CurrentSemanticValue.brick = ValueStack[ValueStack.Depth-1].choice;}
         break;
       case 46: // brick -> title
 { CurrentSemanticValue.brick = ValueStack[ValueStack.Depth-1].Title; }
@@ -538,7 +538,7 @@ public class Parser: ShiftReduceParser<ValueType, LexLocation>
         break;
       case 76: // choice -> CHOIXCKW, PARENTOPEN, ID, COMMA, STRING, PARENTCLOSE, BRACEOPEN, 
                //           listProposition, BRACECLOSE
-{ CurrentSemanticValue.choice = new Choice(ValueStack[ValueStack.Depth-7].String, ValueStack[ValueStack.Depth-5].String, ValueStack[ValueStack.Depth-2].listProposition); CurrentSemanticValue.choice.Print(); }
+{ CurrentSemanticValue.choice = new Choice(ValueStack[ValueStack.Depth-7].String, ValueStack[ValueStack.Depth-5].String, ValueStack[ValueStack.Depth-2].listProposition); }
         break;
       case 77: // listProposition -> proposition
 { CurrentSemanticValue.listProposition = new List<Proposition>(); CurrentSemanticValue.listProposition.Add(ValueStack[ValueStack.Depth-1].proposition); }

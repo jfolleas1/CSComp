@@ -279,13 +279,15 @@ namespace CompCorpus.RunTime
                     "<script src=\"https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js\"></script>\n" +
                     "<script src=\"http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js\"></script>\n" +
                     "<script src=\"https://code.jquery.com/ui/1.12.1/jquery-ui.js\"></script>\n" +
+                    "<script src=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js\"></script> \n "+
                     "<head>\n" +
                     "\t<meta charset=\"utf-8\"/>\n" +
                     "\t<title>" + nameOfTheMontage + "</title>\n" +
-                    "\t<link rel=\"stylesheet\" type=\"text/css\" href=\"styleActe.css\">\n" +
+                    "\t<link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css\">\n" +
                     "\t<link rel=\"stylesheet\" href=\"//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css\">\n" +
                     "</head>\n\n<body>\n" +
-                    "<div ng-app=\"myActe\" ng-controller=\"myCtrl\">\n";
+                    "<div class=\"container\" ng-app=\"myActe\" ng-controller=\"myCtrl\">\n"+
+                    "<h1>" + nameOfTheMontage + "</h1>";
                 monStreamWriter.Write(beginOfTheHtmlDoc);
                
                 // what will be written in the html document
@@ -297,7 +299,9 @@ namespace CompCorpus.RunTime
                 }
                 
                 
-                string endOfTheDoc = "\n</div>\n\n<script src=\""+ GetLocalFileName(targetFileJSName) +"\"></script>\n</body>\n</html>\n\n";
+                string endOfTheDoc = "\n</div>\n\n<script src=\""+ GetLocalFileName(targetFileJSName) +"\"></script>\n";
+                endOfTheDoc += "<script> \n$(document).ready(function(){\n\t$('[data-toggle=\"tooltip\"]').tooltip();\n" +
+                "});\n </script>\n</body>\n</html>\n\n";
                 monStreamWriter.Write(endOfTheDoc);
 
                 // close the StreamWriter (realy important) 
