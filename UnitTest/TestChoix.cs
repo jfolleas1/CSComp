@@ -19,6 +19,12 @@ namespace UnitTest
         }
 
         [TestMethod]
+        public void TestChoixSimpleInSymboleTab()
+        {
+            TestHtml.mainTestHtml("TestChoixSimpleInSymboleTab");
+        }
+
+        [TestMethod]
         public void TestChoixSimple()
         {
             TestHtml.mainTestHtml("TestChoixSimple");
