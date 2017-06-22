@@ -13,11 +13,7 @@ namespace CompCorpus
    
     public static class Program
     {
-        public static int toto()
-        {
-            return 1;
-        }
-
+       
         static public void Main(string[] args)
         {
             if (args.Length == 4)
@@ -32,6 +28,23 @@ namespace CompCorpus
                 Parser parser = null;
                 Montage montage = null;
 
+
+                // Read the document to do the precompiling phase
+                string fileForPreCompiling = "";
+                try
+                {   // Open the text file using a stream reader.
+                    using (StreamReader sr = new StreamReader(sourceFileName))
+                    {
+                        // Read the stream to a string, and write the string to the console.
+                        fileForPreCompiling = sr.ReadToEnd();
+                    }
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("The file could not be read:");
+                    Console.WriteLine(e.Message);
+                }
+
                 try
                 {
                     file = new FileStream(sourceFileName, FileMode.Open);
@@ -39,6 +52,7 @@ namespace CompCorpus
                     scn = new Scanner(file);
                     parser = new Parser(scn);
                     parser.montage.AddSymboleFromFile(dataStructurePath);
+                    parser.montage.AddSymboleFromPreCompile(fileForPreCompiling);
 
                     parser.Parse();
 
@@ -49,7 +63,7 @@ namespace CompCorpus
                     if (montage != null && !montage.errorList.Any() && !scn.hasErrors)
                     {
                         montage.WriteInFiles(targetFilehtmlName, targetFileJSName);
-                        System.Diagnostics.Process.Start(targetFilehtmlName);
+                        //System.Diagnostics.Process.Start(targetFilehtmlName);
                     }
                     else
                     {

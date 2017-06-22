@@ -4,6 +4,7 @@ using System.IO;
 using CompCorpus.RunTime.error;
 using CompCorpus.RunTime.declaration;
 using CompCorpus.RunTime.Bricks;
+using System.Text.RegularExpressions;
 
 namespace CompCorpus.RunTime
 {
@@ -51,6 +52,25 @@ namespace CompCorpus.RunTime
             {
                 Console.WriteLine("The file could not be read:");
                 Console.WriteLine(e.Message);
+            }
+        }
+
+        public void AddSymboleFromPreCompile(string file)
+        {
+            //Add of the choice variables 
+            Console.WriteLine("AddSymboleFromPreCompile");
+            string choicePattern = @"(\$choix\()\w+,";
+            MatchCollection choiceMatches;
+            Regex choiceRegex = new Regex(choicePattern);
+            choiceMatches = choiceRegex.Matches(file);
+            // Iterate matches
+            for (int ctr = 0; ctr < choiceMatches.Count; ctr++)
+            {
+                Console.WriteLine("{0}. {1}", ctr, choiceMatches[ctr].Value);
+                string choiceVarName = choiceMatches[ctr].Value.Substring("$choix(".Length,
+                    (choiceMatches[ctr].Value.Length - "$choix(,".Length));
+                Console.WriteLine(choiceVarName);
+                this.AddSymbole(choiceVarName, "STRING");
             }
         }
 
