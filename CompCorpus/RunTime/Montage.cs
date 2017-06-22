@@ -58,7 +58,7 @@ namespace CompCorpus.RunTime
         public void AddSymboleFromPreCompile(string file)
         {
             //Add of the choice variables 
-            Console.WriteLine("AddSymboleFromPreCompile");
+            Console.WriteLine("AddSymboleFromPreCompile : Choix");
             string choicePattern = @"(\$choix\() *\w+ *,";
             MatchCollection choiceMatches;
             Regex choiceRegex = new Regex(choicePattern);
@@ -69,6 +69,27 @@ namespace CompCorpus.RunTime
                 string choiceVarName = choiceMatches[ctr].Value.Substring("$choix(".Length,
                     (choiceMatches[ctr].Value.Length - "$choix(,".Length));
                 this.AddSymbole(choiceVarName.Trim(), "STRING");
+            }
+
+            //Add of the propositions variables 
+            Console.WriteLine("AddSymboleFromPreCompile : Proposition");
+            string propositionPattern = @"[^x]\( *\w+ *, *"+"\"[^\"]*\""+@" *\)";
+            MatchCollection propositionMatches;
+            Regex propositionRegex = new Regex(propositionPattern);
+            propositionMatches = propositionRegex.Matches(file);
+            // Iterate matches
+            for (int ctr = 0; ctr < propositionMatches.Count; ctr++)
+            {
+               
+                string propoVarName = propositionMatches[ctr].Value.Substring("x(".Length,
+                    (Regex.Match(propositionMatches[ctr].Value,@",").Index  - "x(".Length));
+                this.AddSymbole(propoVarName.Trim(), "LSTRING");
+                Console.WriteLine(propoVarName);
+
+                int commaIndex = ("x(" + propoVarName + ",").Length;
+                string propoString = propositionMatches[ctr].Value.Substring(commaIndex,
+                    (propositionMatches[ctr].Value.Length - (commaIndex+1))); // We don't need the last char
+                Console.WriteLine(propoString.Trim());
             }
         }
 
