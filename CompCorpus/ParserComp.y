@@ -254,7 +254,7 @@ listProposition		: proposition							{ $$ = new List<Proposition>(); $$.Add($1);
 					| listProposition proposition			{ $$ = $1; $$.Add($2); }
 					;
 
-proposition			: PARENTOPEN STRING PARENTCLOSE BRACEOPEN listBrick BRACECLOSE			{ $$ = new Proposition($2, $5); }
+proposition			: PARENTOPEN ID COMMA STRING PARENTCLOSE BRACEOPEN listBrick BRACECLOSE			{ $$ = new Proposition($2,$4, $7); }
 					;
 
 %%

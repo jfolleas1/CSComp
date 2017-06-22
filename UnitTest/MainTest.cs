@@ -55,9 +55,10 @@ namespace UnitTest
 
                     montage = parser.montage;
 
-                    if (montage != null && !montage.errorList.Any() )
+                    if (montage != null && !montage.errorList.Any() && !scn.hasErrors)
                     {
                         montage.WriteInFiles(targetFilehtmlName, targetFileJSName);
+                        Console.WriteLine("No Error!");
                         filemodified = true;
                     }
                     else
