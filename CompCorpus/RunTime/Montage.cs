@@ -59,20 +59,19 @@ namespace CompCorpus.RunTime
         {
             //Add of the choice variables 
             Console.WriteLine("AddSymboleFromPreCompile");
-            string choicePattern = @"(\$choix\()\w+,";
+            string choicePattern = @"(\$choix\() *\w+ *,";
             MatchCollection choiceMatches;
             Regex choiceRegex = new Regex(choicePattern);
             choiceMatches = choiceRegex.Matches(file);
             // Iterate matches
             for (int ctr = 0; ctr < choiceMatches.Count; ctr++)
             {
-                Console.WriteLine("{0}. {1}", ctr, choiceMatches[ctr].Value);
                 string choiceVarName = choiceMatches[ctr].Value.Substring("$choix(".Length,
                     (choiceMatches[ctr].Value.Length - "$choix(,".Length));
-                Console.WriteLine(choiceVarName);
-                this.AddSymbole(choiceVarName, "STRING");
+                this.AddSymbole(choiceVarName.Trim(), "STRING");
             }
         }
+
 
         public void AddSymbole(string varName, string typeString)
         {
