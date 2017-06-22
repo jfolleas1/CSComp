@@ -12,6 +12,7 @@ namespace CompCorpus.RunTime.error
         INVALIDE_TYPE,
         UNKNOW_VARIABLE,
         INCOMPATIBLE_AFFECTATION,
+        DOUBLE_DECLARATION,
     }
 
     public class Error
@@ -56,6 +57,9 @@ namespace CompCorpus.RunTime.error
                     break;
                 case ErrorType.INCOMPATIBLE_AFFECTATION:
                     message += " l'affectation est impossible pour la variable " + data ;
+                    break;
+                case ErrorType.DOUBLE_DECLARATION:
+                    message = "ERREUR: le nom de variable " + data + " à été déclaré plusieur fois.";
                     break;
                 default:
                     break;

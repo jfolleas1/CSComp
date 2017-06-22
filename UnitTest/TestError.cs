@@ -28,12 +28,29 @@ namespace UnitTest
                 Parser parser = null;
                 Montage montage = null;
 
+                // Read the document to do the precompiling phase
+                string fileForPreCompiling = "";
+                try
+                {   // Open the text file using a stream reader.
+                    using (StreamReader sr = new StreamReader(sourceFileName))
+                    {
+                        // Read the stream to a string, and write the string to the console.
+                        fileForPreCompiling = sr.ReadToEnd();
+                    }
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("The file could not be read:");
+                    Console.WriteLine(e.Message);
+                }
+
                 try
                 {
                     file = new FileStream(sourceFileName, FileMode.Open);
                     scn = new Scanner(file);
                     parser = new Parser(scn);
                     parser.montage.AddSymboleFromFile(@"C:\Users\j.folleas\Desktop\settings\DataStructur.txt");
+                    parser.montage.AddSymboleFromPreCompile(fileForPreCompiling);
 
                     parser.Parse();
 
@@ -64,6 +81,20 @@ namespace UnitTest
             List<Error> myListError = TestErrorMain(args);
             List<Error> resListError = new List<Error>();
             resListError.Add(new Error(ErrorType.INVALIDE_OPERATION, "toto", 3, 0));
+            bool test = (myListError.Count == 1);
+            test &= (resListError.First().Equals(myListError.First()));
+            Assert.AreEqual(true, test);
+        }
+
+        [TestMethod]
+        public void TestErrorDoubleDeclaration()
+        {
+            string fileName = "TestErrorDoubleDeclaration";
+            string srcFilePath = @"C:\Users\j.folleas\Desktop\Tests\srcWithError\" + fileName + ".txt";
+            string[] args = { srcFilePath, "", "" };
+            List<Error> myListError = TestErrorMain(args);
+            List<Error> resListError = new List<Error>();
+            resListError.Add(new Error(ErrorType.DOUBLE_DECLARATION, "toto", 0, 0));
             bool test = (myListError.Count == 1);
             test &= (resListError.First().Equals(myListError.First()));
             Assert.AreEqual(true, test);

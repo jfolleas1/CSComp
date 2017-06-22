@@ -79,6 +79,7 @@ namespace CompCorpus.RunTime
             if (symboleTabe.ContainsKey(varName))
             {
                 symboleTabe.Remove(varName);
+                errorList.Add(new Error(ErrorType.DOUBLE_DECLARATION, varName, 0, 0));
             }
             symboleTabe.Add(varName, typeString);
         }
