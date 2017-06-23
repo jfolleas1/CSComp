@@ -30,10 +30,10 @@ namespace CompCorpus
 
 
 
-                string sourceFileNameCopy = sourceFileName + ".comp";
+                string sourceCopiedFileName = sourceFileName + ".comp";
                 try
                 {
-                    File.Copy(sourceFileName, sourceFileNameCopy);
+                    File.Copy(sourceFileName, sourceCopiedFileName);
                 }
                 catch (Exception e)
                 {
@@ -47,12 +47,14 @@ namespace CompCorpus
                 Parser parser = null;
                 Montage montage = null;
 
+                PreProcessor.AddIncludes(sourceCopiedFileName);
+
 
                 // Read the document to do the precompiling phase
                 string fileForPreCompiling = "";
                 try
                 {   // Open the text file using a stream reader.
-                    using (StreamReader sr = new StreamReader(sourceFileNameCopy))
+                    using (StreamReader sr = new StreamReader(sourceCopiedFileName))
                     {
                         // Read the stream to a string, and write the string to the console.
                         fileForPreCompiling = sr.ReadToEnd();
@@ -66,8 +68,7 @@ namespace CompCorpus
 
                 try
                 {
-                    file = new FileStream(sourceFileNameCopy, FileMode.Open);
-                    Console.WriteLine(file.Name);
+                    file = new FileStream(sourceCopiedFileName, FileMode.Open);
                     scn = new Scanner(file);
                     parser = new Parser(scn);
                     parser.montage.AddSymboleFromFile(dataStructurePath);
@@ -101,7 +102,7 @@ namespace CompCorpus
 
                 try
                 {
-                    File.Delete(sourceFileNameCopy);
+                    File.Delete(sourceCopiedFileName);
                 }
                 catch (Exception e)
                 {
