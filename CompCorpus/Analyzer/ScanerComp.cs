@@ -6,9 +6,9 @@
 //
 //  GPLEX Version:  1.2.2
 //  Machine:  FIDF3675368
-//  DateTime: 20/06/2017 15:45:47
+//  DateTime: 23/06/2017 10:51:33
 //  UserName: j.folleas
-//  GPLEX input file <ScanerComp.lex - 20/06/2017 15:25:34>
+//  GPLEX input file <ScanerComp.lex - 23/06/2017 10:51:09>
 //  GPLEX frame file <embedded resource>
 //
 //  Option settings: unicode, verbose, parser, stack, minimize
@@ -126,8 +126,8 @@ namespace CompCorpus.Analyzer
         
         enum Result {accept, noMatch, contextFound};
 
-        const int maxAccept = 39;
-        const int initial = 40;
+        const int maxAccept = 40;
+        const int initial = 41;
         const int eofNum = 0;
         const int goStart = -1;
         const int INITIAL = 0;
@@ -175,7 +175,7 @@ namespace CompCorpus.Analyzer
         }
     };
 
-    static int[] startState = new int[] {40, 0};
+    static int[] startState = new int[] {41, 0};
 
 #region CompressedCharacterMap
     //
@@ -204,7 +204,7 @@ namespace CompCorpus.Analyzer
     }
 #endregion
 
-    static Table[] NxS = new Table[85] {
+    static Table[] NxS = new Table[91] {
 /* NxS[   0] */ new Table(0, 0, 0, null), // Shortest string ""
 /* NxS[   1] */ // Shortest string "\\"
       new Table(23, 28, 1, new sbyte[] {-1, -1, -1, -1, -1, -1, 
@@ -212,15 +212,15 @@ namespace CompCorpus.Analyzer
           1, 1, 1, 1, -1, -1}),
 /* NxS[   2] */ new Table(0, 0, -1, null), // Shortest string "\n"
 /* NxS[   3] */ // Shortest string "$"
-      new Table(3, 18, -1, new sbyte[] {49, -1, 50, -1, -1, -1, 
-          51, -1, -1, -1, 52, -1, 53, -1, -1, -1, -1, 54}),
+      new Table(3, 18, -1, new sbyte[] {50, -1, 51, -1, -1, -1, 
+          52, -1, -1, -1, 53, 54, 55, -1, -1, -1, -1, 56}),
 /* NxS[   4] */ // Shortest string "T"
       new Table(23, 28, 4, new sbyte[] {-1, -1, -1, -1, -1, -1, 
           -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 4, 1, 1, -1, 
           4, 4, 1, 1, -1, -1}),
 /* NxS[   5] */ // Shortest string "1"
       new Table(19, 32, 1, new sbyte[] {5, 1, 1, 1, -1, -1, 
-          -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 48, -1, 
+          -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 49, -1, 
           5, 1, 1, -1, 1, 1, 1, 1, -1, -1}),
 /* NxS[   6] */ new Table(0, 0, -1, null), // Shortest string "+"
 /* NxS[   7] */ new Table(0, 0, -1, null), // Shortest string "-"
@@ -238,9 +238,9 @@ namespace CompCorpus.Analyzer
 /* NxS[  17] */ new Table(0, 0, -1, null), // Shortest string ";"
 /* NxS[  18] */ new Table(0, 0, -1, null), // Shortest string ","
 /* NxS[  19] */ // Shortest string "\""
-      new Table(23, 28, 19, new sbyte[] {46, 46, 46, 46, 46, 46, 
-          46, 46, 46, 46, 46, 46, 46, 46, 46, 46, 46, 46, 19, 21, 22, 46, 
-          19, 19, 19, 19, 46, 46}),
+      new Table(23, 28, 19, new sbyte[] {47, 47, 47, 47, 47, 47, 
+          47, 47, 47, 47, 47, 47, 47, 47, 47, 47, 47, 47, 19, 21, 22, 47, 
+          19, 19, 19, 19, 47, 47}),
 /* NxS[  20] */ // Shortest string "\r"
       new Table(23, 28, 1, new sbyte[] {-1, -1, -1, -1, -1, -1, 
           -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 1, 1, 1, -1, 
@@ -250,9 +250,9 @@ namespace CompCorpus.Analyzer
           -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 1, 1, 1, -1, 
           1, 1, 1, 1, -1, -1}),
 /* NxS[  22] */ // Shortest string "\"\\"
-      new Table(23, 28, 19, new sbyte[] {46, 46, 46, 46, 46, 46, 
-          46, 46, 46, 46, 46, 46, 46, 46, 46, 46, 46, 46, 19, 19, 19, 46, 
-          19, 19, 19, 19, -1, 46}),
+      new Table(23, 28, 19, new sbyte[] {47, 47, 47, 47, 47, 47, 
+          47, 47, 47, 47, 47, 47, 47, 47, 47, 47, 47, 47, 19, 19, 19, 47, 
+          19, 19, 19, 19, -1, 47}),
 /* NxS[  23] */ new Table(0, 0, -1, null), // Shortest string "\"\n\""
 /* NxS[  24] */ new Table(0, 0, -1, null), // Shortest string "%%"
 /* NxS[  25] */ new Table(0, 0, -1, null), // Shortest string ":="
@@ -268,106 +268,117 @@ namespace CompCorpus.Analyzer
 /* NxS[  32] */ new Table(0, 0, -1, null), // Shortest string "$choix"
 /* NxS[  33] */ new Table(0, 0, -1, null), // Shortest string "$nouvparag"
 /* NxS[  34] */ new Table(0, 0, -1, null), // Shortest string "$nouvligne"
-/* NxS[  35] */ new Table(0, 0, -1, null), // Shortest string "$dollar"
-/* NxS[  36] */ new Table(0, 0, -1, null), // Shortest string "$false"
-/* NxS[  37] */ new Table(0, 0, -1, null), // Shortest string "$true"
-/* NxS[  38] */ new Table(0, 0, -1, null), // Shortest string "$titre1"
-/* NxS[  39] */ new Table(0, 0, -1, null), // Shortest string "$Titre"
-/* NxS[  40] */ // Shortest string ""
+/* NxS[  35] */ new Table(0, 0, -1, null), // Shortest string "$option"
+/* NxS[  36] */ new Table(0, 0, -1, null), // Shortest string "$dollar"
+/* NxS[  37] */ new Table(0, 0, -1, null), // Shortest string "$false"
+/* NxS[  38] */ new Table(0, 0, -1, null), // Shortest string "$true"
+/* NxS[  39] */ new Table(0, 0, -1, null), // Shortest string "$titre1"
+/* NxS[  40] */ new Table(0, 0, -1, null), // Shortest string "$Titre"
+/* NxS[  41] */ // Shortest string ""
       new Table(19, 32, 4, new sbyte[] {5, 4, 4, 4, 6, 7, 
-          8, 9, 10, 11, 12, 13, 41, 42, 14, 43, 15, 16, 44, 17, 18, 45, 
+          8, 9, 10, 11, 12, 13, 42, 43, 14, 44, 15, 16, 45, 17, 18, 46, 
           5, 19, 1, 2, 4, 1, 20, 1, 2, 3}),
-/* NxS[  41] */ // Shortest string "&"
+/* NxS[  42] */ // Shortest string "&"
       new Table(31, 1, -1, new sbyte[] {30}),
-/* NxS[  42] */ // Shortest string "|"
+/* NxS[  43] */ // Shortest string "|"
       new Table(32, 1, -1, new sbyte[] {29}),
-/* NxS[  43] */ // Shortest string "="
+/* NxS[  44] */ // Shortest string "="
       new Table(34, 1, -1, new sbyte[] {28}),
-/* NxS[  44] */ // Shortest string ":"
+/* NxS[  45] */ // Shortest string ":"
       new Table(34, 1, -1, new sbyte[] {25}),
-/* NxS[  45] */ // Shortest string "%"
+/* NxS[  46] */ // Shortest string "%"
       new Table(40, 1, -1, new sbyte[] {24}),
-/* NxS[  46] */ // Shortest string "\"\n"
-      new Table(42, 2, 46, new sbyte[] {23, 47}),
-/* NxS[  47] */ // Shortest string "\"\n\\"
-      new Table(1, 1, 46, new sbyte[] {-1}),
-/* NxS[  48] */ // Shortest string "1,"
+/* NxS[  47] */ // Shortest string "\"\n"
+      new Table(42, 2, 47, new sbyte[] {23, 48}),
+/* NxS[  48] */ // Shortest string "\"\n\\"
+      new Table(1, 1, 47, new sbyte[] {-1}),
+/* NxS[  49] */ // Shortest string "1,"
       new Table(19, 23, -1, new sbyte[] {31, -1, -1, -1, -1, -1, 
           -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 
           31}),
-/* NxS[  49] */ // Shortest string "$T"
-      new Table(4, 1, -1, new sbyte[] {82}),
-/* NxS[  50] */ // Shortest string "$t"
-      new Table(4, 3, -1, new sbyte[] {76, -1, 77}),
-/* NxS[  51] */ // Shortest string "$f"
-      new Table(10, 1, -1, new sbyte[] {73}),
-/* NxS[  52] */ // Shortest string "$d"
-      new Table(14, 1, -1, new sbyte[] {69}),
-/* NxS[  53] */ // Shortest string "$n"
+/* NxS[  50] */ // Shortest string "$T"
+      new Table(4, 1, -1, new sbyte[] {88}),
+/* NxS[  51] */ // Shortest string "$t"
+      new Table(4, 3, -1, new sbyte[] {82, -1, 83}),
+/* NxS[  52] */ // Shortest string "$f"
+      new Table(10, 1, -1, new sbyte[] {79}),
+/* NxS[  53] */ // Shortest string "$d"
+      new Table(14, 1, -1, new sbyte[] {75}),
+/* NxS[  54] */ // Shortest string "$o"
+      new Table(18, 1, -1, new sbyte[] {71}),
+/* NxS[  55] */ // Shortest string "$n"
+      new Table(14, 1, -1, new sbyte[] {60}),
+/* NxS[  56] */ // Shortest string "$c"
+      new Table(21, 1, -1, new sbyte[] {57}),
+/* NxS[  57] */ // Shortest string "$ch"
       new Table(14, 1, -1, new sbyte[] {58}),
-/* NxS[  54] */ // Shortest string "$c"
-      new Table(21, 1, -1, new sbyte[] {55}),
-/* NxS[  55] */ // Shortest string "$ch"
-      new Table(14, 1, -1, new sbyte[] {56}),
-/* NxS[  56] */ // Shortest string "$cho"
-      new Table(4, 1, -1, new sbyte[] {57}),
-/* NxS[  57] */ // Shortest string "$choi"
+/* NxS[  58] */ // Shortest string "$cho"
+      new Table(4, 1, -1, new sbyte[] {59}),
+/* NxS[  59] */ // Shortest string "$choi"
       new Table(22, 1, -1, new sbyte[] {32}),
-/* NxS[  58] */ // Shortest string "$no"
-      new Table(8, 1, -1, new sbyte[] {59}),
-/* NxS[  59] */ // Shortest string "$nou"
-      new Table(16, 1, -1, new sbyte[] {60}),
-/* NxS[  60] */ // Shortest string "$nouv"
-      new Table(11, 8, -1, new sbyte[] {61, -1, -1, -1, -1, -1, 
-          -1, 62}),
-/* NxS[  61] */ // Shortest string "$nouvl"
-      new Table(4, 1, -1, new sbyte[] {66}),
-/* NxS[  62] */ // Shortest string "$nouvp"
-      new Table(10, 1, -1, new sbyte[] {63}),
-/* NxS[  63] */ // Shortest string "$nouvpa"
-      new Table(6, 1, -1, new sbyte[] {64}),
-/* NxS[  64] */ // Shortest string "$nouvpar"
+/* NxS[  60] */ // Shortest string "$no"
+      new Table(8, 1, -1, new sbyte[] {61}),
+/* NxS[  61] */ // Shortest string "$nou"
+      new Table(16, 1, -1, new sbyte[] {62}),
+/* NxS[  62] */ // Shortest string "$nouv"
+      new Table(11, 8, -1, new sbyte[] {63, -1, -1, -1, -1, -1, 
+          -1, 64}),
+/* NxS[  63] */ // Shortest string "$nouvl"
+      new Table(4, 1, -1, new sbyte[] {68}),
+/* NxS[  64] */ // Shortest string "$nouvp"
       new Table(10, 1, -1, new sbyte[] {65}),
-/* NxS[  65] */ // Shortest string "$nouvpara"
+/* NxS[  65] */ // Shortest string "$nouvpa"
+      new Table(6, 1, -1, new sbyte[] {66}),
+/* NxS[  66] */ // Shortest string "$nouvpar"
+      new Table(10, 1, -1, new sbyte[] {67}),
+/* NxS[  67] */ // Shortest string "$nouvpara"
       new Table(17, 1, -1, new sbyte[] {33}),
-/* NxS[  66] */ // Shortest string "$nouvli"
-      new Table(17, 1, -1, new sbyte[] {67}),
-/* NxS[  67] */ // Shortest string "$nouvlig"
-      new Table(15, 1, -1, new sbyte[] {68}),
-/* NxS[  68] */ // Shortest string "$nouvlign"
+/* NxS[  68] */ // Shortest string "$nouvli"
+      new Table(17, 1, -1, new sbyte[] {69}),
+/* NxS[  69] */ // Shortest string "$nouvlig"
+      new Table(15, 1, -1, new sbyte[] {70}),
+/* NxS[  70] */ // Shortest string "$nouvlign"
       new Table(7, 1, -1, new sbyte[] {34}),
-/* NxS[  69] */ // Shortest string "$do"
-      new Table(11, 1, -1, new sbyte[] {70}),
-/* NxS[  70] */ // Shortest string "$dol"
-      new Table(11, 1, -1, new sbyte[] {71}),
-/* NxS[  71] */ // Shortest string "$doll"
-      new Table(10, 1, -1, new sbyte[] {72}),
-/* NxS[  72] */ // Shortest string "$dolla"
-      new Table(6, 1, -1, new sbyte[] {35}),
-/* NxS[  73] */ // Shortest string "$fa"
-      new Table(11, 1, -1, new sbyte[] {74}),
-/* NxS[  74] */ // Shortest string "$fal"
-      new Table(12, 1, -1, new sbyte[] {75}),
-/* NxS[  75] */ // Shortest string "$fals"
-      new Table(7, 1, -1, new sbyte[] {36}),
-/* NxS[  76] */ // Shortest string "$ti"
-      new Table(5, 1, -1, new sbyte[] {79}),
-/* NxS[  77] */ // Shortest string "$tr"
-      new Table(8, 1, -1, new sbyte[] {78}),
-/* NxS[  78] */ // Shortest string "$tru"
+/* NxS[  71] */ // Shortest string "$op"
+      new Table(5, 1, -1, new sbyte[] {72}),
+/* NxS[  72] */ // Shortest string "$opt"
+      new Table(4, 1, -1, new sbyte[] {73}),
+/* NxS[  73] */ // Shortest string "$opti"
+      new Table(14, 1, -1, new sbyte[] {74}),
+/* NxS[  74] */ // Shortest string "$optio"
+      new Table(15, 1, -1, new sbyte[] {35}),
+/* NxS[  75] */ // Shortest string "$do"
+      new Table(11, 1, -1, new sbyte[] {76}),
+/* NxS[  76] */ // Shortest string "$dol"
+      new Table(11, 1, -1, new sbyte[] {77}),
+/* NxS[  77] */ // Shortest string "$doll"
+      new Table(10, 1, -1, new sbyte[] {78}),
+/* NxS[  78] */ // Shortest string "$dolla"
+      new Table(6, 1, -1, new sbyte[] {36}),
+/* NxS[  79] */ // Shortest string "$fa"
+      new Table(11, 1, -1, new sbyte[] {80}),
+/* NxS[  80] */ // Shortest string "$fal"
+      new Table(12, 1, -1, new sbyte[] {81}),
+/* NxS[  81] */ // Shortest string "$fals"
       new Table(7, 1, -1, new sbyte[] {37}),
-/* NxS[  79] */ // Shortest string "$tit"
-      new Table(6, 1, -1, new sbyte[] {80}),
-/* NxS[  80] */ // Shortest string "$titr"
-      new Table(7, 1, -1, new sbyte[] {81}),
-/* NxS[  81] */ // Shortest string "$titre"
-      new Table(19, 1, -1, new sbyte[] {38}),
-/* NxS[  82] */ // Shortest string "$Ti"
-      new Table(5, 1, -1, new sbyte[] {83}),
-/* NxS[  83] */ // Shortest string "$Tit"
-      new Table(6, 1, -1, new sbyte[] {84}),
-/* NxS[  84] */ // Shortest string "$Titr"
-      new Table(7, 1, -1, new sbyte[] {39}),
+/* NxS[  82] */ // Shortest string "$ti"
+      new Table(5, 1, -1, new sbyte[] {85}),
+/* NxS[  83] */ // Shortest string "$tr"
+      new Table(8, 1, -1, new sbyte[] {84}),
+/* NxS[  84] */ // Shortest string "$tru"
+      new Table(7, 1, -1, new sbyte[] {38}),
+/* NxS[  85] */ // Shortest string "$tit"
+      new Table(6, 1, -1, new sbyte[] {86}),
+/* NxS[  86] */ // Shortest string "$titr"
+      new Table(7, 1, -1, new sbyte[] {87}),
+/* NxS[  87] */ // Shortest string "$titre"
+      new Table(19, 1, -1, new sbyte[] {39}),
+/* NxS[  88] */ // Shortest string "$Ti"
+      new Table(5, 1, -1, new sbyte[] {89}),
+/* NxS[  89] */ // Shortest string "$Tit"
+      new Table(6, 1, -1, new sbyte[] {90}),
+/* NxS[  90] */ // Shortest string "$Titr"
+      new Table(7, 1, -1, new sbyte[] {40}),
     };
 
 int NextState() {
@@ -894,19 +905,22 @@ yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.NO
         case 34: // Recognized '"$nouvligne"',	Shortest string "$nouvligne"
 yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.NOUVLIGNE;
             break;
-        case 35: // Recognized '"$dollar"',	Shortest string "$dollar"
+        case 35: // Recognized '"$option"',	Shortest string "$option"
+yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.OPTIONCKW;
+            break;
+        case 36: // Recognized '"$dollar"',	Shortest string "$dollar"
 yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.DOLLAR;
             break;
-        case 36: // Recognized '"$false"',	Shortest string "$false"
+        case 37: // Recognized '"$false"',	Shortest string "$false"
 yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.FALSE;
             break;
-        case 37: // Recognized '"$true"',	Shortest string "$true"
+        case 38: // Recognized '"$true"',	Shortest string "$true"
 yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.TRUE;
             break;
-        case 38: // Recognized '{TitleId}',	Shortest string "$titre1"
+        case 39: // Recognized '{TitleId}',	Shortest string "$titre1"
 yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); yylval.String = yytext; return (int)Tokens.TITLEID;
             break;
-        case 39: // Recognized '"$Titre"',	Shortest string "$Titre"
+        case 40: // Recognized '"$Titre"',	Shortest string "$Titre"
 yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.TITREACTEKW;
             break;
         default:
