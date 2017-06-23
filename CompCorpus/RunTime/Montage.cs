@@ -68,7 +68,11 @@ namespace CompCorpus.RunTime
             {
                 string choiceVarName = choiceMatches[ctr].Value.Substring("$choix(".Length,
                     (choiceMatches[ctr].Value.Length - "$choix(,".Length));
-                this.AddSymbole(choiceVarName.Trim(), "STRING");
+                //this.AddSymbole(choiceVarName.Trim(), "STRING");
+                Affectation aff = new Affectation(new VariableId(choiceVarName.Trim(), "LSTRING"),
+                    new VariableId(choiceVarName.Trim() + "Model", "STRING"));
+                this.AddSymbole(aff);
+                this.listOfCalculExpressions.Add(aff);
             }
 
             //Add of the propositions variables 
@@ -88,7 +92,7 @@ namespace CompCorpus.RunTime
                 string propoString = propositionMatches[ctr].Value.Substring(commaIndex,
                     (propositionMatches[ctr].Value.Length - (commaIndex+1))); // We don't need the last char
 
-                Affectation aff = new Affectation(new VariableId(propoVarName,"LSTRING"), new VariableString(propoString));
+                Affectation aff = new Affectation(new VariableId(propoVarName.Trim(), "LSTRING"), new VariableString(propoString));
                 this.AddSymbole(aff);
                 this.listOfCalculExpressions.Add(aff);
             }
@@ -104,7 +108,7 @@ namespace CompCorpus.RunTime
             {
                 string optionVarName = optionMatches[ctr].Value.Substring("$option(".Length,
                     (optionMatches[ctr].Value.Length - "$option(,".Length));
-                Affectation aff = new Affectation(new VariableId(optionVarName, "LBOOL"), new VariableId(optionVarName+"Model", "BOOL"));
+                Affectation aff = new Affectation(new VariableId(optionVarName.Trim(), "LBOOL"), new VariableId(optionVarName.Trim()+"Model", "BOOL"));
                 this.AddSymbole(aff);
                 this.listOfCalculExpressions.Add(aff);
             }

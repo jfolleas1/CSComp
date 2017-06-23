@@ -36,8 +36,8 @@ namespace CompCorpus.RunTime.Bricks
         {
             string htmlText = "";
             htmlText += "<select class=\"pull-left\" ng-model=\"";
-            htmlText += varName;
-            htmlText += "\" ng-init=\"" + varName + "='" + propositionList.First<Proposition>().textOfChoice;
+            htmlText += varName + "Model";
+            htmlText += "\" ng-init=\"" + varName + "Model" + "='" + propositionList.First<Proposition>().textOfChoice;
             htmlText += "'\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"";
             htmlText += textOfChoice.Substring(1, (textOfChoice.Length - 2));
             htmlText += "\" > \n";
@@ -48,7 +48,7 @@ namespace CompCorpus.RunTime.Bricks
             htmlText += "</select>\n";
             foreach (Proposition pr in propositionList)
             {
-                htmlText += pr.Write(varName) + "\n";
+                htmlText += pr.Write(varName + "Model") + "\n";
             }
             return htmlText;
         }
