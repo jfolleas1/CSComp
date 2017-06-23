@@ -18,10 +18,29 @@ namespace CompCorpus
         {
             if (args.Length == 4)
             {
+
+
+
+
                 string sourceFileName = args[0];
                 string targetFilehtmlName = args[1];
                 string targetFileJSName = args[2];
                 string dataStructurePath = args[3];
+
+
+
+
+                string sourceFileNameCopy = sourceFileName + ".comp";
+                try
+                {
+                    File.Copy(sourceFileName, sourceFileNameCopy);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("The file could not be read:");
+                    Console.WriteLine(e.Message);
+                }
+
 
                 FileStream file = null;
                 Scanner scn = null;
@@ -33,7 +52,7 @@ namespace CompCorpus
                 string fileForPreCompiling = "";
                 try
                 {   // Open the text file using a stream reader.
-                    using (StreamReader sr = new StreamReader(sourceFileName))
+                    using (StreamReader sr = new StreamReader(sourceFileNameCopy))
                     {
                         // Read the stream to a string, and write the string to the console.
                         fileForPreCompiling = sr.ReadToEnd();
@@ -47,7 +66,7 @@ namespace CompCorpus
 
                 try
                 {
-                    file = new FileStream(sourceFileName, FileMode.Open);
+                    file = new FileStream(sourceFileNameCopy, FileMode.Open);
                     Console.WriteLine(file.Name);
                     scn = new Scanner(file);
                     parser = new Parser(scn);
@@ -78,6 +97,16 @@ namespace CompCorpus
                 finally
                 {
                     file.Close();
+                }
+
+                try
+                {
+                    File.Delete(sourceFileNameCopy);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("The file could not be read:");
+                    Console.WriteLine(e.Message);
                 }
             }
             Console.ReadLine();
