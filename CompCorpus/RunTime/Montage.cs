@@ -73,7 +73,7 @@ namespace CompCorpus.RunTime
 
             //Add of the propositions variables 
             Console.WriteLine("AddSymboleFromPreCompile : Proposition");
-            string propositionPattern = @"[^x]\( *\w+ *, *"+"\"[^\"]*\""+@" *\)";
+            string propositionPattern = @"[^xn]\( *\w+ *, *"+"\"[^\"]*\""+@" *\)";
             MatchCollection propositionMatches;
             Regex propositionRegex = new Regex(propositionPattern);
             propositionMatches = propositionRegex.Matches(file);

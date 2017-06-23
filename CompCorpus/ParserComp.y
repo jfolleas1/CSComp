@@ -31,6 +31,7 @@
 		public Proposition proposition;
 		public List<Proposition> listProposition;
 		public Choice choice;
+		public Option option;
 
 }
 
@@ -100,7 +101,7 @@
 %type<listProposition> listProposition
 %type<proposition> proposition
 
-%type<String> option
+%type<option> option
 
 
 // Priority
@@ -201,7 +202,7 @@ listBrick	:  /* Empty */			{ $$ = new List<Brick>();  }
 brick		: textBloc				{ $$ = new DeadText($1); }
 			| callVar				{ $$ = $1; }
 			| choice				{ $$ = $1; }
-			| option				{ $$ = new DeadText($1); } 
+			| option				{ $$ = new DeadText("Option: look in console for much information"); } 
 			| title					{ $$ = $1; }
 			;
 
@@ -253,7 +254,7 @@ callVar		: CODEINDIC BRACEOPEN ID BRACECLOSE			{ $$ = new VariableCall($3, monta
 choice		: CHOIXCKW PARENTOPEN ID COMMA STRING PARENTCLOSE BRACEOPEN listProposition BRACECLOSE		{ $$ = new Choice($3, $5, $8); }
 			;
 
-option		: OPTIONCKW PARENTOPEN ID COMMA STRING PARENTCLOSE BRACEOPEN listBrick BRACECLOSE		{ $$ = "Option!! : " + $3 + "  :  " + $5; }
+option		: OPTIONCKW PARENTOPEN ID COMMA STRING PARENTCLOSE BRACEOPEN listBrick BRACECLOSE		{ $$ = new Option($3, $5, $8); $$.Print(); }
 			;
 
 listProposition		: proposition							{ $$ = new List<Proposition>(); $$.Add($1); }
