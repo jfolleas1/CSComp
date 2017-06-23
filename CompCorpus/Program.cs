@@ -63,7 +63,7 @@ namespace CompCorpus
                     if (montage != null && !montage.errorList.Any() && !scn.hasErrors)
                     {
                         montage.WriteInFiles(targetFilehtmlName, targetFileJSName);
-                        //System.Diagnostics.Process.Start(targetFilehtmlName);
+                        System.Diagnostics.Process.Start(targetFilehtmlName);
                     }
                     else
                     {

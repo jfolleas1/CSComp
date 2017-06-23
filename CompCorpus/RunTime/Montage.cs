@@ -83,13 +83,16 @@ namespace CompCorpus.RunTime
                
                 string propoVarName = propositionMatches[ctr].Value.Substring("x(".Length,
                     (Regex.Match(propositionMatches[ctr].Value,@",").Index  - "x(".Length));
-                this.AddSymbole(propoVarName.Trim(), "LSTRING");
                 Console.WriteLine(propoVarName);
 
                 int commaIndex = ("x(" + propoVarName + ",").Length;
                 string propoString = propositionMatches[ctr].Value.Substring(commaIndex,
                     (propositionMatches[ctr].Value.Length - (commaIndex+1))); // We don't need the last char
                 Console.WriteLine(propoString.Trim());
+
+                Affectation aff = new Affectation(new VariableId(propoVarName,"LSTRING"), new VariableString(propoString));
+                this.AddSymbole(aff);
+                this.listOfCalculExpressions.Add(aff);
             }
         }
 
