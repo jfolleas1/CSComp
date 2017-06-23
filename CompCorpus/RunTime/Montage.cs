@@ -83,17 +83,32 @@ namespace CompCorpus.RunTime
                
                 string propoVarName = propositionMatches[ctr].Value.Substring("x(".Length,
                     (Regex.Match(propositionMatches[ctr].Value,@",").Index  - "x(".Length));
-                Console.WriteLine(propoVarName);
 
                 int commaIndex = ("x(" + propoVarName + ",").Length;
                 string propoString = propositionMatches[ctr].Value.Substring(commaIndex,
                     (propositionMatches[ctr].Value.Length - (commaIndex+1))); // We don't need the last char
-                Console.WriteLine(propoString.Trim());
 
                 Affectation aff = new Affectation(new VariableId(propoVarName,"LSTRING"), new VariableString(propoString));
                 this.AddSymbole(aff);
                 this.listOfCalculExpressions.Add(aff);
             }
+
+            //Add of the option variables 
+            Console.WriteLine("AddSymboleFromPreCompile : Option");
+            string optionPattern = @"(\$option\() *\w+ *,";
+            MatchCollection optionMatches;
+            Regex optionRegex = new Regex(optionPattern);
+            optionMatches = optionRegex.Matches(file);
+            // Iterate matches
+            for (int ctr = 0; ctr < optionMatches.Count; ctr++)
+            {
+                string optionVarName = optionMatches[ctr].Value.Substring("$option(".Length,
+                    (optionMatches[ctr].Value.Length - "$option(,".Length));
+                Affectation aff = new Affectation(new VariableId(optionVarName, "LBOOL"), new VariableId(optionVarName+"Model", "BOOL"));
+                this.AddSymbole(aff);
+                this.listOfCalculExpressions.Add(aff);
+            }
+
         }
 
 

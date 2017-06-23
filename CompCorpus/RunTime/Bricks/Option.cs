@@ -34,7 +34,21 @@ namespace CompCorpus.RunTime.Bricks
 
         public override string Write()
         {
-            throw new NotImplementedException("comming soon");
+            string htmlText = "";
+            htmlText += "<input type=\"checkbox\" class=\"pull-left\" ng-model=\"";
+            htmlText += varName + "Model";
+            htmlText += "\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"";
+            htmlText += textOfOption.Substring(1, (textOfOption.Length - 2));
+            htmlText += "\" >\n";
+            htmlText += "<span ng-show=\"" + varName + "Model" + "\">";
+            foreach (Brick bk in brickList)
+            {
+                htmlText += bk.Write() + "\n";
+            }
+            htmlText += "</span>";
+            return htmlText;
+
+
         }
     }
 }
