@@ -54,6 +54,7 @@
   <ItemGroup>
     <Compile Include="MainTest.cs" />
     <Compile Include="TestChoix.cs" />
+    <Compile Include="TestCondition.cs" />
     <Compile Include="TestHtml.cs" />
     <Compile Include="TestIncludes.cs" />
     <Compile Include="TestOnExpressions.cs" />

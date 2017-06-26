@@ -209,7 +209,7 @@ namespace CompCorpus.RunTime
         {
             if (!(expressionType == ExpressionType.UNKNOWVAR))
             {   // If the expression is an unknow var then the error is already know 
-                if (expressionType != ExpressionType.INVALIDE)
+                if (expressionType != ExpressionType.BOOL)
                 {
                     errorList.Add(new Error(ErrorType.INVALID_CONDITION_EXPR , "", line, column));
                 }

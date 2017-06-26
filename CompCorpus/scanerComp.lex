@@ -31,19 +31,23 @@ Integer [0-9]+
 Float [0-9]+,[0-9]+
 CharString \"(\\.|[^\\"])*\"
 TitleId ($titre)[1-6]
-
+Comment ((\/\/)[^\n]*\n|\/\*[^(\*\/)]*\*\/)
 DeadWord	[^ ,\t\n{}\(\)\$+\-/*(&&)(||)!(==)(<=)(<)(>=)(>)(:=);(%%)]+
 
 %%
 
+			
 [ \n\r\t]			{ /*ignore*/ yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); }
 
 //
 // Start of Rules
+//    /\\*[^(\\*/)]*\\*/
 //
 
 %{ //user-code that will be executed before getting the next token
 %}
+
+{Comment}				{ yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); }
 
 "$Titre"				{yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.TITREACTEKW;}
 "$true"                 {yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.TRUE; }
@@ -56,7 +60,6 @@ DeadWord	[^ ,\t\n{}\(\)\$+\-/*(&&)(||)!(==)(<=)(<)(>=)(>)(:=);(%%)]+
 "$choix"				{yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.CHOIXCKW;}
 "$option"				{yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.OPTIONCKW;}
 "$condition"			{yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.CONDITIONCKW;}
-
 
 "+"                     {yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.PLUS;}
 "-"                     {yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.MINUS;}
