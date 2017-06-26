@@ -205,6 +205,17 @@ namespace CompCorpus.RunTime
             }
         }
 
+        public void CheckConditionExpressionIsBoolean(ExpressionType expressionType, int line , int column)
+        {
+            if (!(expressionType == ExpressionType.UNKNOWVAR))
+            {   // If the expression is an unknow var then the error is already know 
+                if (expressionType != ExpressionType.INVALIDE)
+                {
+                    errorList.Add(new Error(ErrorType.INVALID_CONDITION_EXPR , "", line, column));
+                }
+            }
+        }
+
         private void CheckCorespondanceExpectedAndExpressionType(ExpressionType expressionType, string expectedTypeString, string symbole, int line)
         {
             ExpressionType expectedType;

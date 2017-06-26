@@ -13,6 +13,7 @@ namespace CompCorpus.RunTime.error
         UNKNOW_VARIABLE,
         INCOMPATIBLE_AFFECTATION,
         DOUBLE_DECLARATION,
+        INVALID_CONDITION_EXPR
     }
 
     public class Error
@@ -60,6 +61,9 @@ namespace CompCorpus.RunTime.error
                     break;
                 case ErrorType.DOUBLE_DECLARATION:
                     message = "ERREUR: le nom de variable " + data + " à été déclaré plusieur fois.";
+                    break;
+                case ErrorType.INVALID_CONDITION_EXPR:
+                    message += " l'expression utilisé pour une condition ne retourne pas une valeur boolean";
                     break;
                 default:
                     break;

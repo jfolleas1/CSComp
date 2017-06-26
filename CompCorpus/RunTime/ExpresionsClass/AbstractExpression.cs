@@ -27,5 +27,6 @@ namespace CompCorpus.RunTime
         }
         public abstract void Print(int level);
         public abstract string Write();
+        public abstract string WriteForCondition();
     }
 }

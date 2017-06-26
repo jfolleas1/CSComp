@@ -32,6 +32,7 @@
 		public List<Proposition> listProposition;
 		public Choice choice;
 		public Option option;
+		public Condition condition;
 
 }
 
@@ -56,7 +57,7 @@
 %token CODEINDIC
 %token NOUVLIGNE NOUVPARAG
 
-%token CHOIXCKW OPTIONCKW
+%token CHOIXCKW OPTIONCKW CONDITIONCKW
 
 %token <String> ID
 %token <String> STRING
@@ -102,6 +103,8 @@
 %type<proposition> proposition
 
 %type<option> option
+
+%type<condition> condition
 
 
 // Priority
@@ -204,6 +207,7 @@ brick		: textBloc				{ $$ = new DeadText($1); }
 			| choice				{ $$ = $1; }
 			| option				{ $$ = $1; } 
 			| title					{ $$ = $1; }
+			| condition				{ $$ = $1; }
 			;
 
 
@@ -255,6 +259,9 @@ choice		: CHOIXCKW PARENTOPEN ID COMMA STRING PARENTCLOSE BRACEOPEN listProposit
 			;
 
 option		: OPTIONCKW PARENTOPEN ID COMMA STRING PARENTCLOSE BRACEOPEN listBrick BRACECLOSE		{ $$ = new Option($3, $5, $8); }
+			;
+
+condition	: CONDITIONCKW PARENTOPEN expression PARENTCLOSE BRACEOPEN listBrick BRACECLOSE		{ $$ = new Condition($3, $6); montage.CheckConditionExpressionIsBoolean($3.dataType, @2.StartLine, @2.StartColumn); }
 			;
 
 listProposition		: proposition							{ $$ = new List<Proposition>(); $$.Add($1); }

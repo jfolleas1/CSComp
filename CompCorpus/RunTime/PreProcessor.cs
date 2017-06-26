@@ -45,8 +45,9 @@ namespace CompCorpus.RunTime
         {
             try
             {
-                using (System.IO.StreamWriter file =
-                new System.IO.StreamWriter(fileName))
+                FileStream fs = new FileStream(fileName, FileMode.OpenOrCreate);
+                using (StreamWriter file =
+                new StreamWriter(fs, Encoding.UTF8))
                 {
                     file.Write(copiedSourceFile);
                 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CompCorpus.RunTime
 {
-    enum ExpressionSymbole
+    public enum ExpressionSymbole
     {
         PLUS,
         MUL,
@@ -23,7 +23,7 @@ namespace CompCorpus.RunTime
         PARENT,
     };
 
-    class Expression : AbstractExpression
+    public class Expression : AbstractExpression
     {
         public ExpressionSymbole symbole { get; }
         public AbstractExpression expression1 { get; }
@@ -185,6 +185,59 @@ namespace CompCorpus.RunTime
                     break;
                 case ExpressionSymbole.PARENT:
                     myExpressionInString = "(" + expression1.Write() + ")";
+                    break;
+                default:
+                    Console.WriteLine("Symbole de calcul non reconu");
+                    myExpressionInString = "";
+                    break;
+            }
+            return myExpressionInString;
+        }
+
+        public override string WriteForCondition()
+        {
+            string myExpressionInString;
+            switch (symbole)
+            {
+
+                case ExpressionSymbole.PLUS:
+                    myExpressionInString = expression1.WriteForCondition() + "+" + expression2.WriteForCondition();
+                    break;
+                case ExpressionSymbole.MUL:
+                    myExpressionInString = expression1.WriteForCondition() + "*" + expression2.WriteForCondition();
+                    break;
+                case ExpressionSymbole.DIV:
+                    myExpressionInString = expression1.WriteForCondition() + "/" + expression2.WriteForCondition();
+                    break;
+                case ExpressionSymbole.MINUS:
+                    myExpressionInString = expression1.WriteForCondition() + "-" + expression2.WriteForCondition();
+                    break;
+                case ExpressionSymbole.AND:
+                    myExpressionInString = expression1.WriteForCondition() + "&&" + expression2.WriteForCondition();
+                    break;
+                case ExpressionSymbole.OR:
+                    myExpressionInString = expression1.WriteForCondition() + "||" + expression2.WriteForCondition();
+                    break;
+                case ExpressionSymbole.NOT:
+                    myExpressionInString = "!" + expression1.WriteForCondition();
+                    break;
+                case ExpressionSymbole.EGALE:
+                    myExpressionInString = expression1.WriteForCondition() + "==" + expression2.WriteForCondition();
+                    break;
+                case ExpressionSymbole.INF:
+                    myExpressionInString = expression1.WriteForCondition() + "<" + expression2.WriteForCondition();
+                    break;
+                case ExpressionSymbole.INFEGALE:
+                    myExpressionInString = expression1.WriteForCondition() + "<=" + expression2.WriteForCondition();
+                    break;
+                case ExpressionSymbole.SUP:
+                    myExpressionInString = expression1.WriteForCondition() + ">" + expression2.WriteForCondition();
+                    break;
+                case ExpressionSymbole.SUPEGALE:
+                    myExpressionInString = expression1.WriteForCondition() + ">=" + expression2.WriteForCondition();
+                    break;
+                case ExpressionSymbole.PARENT:
+                    myExpressionInString = "(" + expression1.WriteForCondition() + ")";
                     break;
                 default:
                     Console.WriteLine("Symbole de calcul non reconu");

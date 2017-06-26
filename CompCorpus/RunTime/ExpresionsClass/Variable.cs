@@ -60,6 +60,11 @@ namespace CompCorpus.RunTime
         {
             return value.ToString();
         }
+
+        public override string WriteForCondition()
+        {
+            return Write();
+        }
     }
 
     public class VariableFloat : Variable
@@ -81,6 +86,11 @@ namespace CompCorpus.RunTime
         public override string Write()
         {
             return value.ToString("G", CultureInfo.CreateSpecificCulture("en-US"));
+        }
+
+        public override string WriteForCondition()
+        {
+            return Write();
         }
     }
 
@@ -104,6 +114,11 @@ namespace CompCorpus.RunTime
         public override string Write()
         {
             return value;
+        }
+
+        public override string WriteForCondition()
+        {
+            return Write();
         }
     }
 
@@ -167,6 +182,16 @@ namespace CompCorpus.RunTime
         public override string Write()
         {
             string text = "$scope."+name;
+            if (local)
+            {
+                text += "()";
+            }
+            return text;
+        }
+
+        public override string WriteForCondition()
+        {
+            string text = name;
             if (local)
             {
                 text += "()";

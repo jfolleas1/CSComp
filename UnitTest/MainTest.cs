@@ -20,17 +20,30 @@ namespace UnitTest
                 string targetFilehtmlName = args[1];
                 string targetFileJSName = args[2];
 
+                string sourceCopiedFileName = sourceFileName + ".comp";
+                try
+                {
+                    File.Copy(sourceFileName, sourceCopiedFileName);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("The file could not be read:");
+                    Console.WriteLine(e.Message);
+                }
+
                 FileStream file = null;
                 Scanner scn = null;
                 Parser parser = null;
                 Montage montage = null;
+
+                PreProcessor.AddIncludes(sourceCopiedFileName);
 
 
                 // Read the document to do the precompiling phase
                 string fileForPreCompiling = "";
                 try
                 {   // Open the text file using a stream reader.
-                    using (StreamReader sr = new StreamReader(sourceFileName))
+                    using (StreamReader sr = new StreamReader(sourceCopiedFileName))
                     {
                         // Read the stream to a string, and write the string to the console.
                         fileForPreCompiling = sr.ReadToEnd();
@@ -44,7 +57,7 @@ namespace UnitTest
 
                 try
                 {
-                    file = new FileStream(sourceFileName, FileMode.Open);
+                    file = new FileStream(sourceCopiedFileName, FileMode.Open);
                     scn = new Scanner(file);
                     parser = new Parser(scn);
                     parser.montage.AddSymboleFromFile(@"C:\Users\j.folleas\Desktop\settings\DataStructur.txt");
@@ -75,7 +88,16 @@ namespace UnitTest
                 {
                     file.Close();
                 }
-                
+
+                try
+                {
+                    File.Delete(sourceCopiedFileName);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("The file could not be read:");
+                    Console.WriteLine(e.Message);
+                }
             }
             return filemodified;
         }

@@ -55,6 +55,7 @@ DeadWord	[^ ,\t\n{}\(\)\$+\-/*(&&)(||)!(==)(<=)(<)(>=)(>)(:=);(%%)]+
 {TitleId}				{yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); yylval.String = yytext; return (int)Tokens.TITLEID;}
 "$choix"				{yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.CHOIXCKW;}
 "$option"				{yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.OPTIONCKW;}
+"$condition"			{yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.CONDITIONCKW;}
 
 
 "+"                     {yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.PLUS;}
