@@ -43,6 +43,12 @@ namespace UnitTest
             mainTestHtml("TestTitle");
         }
 
+        [TestMethod]
+        public void TestCommentBothType()
+        {
+            mainTestHtml("TestCommentBothType");
+
+        } 
 
         public static void mainTestHtml(string fileName)
         {
