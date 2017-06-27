@@ -34,6 +34,7 @@
 		public Option option;
 		public Condition condition;
 		public Iteration iteration;
+		public IteratorStr iterator; 
 
 }
 
@@ -52,7 +53,7 @@
 
 %token ASSIGN
 
-%token SEMICOLON COMMA
+%token SEMICOLON COMMA COLON
 
 %token SEPARATOR
 %token CODEINDIC
@@ -108,7 +109,7 @@
 %type<condition> condition
 
 %type<iteration> iteration
-
+%type<iterator> iterator
 
 // Priority
 
@@ -211,7 +212,7 @@ brick		: textBloc				{ $$ = new DeadText($1); }
 			| option				{ $$ = $1; } 
 			| title					{ $$ = $1; }
 			| condition				{ $$ = $1; }
-			| iteration			{ $$ = new DeadText("Iteration"); }
+			| iteration				{ $$ = $1; }
 			;
 
 
@@ -226,6 +227,7 @@ textBlocElement		: DEADWORD		{ $$ = $1; }
 					| PARENTCLOSE	{ $$ = ")"; }
 					| SEMICOLON		{ $$ = ";"; }
 					| COMMA			{ $$ = ","; }
+					| COLON			{ $$ = ":"; }
 					| INTEGER		{ $$ = $1.ToString(); }
 					| FLOAT			{ $$ = $1.ToString(); }
 					| STRING		{ $$ = $1; }
@@ -248,6 +250,7 @@ titleContentElement		: DEADWORD		{ $$ = $1; }
 						| PARENTCLOSE	{ $$ = ")"; }
 						| SEMICOLON		{ $$ = ";"; }
 						| COMMA			{ $$ = ","; }
+						| COLON			{ $$ = ":"; }
 						| INTEGER		{ $$ = $1.ToString(); }
 						| FLOAT			{ $$ = $1.ToString(); }
 						| STRING		{ $$ = $1; }
@@ -277,7 +280,10 @@ option		: OPTIONCKW PARENTOPEN ID COMMA STRING PARENTCLOSE BRACEOPEN listBrick B
 condition	: CONDITIONCKW PARENTOPEN expression PARENTCLOSE BRACEOPEN listBrick BRACECLOSE		{ $$ = new Condition($3, $6); montage.CheckConditionExpressionIsBoolean($3.dataType, @2.StartLine, @2.StartColumn); }
 			;
 
-iteration 	: POURCHAQUECKW PARENTOPEN ID PARENTCLOSE BRACEOPEN listBrick BRACECLOSE		{ $$ = new Iteration(new VariableId($3, montage.GetVarTypeStringForIteration($3,  @3.StartLine, @3.StartColumn)), $6); /*Console.WriteLine(montage.GetVarTypeString($3)); $$.Print();*/ }
+iteration 	: POURCHAQUECKW PARENTOPEN iterator PARENTCLOSE BRACEOPEN listBrick BRACECLOSE		{ $$ = new Iteration($3.iteratorName, $3.listData , $6); $$.Print(); montage.RemoveSymboles($3.GetListVariableOfIterator(montage));}
+			;
+
+iterator	: ID COLON ID { $$ = new IteratorStr($1,new VariableId($3, montage.GetVarTypeStringForIteration($3,  @3.StartLine, @3.StartColumn))); montage.AddSymbole($$.GetListVariableOfIterator(montage)); }
 			;
 
 %%

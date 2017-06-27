@@ -146,6 +146,14 @@ namespace CompCorpus.RunTime
             }
         }
 
+        public void RemoveSymboles(List<Tuple<string, string>> ls)
+        {
+            foreach (Tuple<string, string> tp in ls)
+            {
+                this.symboleTabe.Remove(tp.Item1);
+            }
+        }
+
         public bool isLocalVar(string varName, int line, int column)
         {
             if (IsInSymboleTable(varName, line, column))
@@ -250,7 +258,8 @@ namespace CompCorpus.RunTime
         public string GetVarTypeStringForIteration(string varName, int line, int col)
         {
             string value = GetVarTypeString(varName);
-            if (value == "UNKNOWVAR"/*unknow*/)
+            
+            if (value == "UNKNOWVAR")
             {
                 //Rise Error
                 errorList.Add(new Error(ErrorType.UNKNOW_VARIABLE, varName, line, col));

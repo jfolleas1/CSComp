@@ -108,7 +108,7 @@ namespace UnitTest
             string[] args = { srcFilePath, "", "" };
             List<Error> myListError = TestErrorMain(args);
             List<Error> resListError = new List<Error>();
-            resListError.Add(new Error(ErrorType.NOTLIST_USE_FOR_ITERATION, "toto", 8, 13));
+            resListError.Add(new Error(ErrorType.NOTLIST_USE_FOR_ITERATION, "toto", 8, 18));
             bool test = (myListError.Count == 1);
             test &= (resListError.First().Equals(myListError.First()));
             Assert.AreEqual(true, test);
