@@ -13,7 +13,8 @@ namespace CompCorpus.RunTime.error
         UNKNOW_VARIABLE,
         INCOMPATIBLE_AFFECTATION,
         DOUBLE_DECLARATION,
-        INVALID_CONDITION_EXPR
+        INVALID_CONDITION_EXPR,
+        NOTLIST_USE_FOR_ITERATION,
     }
 
     public class Error
@@ -64,6 +65,9 @@ namespace CompCorpus.RunTime.error
                     break;
                 case ErrorType.INVALID_CONDITION_EXPR:
                     message += " l'expression utilisé pour une condition ne retourne pas une valeur boolean";
+                    break;
+                case ErrorType.NOTLIST_USE_FOR_ITERATION:
+                    message += " la variable " + data + " est utilisé dans une itération mais n'est pas une liste";
                     break;
                 default:
                     break;

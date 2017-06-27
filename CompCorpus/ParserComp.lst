@@ -1,10 +1,10 @@
 
 // ==========================================================================
-//  GPPG error listing for yacc source file <ParserComp.y - 20/06/2017 13:22:26>
+//  GPPG error listing for yacc source file <ParserComp.y - 27/06/2017 10:02:34>
 // ==========================================================================
 //  Version:  1.5.2
 //  Machine:  FIDF3675368
-//  DateTime: 20/06/2017 13:22:33
+//  DateTime: 27/06/2017 10:02:39
 //  UserName: j.folleas
 // ==========================================================================
 
@@ -39,6 +39,15 @@
 		public List<Brick> listBrick ;
 		public VariableCall variableCall;
 		public Title Title;
+		public Proposition proposition;
+		public List<Proposition> listProposition;
+		public Choice choice;
+		public Option option;
+		public Condition condition;
+		ûblic Iteration iteration;
+// Error: This character is invalid in this context
+// ------------------------------------------------
+
 }
 
 // Defining Tokens
@@ -62,7 +71,7 @@
 %token CODEINDIC
 %token NOUVLIGNE NOUVPARAG
 
-%token CHOIXCKW
+%token CHOIXCKW OPTIONCKW CONDITIONCKW POURCHAQUECKW
 
 %token <String> ID
 %token <String> STRING
@@ -93,10 +102,25 @@
 %type<brick> brick
 %type<listBrick> document
 %type<listBrick> listBrick
+
+
 %type<variableCall> callVar
+
+
 %type<Title> title
 %type<String> titleContent
 %type<String> titleContentElement
+
+
+%type<choice> choice
+%type<listProposition> listProposition
+%type<proposition> proposition
+
+%type<option> option
+
+%type<condition> condition
+
+%type<iteration> iteration
 
 
 // Priority
@@ -112,15 +136,9 @@
 
 
 %% // Grammar rules section
-// Error: NonTerminal symbol "CHOICKW" has no productions
-// Warning: Terminating CHOICKW fixes the following size-2 NonTerminal set
-   // {choice, CHOICKW}
-// Error: There are 2 non-terminating NonTerminal Symbols
-   //  {choice, CHOICKW}
-// -----------------------------------------------------------------------
 
 montage		:	  /*Empty*/																{ Console.WriteLine(" Empty programe "); }
-			|	defActeTitle listDeclaration SEPARATOR listAffectation document 		{  montage.nameOfTheMontage=$1; montage.listOfDeclarations=$2; montage.listOfCalculExpressions=$4; montage.listOfBricks=$5; }
+			|	defActeTitle listDeclaration SEPARATOR listAffectation document 		{  montage.nameOfTheMontage=$1; montage.listOfDeclarations=$2; montage.listOfCalculExpressions.AddRange($4); montage.listOfBricks=$5; }
 			;
 
 defActeTitle	:	TITREACTEKW BRACEOPEN deadText BRACECLOSE		{ $$ = $3; }
@@ -189,6 +207,9 @@ constante   :   INTEGER		{ @$ = @1; /*Console.WriteLine("int :" + $1 );*/		$$ = 
 
 
 
+
+
+
 document	: /* Empty */					{ $$=new List<Brick>(); }
 			| SEPARATOR listBrick			{ $$ = $2; }
 			;
@@ -197,10 +218,13 @@ listBrick	:  /* Empty */			{ $$ = new List<Brick>();  }
 			| listBrick brick		{ $$ = $1; $$.Add($2); }
 			;
 
-brick		: textBloc				{ $$ = new DeadText($1, montage.paragraphOpen); montage.paragraphOpen = true; }
+brick		: textBloc				{ $$ = new DeadText($1); }
 			| callVar				{ $$ = $1; }
-			| title					{ $$ = $1; montage.paragraphOpen = false; }
-			| choice				{ $$ = new DeadText("Il y avait un choix", montage.paragraphOpen); montage.paragraphOpen = true;}
+			| choice				{ $$ = $1; }
+			| option				{ $$ = $1; } 
+			| title					{ $$ = $1; }
+			| condition				{ $$ = $1; }
+			| iteration			{ $$ = new DeadText("Iteration"); }
 			;
 
 
@@ -223,7 +247,7 @@ textBlocElement		: DEADWORD		{ $$ = $1; }
 					;
 
 
-title		: TITLEID BRACEOPEN titleContent BRACECLOSE				{  $$ = new Title($1, $3, montage.paragraphOpen); }
+title		: TITLEID BRACEOPEN titleContent BRACECLOSE				{  $$ = new Title($1, $3); }
 			;
 
 titleContent	: titleContentElement					{ $$ = $1; }
@@ -248,7 +272,25 @@ callVar		: CODEINDIC BRACEOPEN ID BRACECLOSE			{ $$ = new VariableCall($3, monta
 			;
 
 
-choice		: CHOICKW PARENTOPEN ID COMMA STRING PARENTCLOSE BRACEOPEN BRACECLOSE { Console.WriteLine("choice"); }
+choice		: CHOIXCKW PARENTOPEN ID COMMA STRING PARENTCLOSE BRACEOPEN listProposition BRACECLOSE		{ $$ = new Choice($3, $5, $8); }
+			;
+
+
+
+listProposition		: proposition							{ $$ = new List<Proposition>(); $$.Add($1); }
+					| listProposition proposition			{ $$ = $1; $$.Add($2); }
+					;
+
+proposition			: PARENTOPEN ID COMMA STRING PARENTCLOSE BRACEOPEN listBrick BRACECLOSE			{ $$ = new Proposition($2,$4, $7); }
+					;
+
+option		: OPTIONCKW PARENTOPEN ID COMMA STRING PARENTCLOSE BRACEOPEN listBrick BRACECLOSE		{ $$ = new Option($3, $5, $8); }
+			;
+
+condition	: CONDITIONCKW PARENTOPEN expression PARENTCLOSE BRACEOPEN listBrick BRACECLOSE		{ $$ = new Condition($3, $6); montage.CheckConditionExpressionIsBoolean($3.dataType, @2.StartLine, @2.StartColumn); }
+			;
+
+iteration 	: POURCHAQUECKW PARENTOPEN ID PARENTCLOSE BRACEOPEN listBrick BRACECLOSE		{ $$ = new Iteration(new Var($3, montage.GetVarTypeString($3)), $6); }
 			;
 
 %%

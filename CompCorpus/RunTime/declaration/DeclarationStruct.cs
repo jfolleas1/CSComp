@@ -87,14 +87,6 @@ namespace CompCorpus.RunTime.declaration
             {
                 ls.AddRange(dec.GetSymboles(baseSymbole));
             }
-            //if(firstLevel)
-            //{
-            //    Console.WriteLine(" Declaration d'objet avec :");
-            //    foreach (Tuple<string, string> tp in ls)
-            //    {
-            //        Console.WriteLine(tp.Item1 + " : " + tp.Item2);
-            //    }
-            //}
             return ls;
         }
     }

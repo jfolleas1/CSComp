@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CompCorpus.RunTime.Bricks
 {
-    class Iteration : Brick
+    public class Iteration : Brick
     {
         public VariableId iterator { get; }
         public List<Brick> brickList { get; }
@@ -21,6 +21,7 @@ namespace CompCorpus.RunTime.Bricks
         {
             Console.WriteLine("Iteration");
             Console.WriteLine(iterator.WriteForCondition());
+          
             int i = 1;
             foreach (Brick bk in brickList)
             {

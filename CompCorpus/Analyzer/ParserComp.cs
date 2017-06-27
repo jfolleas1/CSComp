@@ -4,9 +4,9 @@
 
 // GPPG version 1.5.2
 // Machine:  FIDF3675368
-// DateTime: 27/06/2017 09:43:42
+// DateTime: 27/06/2017 11:09:02
 // UserName: j.folleas
-// Input file <ParserComp.y - 27/06/2017 09:42:55>
+// Input file <ParserComp.y - 27/06/2017 11:09:00>
 
 // options: no-lines gplex
 
@@ -51,6 +51,7 @@ public struct ValueType
 		public Choice choice;
 		public Option option;
 		public Condition condition;
+		public Iteration iteration;
 
 }
 // Abstract base class for GPLEX scanners
@@ -75,11 +76,11 @@ public class ScanObj {
 [GeneratedCodeAttribute( "Gardens Point Parser Generator", "1.5.2")]
 public class Parser: ShiftReduceParser<ValueType, LexLocation>
 {
-  // Verbatim content from ParserComp.y - 27/06/2017 09:42:55
+  // Verbatim content from ParserComp.y - 27/06/2017 11:09:00
     
     public Montage montage = new Montage();
 
-  // End verbatim content from ParserComp.y - 27/06/2017 09:42:55
+  // End verbatim content from ParserComp.y - 27/06/2017 11:09:00
 
 #pragma warning disable 649
   private static Dictionary<int, string> aliases;
@@ -606,7 +607,7 @@ public class Parser: ShiftReduceParser<ValueType, LexLocation>
         break;
       case 85: // iteration -> POURCHAQUECKW, PARENTOPEN, ID, PARENTCLOSE, BRACEOPEN, listBrick, 
                //              BRACECLOSE
-{ CurrentSemanticValue.String = ""; }
+{ CurrentSemanticValue.iteration = new Iteration(new VariableId(ValueStack[ValueStack.Depth-5].String, montage.GetVarTypeStringForIteration(ValueStack[ValueStack.Depth-5].String,  LocationStack[LocationStack.Depth-5].StartLine, LocationStack[LocationStack.Depth-5].StartColumn)), ValueStack[ValueStack.Depth-2].listBrick); /*Console.WriteLine(montage.GetVarTypeString($3)); $$.Print();*/ }
         break;
     }
 #pragma warning restore 162, 1522

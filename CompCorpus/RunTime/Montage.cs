@@ -68,7 +68,6 @@ namespace CompCorpus.RunTime
             {
                 string choiceVarName = choiceMatches[ctr].Value.Substring("$choix(".Length,
                     (choiceMatches[ctr].Value.Length - "$choix(,".Length));
-                //this.AddSymbole(choiceVarName.Trim(), "STRING");
                 Affectation aff = new Affectation(new VariableId(choiceVarName.Trim(), "LSTRING"),
                     new VariableId(choiceVarName.Trim() + "Model", "STRING"));
                 this.AddSymbole(aff);
@@ -248,7 +247,24 @@ namespace CompCorpus.RunTime
             return value;
         }
 
-        
+        public string GetVarTypeStringForIteration(string varName, int line, int col)
+        {
+            string value = GetVarTypeString(varName);
+            if (value == "NULL"/*unknow*/)
+            {
+                //Rise Error
+                errorList.Add(new Error(ErrorType.UNKNOW_VARIABLE, varName, line, col));
+
+            }
+            else if (value != "LISTSTRUCT")
+            {
+                //Rise Error
+                errorList.Add(new Error(ErrorType.NOTLIST_USE_FOR_ITERATION,varName, line, col));
+            }
+            return value;
+        }
+
+
 
         public static string GetLocalFileName(string fileName)
         {

@@ -33,6 +33,7 @@
 		public Choice choice;
 		public Option option;
 		public Condition condition;
+		public Iteration iteration;
 
 }
 
@@ -106,7 +107,7 @@
 
 %type<condition> condition
 
-%type<String> iteration
+%type<iteration> iteration
 
 
 // Priority
@@ -276,7 +277,7 @@ option		: OPTIONCKW PARENTOPEN ID COMMA STRING PARENTCLOSE BRACEOPEN listBrick B
 condition	: CONDITIONCKW PARENTOPEN expression PARENTCLOSE BRACEOPEN listBrick BRACECLOSE		{ $$ = new Condition($3, $6); montage.CheckConditionExpressionIsBoolean($3.dataType, @2.StartLine, @2.StartColumn); }
 			;
 
-iteration 	: POURCHAQUECKW PARENTOPEN ID PARENTCLOSE BRACEOPEN listBrick BRACECLOSE		{ $$ = ""; }
+iteration 	: POURCHAQUECKW PARENTOPEN ID PARENTCLOSE BRACEOPEN listBrick BRACECLOSE		{ $$ = new Iteration(new VariableId($3, montage.GetVarTypeStringForIteration($3,  @3.StartLine, @3.StartColumn)), $6); /*Console.WriteLine(montage.GetVarTypeString($3)); $$.Print();*/ }
 			;
 
 %%
