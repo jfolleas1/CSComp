@@ -49,6 +49,7 @@
     <Compile Include="RunTime\Bricks\Choice.cs" />
     <Compile Include="RunTime\Bricks\Condition.cs" />
     <Compile Include="RunTime\Bricks\DeadText.cs" />
+    <Compile Include="RunTime\Bricks\Iteration.cs" />
     <Compile Include="RunTime\Bricks\Option.cs" />
     <Compile Include="RunTime\Bricks\Proposition.cs" />
     <Compile Include="RunTime\Bricks\Title.cs" />

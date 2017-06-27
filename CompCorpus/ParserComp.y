@@ -57,7 +57,7 @@
 %token CODEINDIC
 %token NOUVLIGNE NOUVPARAG
 
-%token CHOIXCKW OPTIONCKW CONDITIONCKW
+%token CHOIXCKW OPTIONCKW CONDITIONCKW POURCHAQUECKW
 
 %token <String> ID
 %token <String> STRING
@@ -105,6 +105,8 @@
 %type<option> option
 
 %type<condition> condition
+
+%type<String> iteration
 
 
 // Priority
@@ -208,6 +210,7 @@ brick		: textBloc				{ $$ = new DeadText($1); }
 			| option				{ $$ = $1; } 
 			| title					{ $$ = $1; }
 			| condition				{ $$ = $1; }
+			| iteration			{ $$ = new DeadText("Iteration"); }
 			;
 
 
@@ -258,11 +261,7 @@ callVar		: CODEINDIC BRACEOPEN ID BRACECLOSE			{ $$ = new VariableCall($3, monta
 choice		: CHOIXCKW PARENTOPEN ID COMMA STRING PARENTCLOSE BRACEOPEN listProposition BRACECLOSE		{ $$ = new Choice($3, $5, $8); }
 			;
 
-option		: OPTIONCKW PARENTOPEN ID COMMA STRING PARENTCLOSE BRACEOPEN listBrick BRACECLOSE		{ $$ = new Option($3, $5, $8); }
-			;
 
-condition	: CONDITIONCKW PARENTOPEN expression PARENTCLOSE BRACEOPEN listBrick BRACECLOSE		{ $$ = new Condition($3, $6); montage.CheckConditionExpressionIsBoolean($3.dataType, @2.StartLine, @2.StartColumn); }
-			;
 
 listProposition		: proposition							{ $$ = new List<Proposition>(); $$.Add($1); }
 					| listProposition proposition			{ $$ = $1; $$.Add($2); }
@@ -270,6 +269,15 @@ listProposition		: proposition							{ $$ = new List<Proposition>(); $$.Add($1);
 
 proposition			: PARENTOPEN ID COMMA STRING PARENTCLOSE BRACEOPEN listBrick BRACECLOSE			{ $$ = new Proposition($2,$4, $7); }
 					;
+
+option		: OPTIONCKW PARENTOPEN ID COMMA STRING PARENTCLOSE BRACEOPEN listBrick BRACECLOSE		{ $$ = new Option($3, $5, $8); }
+			;
+
+condition	: CONDITIONCKW PARENTOPEN expression PARENTCLOSE BRACEOPEN listBrick BRACECLOSE		{ $$ = new Condition($3, $6); montage.CheckConditionExpressionIsBoolean($3.dataType, @2.StartLine, @2.StartColumn); }
+			;
+
+iteration 	: POURCHAQUECKW PARENTOPEN ID PARENTCLOSE BRACEOPEN listBrick BRACECLOSE		{ $$ = ""; }
+			;
 
 %%
 
