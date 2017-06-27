@@ -101,6 +101,20 @@ namespace UnitTest
         }
 
         [TestMethod]
+        public void TestErrorNotListUseInIteration()
+        {
+            string fileName = "TestErrorNotListUseInIteration";
+            string srcFilePath = @"C:\Users\j.folleas\Desktop\Tests\srcWithError\" + fileName + ".txt";
+            string[] args = { srcFilePath, "", "" };
+            List<Error> myListError = TestErrorMain(args);
+            List<Error> resListError = new List<Error>();
+            resListError.Add(new Error(ErrorType.NOTLIST_USE_FOR_ITERATION, "toto", 8, 13));
+            bool test = (myListError.Count == 1);
+            test &= (resListError.First().Equals(myListError.First()));
+            Assert.AreEqual(true, test);
+        }
+
+        [TestMethod]
         public void TestErrorDoubleDeclaration()
         {
             string fileName = "TestErrorDoubleDeclaration";
