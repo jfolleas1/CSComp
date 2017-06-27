@@ -4,9 +4,9 @@
 
 // GPPG version 1.5.2
 // Machine:  FIDF3675368
-// DateTime: 27/06/2017 15:34:32
+// DateTime: 27/06/2017 16:09:50
 // UserName: j.folleas
-// Input file <ParserComp.y - 27/06/2017 15:34:30>
+// Input file <ParserComp.y - 27/06/2017 16:09:48>
 
 // options: no-lines gplex
 
@@ -77,11 +77,11 @@ public class ScanObj {
 [GeneratedCodeAttribute( "Gardens Point Parser Generator", "1.5.2")]
 public class Parser: ShiftReduceParser<ValueType, LexLocation>
 {
-  // Verbatim content from ParserComp.y - 27/06/2017 15:34:30
+  // Verbatim content from ParserComp.y - 27/06/2017 16:09:48
     
     public Montage montage = new Montage();
 
-  // End verbatim content from ParserComp.y - 27/06/2017 15:34:30
+  // End verbatim content from ParserComp.y - 27/06/2017 16:09:48
 
 #pragma warning disable 649
   private static Dictionary<int, string> aliases;
@@ -392,7 +392,8 @@ public class Parser: ShiftReduceParser<ValueType, LexLocation>
         break;
       case 12: // declaration -> declaredVariableName, declaredVariableType, BRACEOPEN, 
                //                listDeclaration, BRACECLOSE, SEMICOLON
-{ CurrentSemanticValue.declaration = new DeclarationStruct(ValueStack[ValueStack.Depth-6].String, ValueStack[ValueStack.Depth-5].String, ValueStack[ValueStack.Depth-3].listDeclaration); montage.IsValideTypeString(ValueStack[ValueStack.Depth-5].String,LocationStack[LocationStack.Depth-5].StartLine, LocationStack[LocationStack.Depth-5].StartColumn); montage.AddSymbole(CurrentSemanticValue.declaration.GetSymboles()); }
+{ CurrentSemanticValue.declaration = new DeclarationStruct(ValueStack[ValueStack.Depth-6].String, ValueStack[ValueStack.Depth-5].String, ValueStack[ValueStack.Depth-3].listDeclaration); montage.IsValideTypeString(ValueStack[ValueStack.Depth-5].String,LocationStack[LocationStack.Depth-5].StartLine, LocationStack[LocationStack.Depth-5].StartColumn); montage.AddSymbole(CurrentSemanticValue.declaration.GetSymboles()); 
+																												  montage.AddFunctionForList(CurrentSemanticValue.declaration); }
         break;
       case 13: // declaredVariableName -> ID
 { CurrentSemanticValue.String = ValueStack[ValueStack.Depth-1].String; }

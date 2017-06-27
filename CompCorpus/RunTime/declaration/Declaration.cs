@@ -7,7 +7,7 @@ using CompCorpus.RunTime;
 
 namespace CompCorpus.RunTime.declaration
 {
-    
+
     public class Declaration
     {
         public string name { get; }
@@ -26,16 +26,16 @@ namespace CompCorpus.RunTime.declaration
         }
 
         private ExpressionType GetTypeFromString(string typeString)
-        {     
+        {
             ExpressionType myType = ExpressionType.INVALIDE;
-            if(!Enum.TryParse(typeString, out myType) || (typeString == "STRUCT") || (typeString == "LISTSTRUCT"))
+            if (!Enum.TryParse(typeString, out myType) || (typeString == "STRUCT") || (typeString == "LISTSTRUCT"))
                 myType = ExpressionType.INVALIDE;
             return myType;
         }
 
         public virtual string Write(bool notInStruct = true, int nbTab = 0)
         {
-            string text =  "";
+            string text = "";
             if (notInStruct)
             {
                 text = "$scope." + name + "; // de type : " + type.ToString();
@@ -74,7 +74,7 @@ namespace CompCorpus.RunTime.declaration
             return defaultValue;
         }
 
-        public virtual List< Tuple <string,string>> GetSymboles(string baseSymbole = "")
+        public virtual List<Tuple<string, string>> GetSymboles(string baseSymbole = "")
         {
             baseSymbole += "." + name;
             List<Tuple<string, string>> ls = new List<Tuple<string, string>>();
@@ -82,6 +82,9 @@ namespace CompCorpus.RunTime.declaration
             return ls;
         }
 
-
+        public virtual string GetAddNRemoveFunction()
+        {
+            return "";
+        }
     }
 }

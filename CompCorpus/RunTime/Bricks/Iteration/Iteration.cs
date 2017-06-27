@@ -42,6 +42,7 @@ namespace CompCorpus.RunTime.Bricks
                 htmlText += bk.Write() + "\n";
             }
             htmlText += "</span>";
+            htmlText += "<input type=\"submit\" class=\"pull-left\" value=\" + \" ng-click=\"add" + listData.name + "()\">";
             return htmlText;
         }
     }

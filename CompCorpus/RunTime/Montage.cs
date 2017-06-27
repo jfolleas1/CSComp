@@ -16,6 +16,7 @@ namespace CompCorpus.RunTime
         public List<Declaration> listOfDeclarations { get; set; }
         public List<Brick> listOfBricks { get; set; }
         public List<Error> errorList { get; }
+        public List<String> functionForListList { get; }
 
 
         public Montage()
@@ -25,6 +26,7 @@ namespace CompCorpus.RunTime
             nameOfTheMontage = "";
             symboleTabe = new Dictionary<string, string>();
             errorList = new List<Error>();
+            functionForListList = new List<string>();
 
         }
 
@@ -151,6 +153,14 @@ namespace CompCorpus.RunTime
             foreach (Tuple<string, string> tp in ls)
             {
                 this.symboleTabe.Remove(tp.Item1);
+            }
+        }
+
+        public void AddFunctionForList(Declaration dec)
+        {
+            if (dec.type == ExpressionType.LISTSTRUCT)
+            {
+                this.functionForListList.Add(dec.GetAddNRemoveFunction());
             }
         }
 
@@ -449,6 +459,13 @@ namespace CompCorpus.RunTime
                 foreach (Affectation aff in listOfCalculExpressions)
                 {
                     myStreamWriter.Write(aff.Write());
+                    myStreamWriter.Write(" \n\n");
+                }
+
+                //add the functions for list structur
+                foreach (String fun in functionForListList)
+                {
+                    myStreamWriter.Write(fun);
                     myStreamWriter.Write(" \n\n");
                 }
 

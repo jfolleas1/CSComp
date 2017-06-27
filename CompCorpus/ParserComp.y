@@ -125,7 +125,7 @@
 
 %% // Grammar rules section
 
-montage		:	  /*Empty*/																{ Console.WriteLine(" Empty programe "); }
+montage		:	/*Empty*/																{ Console.WriteLine(" Empty programe "); }
 			|	defActeTitle listDeclaration SEPARATOR listAffectation document 		{  montage.nameOfTheMontage=$1; montage.listOfDeclarations=$2; montage.listOfCalculExpressions.AddRange($4); montage.listOfBricks=$5; }
 			;
 
@@ -142,8 +142,9 @@ listDeclaration :	/*Empty*/						{ $$ = new List<Declaration>(); }
 				|   listDeclaration declaration		{ $$=$1; $$.Add($2); }
 				;
 
-declaration		:	declaredVariableName  declaredVariableType SEMICOLON											{ $$ = new Declaration($1, $2); montage.IsValideTypeString($2,@2.StartLine, @2.StartColumn); montage.AddSymbole($$); }
-				|	declaredVariableName declaredVariableType BRACEOPEN listDeclaration BRACECLOSE SEMICOLON		{ $$ = new DeclarationStruct($1, $2, $4); montage.IsValideTypeString($2,@2.StartLine, @2.StartColumn); montage.AddSymbole($$.GetSymboles()); }
+declaration		:	declaredVariableName declaredVariableType SEMICOLON											{ $$ = new Declaration($1, $2); montage.IsValideTypeString($2,@2.StartLine, @2.StartColumn); montage.AddSymbole($$); }
+				|	declaredVariableName declaredVariableType BRACEOPEN listDeclaration BRACECLOSE SEMICOLON	{ $$ = new DeclarationStruct($1, $2, $4); montage.IsValideTypeString($2,@2.StartLine, @2.StartColumn); montage.AddSymbole($$.GetSymboles()); 
+																												  montage.AddFunctionForList($$); }
 				;
 
 declaredVariableName	:	ID		{ $$ = $1; }

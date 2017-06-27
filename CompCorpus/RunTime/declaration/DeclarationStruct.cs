@@ -89,5 +89,18 @@ namespace CompCorpus.RunTime.declaration
             }
             return ls;
         }
+
+        public override string GetAddNRemoveFunction()
+        {
+            string functionAdd = "$scope.add" + this.name + " = function() {\n";
+            functionAdd += "$scope." + this.name + ".push({";
+            foreach (Declaration dec in declarationList)
+            {
+                functionAdd += (dec.Write(false, 1) + "\n");
+            }
+            functionAdd += "\n});\n}";
+            //Console.WriteLine(functionAdd);
+            return functionAdd;
+        }
     }
 }
