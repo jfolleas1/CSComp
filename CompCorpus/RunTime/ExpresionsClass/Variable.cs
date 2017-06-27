@@ -150,7 +150,7 @@ namespace CompCorpus.RunTime
                         type = ExpressionType.BOOL;
                         break;
                     }
-                case "NULL":
+                case "UNKNOWVAR":
                     {
                         // Si la variable tend à être remplacé alors ce sera par une string pour les choix 
                         type = ExpressionType.UNKNOWVAR;

@@ -243,14 +243,14 @@ namespace CompCorpus.RunTime
         {
             string value = "";
             if (!symboleTabe.TryGetValue(varName, out value))
-                value = "NULL";
+                value = "UNKNOWVAR";
             return value;
         }
 
         public string GetVarTypeStringForIteration(string varName, int line, int col)
         {
             string value = GetVarTypeString(varName);
-            if (value == "NULL"/*unknow*/)
+            if (value == "UNKNOWVAR"/*unknow*/)
             {
                 //Rise Error
                 errorList.Add(new Error(ErrorType.UNKNOW_VARIABLE, varName, line, col));
