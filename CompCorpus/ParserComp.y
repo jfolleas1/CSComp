@@ -281,7 +281,7 @@ option		: OPTIONCKW PARENTOPEN ID COMMA STRING PARENTCLOSE BRACEOPEN listBrick B
 condition	: CONDITIONCKW PARENTOPEN expression PARENTCLOSE BRACEOPEN listBrick BRACECLOSE		{ $$ = new Condition($3, $6); montage.CheckConditionExpressionIsBoolean($3.dataType, @2.StartLine, @2.StartColumn); }
 			;
 
-iteration 	: POURCHAQUECKW PARENTOPEN iterator PARENTCLOSE BRACEOPEN listBrick BRACECLOSE		{ $$ = new Iteration($3.iteratorName, $3.listData , $6); $$.Print(); montage.RemoveSymboles($3.GetListVariableOfIterator(montage));}
+iteration 	: POURCHAQUECKW PARENTOPEN iterator PARENTCLOSE BRACEOPEN listBrick BRACECLOSE		{ $$ = new Iteration($3.iteratorName, $3.listData , $6);  montage.RemoveSymboles($3.GetListVariableOfIterator(montage));}
 			;
 
 iterator	: ID COLON ID { $$ = new IteratorStr($1,new VariableId($3, montage.GetVarTypeStringForIteration($3,  @3.StartLine, @3.StartColumn))); montage.AddSymbole($$.GetListVariableOfIterator(montage)); }

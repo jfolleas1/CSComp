@@ -4,9 +4,9 @@
 
 // GPPG version 1.5.2
 // Machine:  FIDF3675368
-// DateTime: 27/06/2017 16:09:50
+// DateTime: 27/06/2017 16:34:29
 // UserName: j.folleas
-// Input file <ParserComp.y - 27/06/2017 16:09:48>
+// Input file <ParserComp.y - 27/06/2017 16:34:25>
 
 // options: no-lines gplex
 
@@ -77,11 +77,11 @@ public class ScanObj {
 [GeneratedCodeAttribute( "Gardens Point Parser Generator", "1.5.2")]
 public class Parser: ShiftReduceParser<ValueType, LexLocation>
 {
-  // Verbatim content from ParserComp.y - 27/06/2017 16:09:48
+  // Verbatim content from ParserComp.y - 27/06/2017 16:34:25
     
     public Montage montage = new Montage();
 
-  // End verbatim content from ParserComp.y - 27/06/2017 16:09:48
+  // End verbatim content from ParserComp.y - 27/06/2017 16:34:25
 
 #pragma warning disable 649
   private static Dictionary<int, string> aliases;
@@ -623,7 +623,7 @@ public class Parser: ShiftReduceParser<ValueType, LexLocation>
         break;
       case 87: // iteration -> POURCHAQUECKW, PARENTOPEN, iterator, PARENTCLOSE, BRACEOPEN, 
                //              listBrick, BRACECLOSE
-{ CurrentSemanticValue.iteration = new Iteration(ValueStack[ValueStack.Depth-5].iterator.iteratorName, ValueStack[ValueStack.Depth-5].iterator.listData , ValueStack[ValueStack.Depth-2].listBrick); CurrentSemanticValue.iteration.Print(); montage.RemoveSymboles(ValueStack[ValueStack.Depth-5].iterator.GetListVariableOfIterator(montage));}
+{ CurrentSemanticValue.iteration = new Iteration(ValueStack[ValueStack.Depth-5].iterator.iteratorName, ValueStack[ValueStack.Depth-5].iterator.listData , ValueStack[ValueStack.Depth-2].listBrick);  montage.RemoveSymboles(ValueStack[ValueStack.Depth-5].iterator.GetListVariableOfIterator(montage));}
         break;
       case 88: // iterator -> ID, COLON, ID
 { CurrentSemanticValue.iterator = new IteratorStr(ValueStack[ValueStack.Depth-3].String,new VariableId(ValueStack[ValueStack.Depth-1].String, montage.GetVarTypeStringForIteration(ValueStack[ValueStack.Depth-1].String,  LocationStack[LocationStack.Depth-1].StartLine, LocationStack[LocationStack.Depth-1].StartColumn))); montage.AddSymbole(CurrentSemanticValue.iterator.GetListVariableOfIterator(montage)); }

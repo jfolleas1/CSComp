@@ -29,7 +29,6 @@ namespace CompCorpus.RunTime.Bricks
                     for (int i = 1; i < item.Key.Split('.').Length; i++)
                         varK += "." + item.Key.Split('.')[i];
                     ls.Add(new Tuple<string, string>(varK, item.Value));
-                    Console.WriteLine(varK);
                 }
             }
             return ls;
