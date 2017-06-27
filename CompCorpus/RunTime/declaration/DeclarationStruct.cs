@@ -90,7 +90,7 @@ namespace CompCorpus.RunTime.declaration
             return ls;
         }
 
-        public override string GetAddNRemoveFunction()
+        public override string GetAddNDelFunction()
         {
             string functionAdd = "$scope.add" + this.name + " = function() {\n";
             functionAdd += "$scope." + this.name + ".push({";
@@ -99,8 +99,11 @@ namespace CompCorpus.RunTime.declaration
                 functionAdd += (dec.Write(false, 1) + "\n");
             }
             functionAdd += "\n});\n}";
+            string functionDel = "$scope.del" + this.name + " = function(index) {\n";
+            functionDel += "$scope." + this.name + ".splice(index, 1); \n}\n";
+
             //Console.WriteLine(functionAdd);
-            return functionAdd;
+            return functionAdd + "\n"+ functionDel;
         }
     }
 }

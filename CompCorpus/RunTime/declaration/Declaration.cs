@@ -82,7 +82,7 @@ namespace CompCorpus.RunTime.declaration
             return ls;
         }
 
-        public virtual string GetAddNRemoveFunction()
+        public virtual string GetAddNDelFunction()
         {
             return "";
         }

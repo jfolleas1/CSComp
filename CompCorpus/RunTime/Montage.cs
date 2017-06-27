@@ -160,7 +160,7 @@ namespace CompCorpus.RunTime
         {
             if (dec.type == ExpressionType.LISTSTRUCT)
             {
-                this.functionForListList.Add(dec.GetAddNRemoveFunction());
+                this.functionForListList.Add(dec.GetAddNDelFunction());
             }
         }
 
