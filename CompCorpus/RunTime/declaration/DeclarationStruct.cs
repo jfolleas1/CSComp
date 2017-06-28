@@ -83,6 +83,10 @@ namespace CompCorpus.RunTime.declaration
             baseSymbole += name;
             List<Tuple<string, string>> ls = new List<Tuple<string, string>>();
             ls.Add(new Tuple<string, string>(baseSymbole, type.ToString()));
+            if (type == ExpressionType.LISTSTRUCT)
+            {
+                ls.Add(new Tuple<string, string>("nombreDe_" + baseSymbole, "L" + ExpressionType.NUMBER.ToString()));
+            }
             foreach (Declaration dec in declarationList)
             {
                 ls.AddRange(dec.GetSymboles(baseSymbole));
@@ -101,9 +105,10 @@ namespace CompCorpus.RunTime.declaration
             functionAdd += "\n});\n}";
             string functionDel = "$scope.del" + this.name + " = function(index) {\n";
             functionDel += "$scope." + this.name + ".splice(index, 1); \n}\n";
+            string functionCount = "$scope.nombreDe_" + this.name + " = function() {\n";
+            functionCount += " return $scope." + this.name + ".length; \n}\n";
 
-            //Console.WriteLine(functionAdd);
-            return functionAdd + "\n"+ functionDel;
+            return functionAdd + "\n"+ functionDel +"\n" + functionCount;
         }
     }
 }

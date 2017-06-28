@@ -57,6 +57,7 @@
     <Compile Include="TestCondition.cs" />
     <Compile Include="TestHtml.cs" />
     <Compile Include="TestIncludes.cs" />
+    <Compile Include="TestIteration.cs" />
     <Compile Include="TestOnExpressions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestDeclaration.cs" />

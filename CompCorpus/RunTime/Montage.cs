@@ -468,9 +468,9 @@ namespace CompCorpus.RunTime
                     myStreamWriter.Write(fun);
                     myStreamWriter.Write(" \n\n");
                 }
+                
 
-
-                string endOfTheJSDoc = "});\n\n" +
+                string endOfTheJSDoc = "\n\n});\n\n" +
                    "var listeInput = document.getElementsByTagName(\"input\");\n" +
                    "for (var iter = 0; iter < listeInput.length; iter++) {\n" +
                    "\tif (listeInput[iter].type == \"text\") {\n" +
