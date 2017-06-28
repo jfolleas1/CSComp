@@ -22,5 +22,11 @@ namespace UnitTest
         {
             TestHtml.mainTestHtml("TestMultipleIterationOnLocals");
         }
+
+        [TestMethod]
+        public void TestCountFunction()
+        {
+            TestHtml.mainTestHtml("TestCountFunction");
+        }
     }
 }
