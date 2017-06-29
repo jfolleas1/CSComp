@@ -76,6 +76,7 @@
 %type<constante> constante
 %type<variable> var
 %type<listAffectation> listAffectation
+%type<listAffectation> listAffectationBis
 %type<String> defActeTitle
 %type<String> deadText
 %type<String> declaredVariableName
@@ -126,7 +127,7 @@
 %% // Grammar rules section
 
 montage		:	/*Empty*/																{ Console.WriteLine(" Empty programe "); }
-			|	defActeTitle listDeclaration SEPARATOR listAffectation document 		{  montage.nameOfTheMontage=$1; montage.listOfDeclarations=$2; montage.AddListCalculExpression($4); montage.listOfBricks=$5; }
+			|	defActeTitle listDeclaration SEPARATOR listAffectation document 		{  montage.nameOfTheMontage=$1; montage.listOfDeclarations=$2; montage.listOfBricks=$5; }
 			;
 
 defActeTitle	:	TITREACTEKW BRACEOPEN deadText BRACECLOSE		{ $$ = $3; }
@@ -151,12 +152,13 @@ declaredVariableName	:	ID		{ $$ = $1; }
 						;
 
 
-
+listAffectation :	listAffectationBis						{ $$ = $1; montage.AddListCalculExpression($1);}
+				;
 							
 
-listAffectation :	/*Empty*/						{ $$ = new List<Affectation>();  }
-				|   listAffectation affectation		{ $$=$1; $$.Add($2);  }
-				;
+listAffectationBis	:	/*Empty*/							{ $$ = new List<Affectation>();  }
+					|   listAffectationBis affectation		{ $$=$1; $$.Add($2);  }
+					;
 
 affectation	:		var affectationType ASSIGN expression SEMICOLON				{ $$ = new Affectation($1, $4); montage.CheckAffectationIsValid($4.dataType, $2, $1.name ,@1.StartLine);  montage.AddSymbole($$);  }
 			;

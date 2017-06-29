@@ -28,6 +28,7 @@ namespace CompCorpus.RunTime
             errorList = new List<Error>();
             functionForListList = new List<string>();
 
+
         }
 
         public void AddListCalculExpression(List<Affectation> list)
