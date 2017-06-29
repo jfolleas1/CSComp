@@ -12,7 +12,7 @@ namespace CompCorpus.RunTime
     {
         INTEGER,
         FLOAT,
-        STRING,
+        TEXTE,
         BOOL,
         ID,
     };
@@ -99,7 +99,7 @@ namespace CompCorpus.RunTime
     {
         public string value { get; }
 
-        public VariableString(string value) : base(VariableType.STRING, ExpressionType.STRING)
+        public VariableString(string value) : base(VariableType.TEXTE, ExpressionType.TEXTE)
         {
             this.value = value;
         }
@@ -132,10 +132,10 @@ namespace CompCorpus.RunTime
             ExpressionType type = ExpressionType.INVALIDE;
             switch (dataType)
             {
-                case "STRING" :
-                case "LSTRING":
+                case "TEXTE" :
+                case "LTEXTE":
                     {
-                        type = ExpressionType.STRING;
+                        type = ExpressionType.TEXTE;
                         break;
                     }
                 case "NUMBER":
@@ -168,7 +168,7 @@ namespace CompCorpus.RunTime
         public VariableId(string name, string varType) : base(VariableType.ID, ComputeDataType(varType))
         {
             this.name = name;
-            local = ((varType == "LSTRING") || (varType == "LNUMBER") || (varType == "LBOOL"));
+            local = ((varType == "L"+ExpressionType.TEXTE.ToString()) || (varType == "LNUMBER") || (varType == "LBOOL"));
 
         }
 

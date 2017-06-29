@@ -79,15 +79,15 @@ namespace CompCorpus.RunTime
             {
                 string choiceVarName = choiceMatches[ctr].Value.Substring("$choix(".Length,
                     (choiceMatches[ctr].Value.Length - "$choix(,".Length));
-                Affectation aff = new Affectation(new VariableId(choiceVarName.Trim(), "LSTRING"),
-                    new VariableId(choiceVarName.Trim() + "Model", "STRING"));
+                Affectation aff = new Affectation(new VariableId(choiceVarName.Trim(), "L"+ExpressionType.TEXTE.ToString()),
+                    new VariableId(choiceVarName.Trim() + "Model", ExpressionType.TEXTE.ToString()));
                 this.AddSymbole(aff);
                 this.mapOfCalculExpressions.Add(aff.variableName.name, aff);
             }
 
             //Add of the propositions variables 
             Console.WriteLine("AddSymboleFromPreCompile : Proposition");
-            string propositionPattern = @"[^xn]\( *\w+ *, *"+"\"[^\"]*\""+@" *\)";
+            string propositionPattern = @"[^xni]\( *\w+ *, *"+"\"[^\"]*\""+@" *\)";
             MatchCollection propositionMatches;
             Regex propositionRegex = new Regex(propositionPattern);
             propositionMatches = propositionRegex.Matches(file);
@@ -102,7 +102,7 @@ namespace CompCorpus.RunTime
                 string propoString = propositionMatches[ctr].Value.Substring(commaIndex,
                     (propositionMatches[ctr].Value.Length - (commaIndex+1))); // We don't need the last char
 
-                Affectation aff = new Affectation(new VariableId(propoVarName.Trim(), "LSTRING"), new VariableString(propoString));
+                Affectation aff = new Affectation(new VariableId(propoVarName.Trim(), "LTEXTE"), new VariableString(propoString));
                 this.AddSymbole(aff);
                 this.mapOfCalculExpressions.Add(aff.variableName.name, aff);
             }
@@ -180,7 +180,7 @@ namespace CompCorpus.RunTime
                 string type;
                 symboleTabe.TryGetValue(varName, out type);
                 if (type == ("L" + ExpressionType.BOOL.ToString()) ||
-                    type == ("L" + ExpressionType.STRING.ToString()) ||
+                    type == ("L" + ExpressionType.TEXTE.ToString()) ||
                     type == ("L" + ExpressionType.NUMBER.ToString()) )
                 {
                     return true;
@@ -282,7 +282,7 @@ namespace CompCorpus.RunTime
         {
             foreach (Proposition prop in listProp)
             {
-                Expression exp = new Expression(ExpressionSymbole.EGALE, choiceExp, new VariableId(prop.varName, "L"+ExpressionType.STRING.ToString()));
+                Expression exp = new Expression(ExpressionSymbole.EGALE, choiceExp, new VariableId(prop.varName, "L"+ExpressionType.TEXTE.ToString()));
                 foreach (Affectation aff in prop.listConditionnalAffectation)
                 {
                     string varName = aff.variableName.name;

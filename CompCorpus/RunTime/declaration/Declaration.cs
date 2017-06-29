@@ -62,7 +62,7 @@ namespace CompCorpus.RunTime.declaration
                 case ExpressionType.NUMBER:
                     defaultValue = "0";
                     break;
-                case ExpressionType.STRING:
+                case ExpressionType.TEXTE:
                     defaultValue = "\"\"";
                     break;
                 case ExpressionType.BOOL:

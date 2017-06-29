@@ -11,7 +11,7 @@ namespace CompCorpus.RunTime
     {
         INVALIDE,
         NUMBER,
-        STRING,
+        TEXTE,
         BOOL,
         STRUCT,
         LISTSTRUCT,

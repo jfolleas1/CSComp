@@ -12,8 +12,8 @@ namespace UnitTest
         [TestMethod]
         public void TestWriteGoodType()
         {
-            Declaration myDec = new Declaration("toto", "STRING");
-            Assert.AreEqual("$scope.toto; // de type : STRING", myDec.Write());
+            Declaration myDec = new Declaration("toto", "TEXTE");
+            Assert.AreEqual("$scope.toto; // de type : TEXTE", myDec.Write());
         }
 
         [TestMethod]
