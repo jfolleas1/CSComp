@@ -12,7 +12,7 @@ namespace CompCorpus.RunTime
     {
         public Dictionary<string, string> symboleTabe { get; set; }
         public string nameOfTheMontage { get; set; }
-        public List<Affectation> mapOfCalculExpressions { get; }
+        public Dictionary<string,Affectation> mapOfCalculExpressions { get; }
         public List<Declaration> listOfDeclarations { get; set; }
         public List<Brick> listOfBricks { get; set; }
         public List<Error> errorList { get; }
@@ -21,7 +21,7 @@ namespace CompCorpus.RunTime
 
         public Montage()
         {
-            mapOfCalculExpressions = new List<Affectation>();
+            mapOfCalculExpressions = new Dictionary<string, Affectation>();
             listOfDeclarations = new List<Declaration>();
             nameOfTheMontage = "";
             symboleTabe = new Dictionary<string, string>();
@@ -33,7 +33,10 @@ namespace CompCorpus.RunTime
 
         public void AddListCalculExpression(List<Affectation> list)
         {
-            this.mapOfCalculExpressions.AddRange(list);
+            foreach (Affectation item in list)
+            {
+                mapOfCalculExpressions.Add(item.variableName.name, item);
+            }
         }
 
 
@@ -79,7 +82,7 @@ namespace CompCorpus.RunTime
                 Affectation aff = new Affectation(new VariableId(choiceVarName.Trim(), "LSTRING"),
                     new VariableId(choiceVarName.Trim() + "Model", "STRING"));
                 this.AddSymbole(aff);
-                this.mapOfCalculExpressions.Add(aff);
+                this.mapOfCalculExpressions.Add(aff.variableName.name, aff);
             }
 
             //Add of the propositions variables 
@@ -101,7 +104,7 @@ namespace CompCorpus.RunTime
 
                 Affectation aff = new Affectation(new VariableId(propoVarName.Trim(), "LSTRING"), new VariableString(propoString));
                 this.AddSymbole(aff);
-                this.mapOfCalculExpressions.Add(aff);
+                this.mapOfCalculExpressions.Add(aff.variableName.name, aff);
             }
 
             //Add of the option variables 
@@ -117,7 +120,7 @@ namespace CompCorpus.RunTime
                     (optionMatches[ctr].Value.Length - "$option(,".Length));
                 Affectation aff = new Affectation(new VariableId(optionVarName.Trim(), "LBOOL"), new VariableId(optionVarName.Trim()+"Model", "BOOL"));
                 this.AddSymbole(aff);
-                this.mapOfCalculExpressions.Add(aff);
+                this.mapOfCalculExpressions.Add(aff.variableName.name, aff);
             }
 
         }
@@ -300,7 +303,7 @@ namespace CompCorpus.RunTime
         public void Print()
         {
             Console.WriteLine(@"// Liste des définition des expressions");
-            foreach (Affectation aff in mapOfCalculExpressions)
+            foreach (Affectation aff in mapOfCalculExpressions.Values)
             {
                 aff.Print();
             }
@@ -342,7 +345,7 @@ namespace CompCorpus.RunTime
 
             Console.WriteLine(@"// Liste des définition des expressions");
 
-            foreach (Affectation aff in mapOfCalculExpressions)
+            foreach (Affectation aff in mapOfCalculExpressions.Values)
             {
                 Console.Write(aff.Write());
             }
@@ -462,7 +465,7 @@ namespace CompCorpus.RunTime
                 }
 
                 //add the differents expressions in functions
-                foreach (Affectation aff in mapOfCalculExpressions)
+                foreach (Affectation aff in mapOfCalculExpressions.Values)
                 {
                     myStreamWriter.Write(aff.Write());
                     myStreamWriter.Write(" \n\n");
