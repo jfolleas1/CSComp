@@ -4,9 +4,9 @@
 
 // GPPG version 1.5.2
 // Machine:  FIDF3675368
-// DateTime: 29/06/2017 15:09:44
+// DateTime: 29/06/2017 15:38:27
 // UserName: j.folleas
-// Input file <ParserComp.y - 29/06/2017 15:09:41>
+// Input file <ParserComp.y - 29/06/2017 15:38:11>
 
 // options: no-lines gplex
 
@@ -77,11 +77,11 @@ public class ScanObj {
 [GeneratedCodeAttribute( "Gardens Point Parser Generator", "1.5.2")]
 public class Parser: ShiftReduceParser<ValueType, LexLocation>
 {
-  // Verbatim content from ParserComp.y - 29/06/2017 15:09:41
+  // Verbatim content from ParserComp.y - 29/06/2017 15:38:11
     
     public Montage montage = new Montage();
 
-  // End verbatim content from ParserComp.y - 29/06/2017 15:09:41
+  // End verbatim content from ParserComp.y - 29/06/2017 15:38:11
 
 #pragma warning disable 649
   private static Dictionary<int, string> aliases;
@@ -635,7 +635,7 @@ public class Parser: ShiftReduceParser<ValueType, LexLocation>
         break;
       case 82: // choice -> CHOIXCKW, PARENTOPEN, ID, COMMA, STRING, PARENTCLOSE, BRACEOPEN, 
                //           listProposition, BRACECLOSE
-{ CurrentSemanticValue.choice = new Choice(ValueStack[ValueStack.Depth-7].String, ValueStack[ValueStack.Depth-5].String, ValueStack[ValueStack.Depth-2].listProposition); }
+{ CurrentSemanticValue.choice = new Choice(ValueStack[ValueStack.Depth-7].String, ValueStack[ValueStack.Depth-5].String, ValueStack[ValueStack.Depth-2].listProposition); montage.AddListConditionalAffectation(ValueStack[ValueStack.Depth-2].listProposition,  new VariableId(ValueStack[ValueStack.Depth-7].String, "LSTRING"));}
         break;
       case 83: // listProposition -> proposition
 { CurrentSemanticValue.listProposition = new List<Proposition>(); CurrentSemanticValue.listProposition.Add(ValueStack[ValueStack.Depth-1].proposition); }
@@ -649,7 +649,7 @@ public class Parser: ShiftReduceParser<ValueType, LexLocation>
         break;
       case 86: // proposition -> PARENTOPEN, ID, COMMA, STRING, PARENTCLOSE, implication, 
                //                BRACEOPEN, listBrick, BRACECLOSE
-{ CurrentSemanticValue.proposition = new Proposition(ValueStack[ValueStack.Depth-8].String,ValueStack[ValueStack.Depth-6].String, ValueStack[ValueStack.Depth-2].listBrick); montage.AddListConditionalAffectation(ValueStack[ValueStack.Depth-4].listAffectation, new VariableId(ValueStack[ValueStack.Depth-8].String, "LBOOL"));}
+{ CurrentSemanticValue.proposition = new Proposition(ValueStack[ValueStack.Depth-8].String,ValueStack[ValueStack.Depth-6].String, ValueStack[ValueStack.Depth-2].listBrick, ValueStack[ValueStack.Depth-4].listAffectation); }
         break;
       case 87: // option -> OPTIONCKW, PARENTOPEN, ID, COMMA, STRING, PARENTCLOSE, BRACEOPEN, 
                //           listBrick, BRACECLOSE

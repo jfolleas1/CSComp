@@ -277,6 +277,30 @@ namespace CompCorpus.RunTime
             }
         }
 
+
+        public void AddListConditionalAffectation(List<Proposition> listProp, AbstractExpression choiceExp)
+        {
+            foreach (Proposition prop in listProp)
+            {
+                Expression exp = new Expression(ExpressionSymbole.EGALE, choiceExp, new VariableId(prop.varName, "L"+ExpressionType.STRING.ToString()));
+                foreach (Affectation aff in prop.listConditionnalAffectation)
+                {
+                    string varName = aff.variableName.name;
+                    if (mapOfCalculExpressions.TryGetValue(varName, out _))
+                    {
+                        mapOfCalculExpressions[varName].listOfConditionAndExpression.Add(
+                            new Tuple<AbstractExpression, AbstractExpression>(exp, aff.expression));
+                    }
+                    else
+                    {
+                        //Rise Error
+                        errorList.Add(new Error(ErrorType.UNKNOW_VARIABLE, varName, 0, 0));
+                    }
+                }
+
+            }
+        }
+
         public void PrintErrors()
         {
             foreach (Error err in errorList)

@@ -11,15 +11,25 @@ namespace CompCorpus.RunTime.Bricks
         public string textOfChoice { get; }
         public string varName { get; }
         public List<Brick> brickList { get; }
+        public List<Affectation> listConditionnalAffectation { get; }
 
         public Proposition(string varName, string textOfChoice, List<Brick> brickList)
         {
             this.textOfChoice = textOfChoice.Substring(1, (textOfChoice.Length - 2));
             this.varName = varName;
             this.brickList = brickList;
+            this.listConditionnalAffectation = new List<Affectation>();
         }
 
-        public string textOfChoiceWithoutCote()
+        public Proposition(string varName, string textOfChoice, List<Brick> brickList, List<Affectation> listConditionnalAffectation)
+        {
+            this.textOfChoice = textOfChoice.Substring(1, (textOfChoice.Length - 2));
+            this.varName = varName;
+            this.brickList = brickList;
+            this.listConditionnalAffectation = listConditionnalAffectation;
+        }
+
+            public string textOfChoiceWithoutCote()
         {
             return textOfChoice;
         }

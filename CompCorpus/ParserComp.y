@@ -269,7 +269,7 @@ callVar		: CODEINDIC BRACEOPEN ID BRACECLOSE			{ $$ = new VariableCall($3, monta
 			;
 
 
-choice		: CHOIXCKW PARENTOPEN ID COMMA STRING PARENTCLOSE BRACEOPEN listProposition BRACECLOSE		{ $$ = new Choice($3, $5, $8); }
+choice		: CHOIXCKW PARENTOPEN ID COMMA STRING PARENTCLOSE BRACEOPEN listProposition BRACECLOSE		{ $$ = new Choice($3, $5, $8); montage.AddListConditionalAffectation($8,  new VariableId($3, "LSTRING"));}
 			;
 
 
@@ -279,7 +279,7 @@ listProposition		: proposition							{ $$ = new List<Proposition>(); $$.Add($1);
 					;
 
 proposition			: PARENTOPEN ID COMMA STRING PARENTCLOSE BRACEOPEN listBrick BRACECLOSE							{ $$ = new Proposition($2,$4, $7); }
-					| PARENTOPEN ID COMMA STRING PARENTCLOSE implication BRACEOPEN listBrick BRACECLOSE				{ $$ = new Proposition($2,$4, $8); montage.AddListConditionalAffectation($6, new VariableId($2, "LBOOL"));}
+					| PARENTOPEN ID COMMA STRING PARENTCLOSE implication BRACEOPEN listBrick BRACECLOSE				{ $$ = new Proposition($2,$4, $8, $6); }
 					;
 
 
