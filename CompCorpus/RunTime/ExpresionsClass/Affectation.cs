@@ -10,11 +10,13 @@ namespace CompCorpus.RunTime
     {
         public VariableId variableName { get; }
         public AbstractExpression expression { get; }
+        public List<Tuple<AbstractExpression, AbstractExpression>> listOfConditionAndExpression{ get; set; }
 
         public Affectation(VariableId name, AbstractExpression exp)
         {
             this.variableName = name;
             this.expression = exp;
+            listOfConditionAndExpression = new List<Tuple<AbstractExpression, AbstractExpression>>();
         }
 
         public void Print()
@@ -31,7 +33,13 @@ namespace CompCorpus.RunTime
         {
             string myAffectationString = "$scope.";
             myAffectationString += this.variableName.name;
-            myAffectationString += " = function() \n { \n \t return ";
+            myAffectationString += " = function() \n { \n ";
+            foreach (Tuple<AbstractExpression, AbstractExpression> t in listOfConditionAndExpression)
+            {
+                myAffectationString += "if(" + t.Item1.Write() + ") \n {";
+                myAffectationString += "return " + t.Item2.Write() + "; \n } \n";
+            }
+            myAffectationString += "\t return ";
             myAffectationString += this.expression.Write();
             myAffectationString += "; \n }";
             return myAffectationString;

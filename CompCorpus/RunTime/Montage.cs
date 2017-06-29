@@ -258,6 +258,25 @@ namespace CompCorpus.RunTime
 
         }
 
+        public void AddListConditionalAffectation(List<Affectation> listAff, AbstractExpression exp)
+        {
+            foreach (Affectation aff in listAff)
+            {
+                string varName = aff.variableName.name;
+                if (mapOfCalculExpressions.TryGetValue(varName, out _))
+                {
+                    mapOfCalculExpressions[varName].listOfConditionAndExpression.Add(
+                        new Tuple<AbstractExpression, AbstractExpression>(exp, aff.expression));
+                }
+                else
+                {
+                    //Rise Error
+                    errorList.Add(new Error(ErrorType.UNKNOW_VARIABLE, varName, 0, 0));
+                }
+
+            }
+        }
+
         public void PrintErrors()
         {
             foreach (Error err in errorList)
