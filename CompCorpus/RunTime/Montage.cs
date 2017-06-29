@@ -30,6 +30,11 @@ namespace CompCorpus.RunTime
 
         }
 
+        public void AddListCalculExpression(List<Affectation> list)
+        {
+            this.listOfCalculExpressions.AddRange(list);
+        }
+
 
         public void AddSymboleFromFile(string filename)
         {
