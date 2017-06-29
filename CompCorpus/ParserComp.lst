@@ -1,10 +1,10 @@
 
 // ==========================================================================
-//  GPPG error listing for yacc source file <ParserComp.y - 29/06/2017 14:00:55>
+//  GPPG error listing for yacc source file <ParserComp.y - 29/06/2017 15:00:27>
 // ==========================================================================
 //  Version:  1.5.2
 //  Machine:  FIDF3675368
-//  DateTime: 29/06/2017 14:01:03
+//  DateTime: 29/06/2017 15:00:34
 //  UserName: j.folleas
 // ==========================================================================
 
@@ -83,11 +83,13 @@
 
 %type<expression> montage
 %type<affectation> affectation
+%type<affectation> affectationWithCond
 %type<expression> expression
 %type<constante> constante
 %type<variable> var
 %type<listAffectation> listAffectation
 %type<listAffectation> listAffectationBis
+%type<listAffectation> listAffectationWithCond
 %type<String> defActeTitle
 %type<String> deadText
 %type<String> declaredVariableName
@@ -123,7 +125,7 @@
 %type<iteration> iteration
 %type<iterator> iterator
 
-%type<String> implication
+%type<listAffectation> implication
 
 // Priority
 
@@ -138,13 +140,6 @@
 
 
 %% // Grammar rules section
-// Warning: NonTerminal symbol "implication" is unreachable
-// Error: NonTerminal symbol "impliquation" has no productions
-// Error: There are 1 non-terminating NonTerminal Symbols
-   //  {impliquation}
-// Warning: Terminating impliquation fixes the following size-1 NonTerminal set
-   // {impliquation}
-// ----------------------------------------------------------------------------
 
 montage		:	/*Empty*/																{ Console.WriteLine(" Empty programe "); }
 			|	defActeTitle listDeclaration SEPARATOR listAffectation document 		{  montage.nameOfTheMontage=$1; montage.listOfDeclarations=$2; montage.listOfBricks=$5; }
@@ -295,14 +290,29 @@ listProposition		: proposition							{ $$ = new List<Proposition>(); $$.Add($1);
 					;
 
 proposition			: PARENTOPEN ID COMMA STRING PARENTCLOSE BRACEOPEN listBrick BRACECLOSE							{ $$ = new Proposition($2,$4, $7); }
-					| PARENTOPEN ID COMMA STRING PARENTCLOSE impliquation BRACEOPEN listBrick BRACECLOSE			{ $$ = new Proposition($2,$4, $8); }
+					| PARENTOPEN ID COMMA STRING PARENTCLOSE implication BRACEOPEN listBrick BRACECLOSE			{ $$ = new Proposition($2,$4, $8); montage.AddListConditionalAffectation($6, new VariableId($2, "LBOOL"));}
 					;
 
-implication			: IMPLIQUECKW BRACEOPEN listAffectationBis BRACECLOSE											{ $$ = ""; Console.WriteLine("Implication !! "); }
-					;
 
-option		: OPTIONCKW PARENTOPEN ID COMMA STRING PARENTCLOSE BRACEOPEN listBrick BRACECLOSE		{ $$ = new Option($3, $5, $8); }
+
+
+option		: OPTIONCKW PARENTOPEN ID COMMA STRING PARENTCLOSE BRACEOPEN listBrick BRACECLOSE					{ $$ = new Option($3, $5, $8); }
+			: OPTIONCKW PARENTOPEN ID COMMA STRING PARENTCLOSE implication BRACEOPEN listBrick BRACECLOSE		{ $$ = new Option($3, $5, $9); montage.AddListConditionalAffectation($7, new VariableId($3, "LBOOL")); }
+//^^
+// Error: Syntax error, unexpected ':'
+// -----------------------------------
 			;
+
+implication			: IMPLIQUECKW BRACEOPEN listAffectationWithCond BRACECLOSE											{ $$ = $3; Console.WriteLine("Implication !! "); }
+					;
+
+					
+listAffectationWithCond	:	/*Empty*/										{ $$ = new List<Affectation>();  }
+						|   listAffectationWithCond affectationWithCond		{ $$=$1; $$.Add($2);  }
+						;
+
+affectationWithCond		:		var ASSIGN expression SEMICOLON				{ $$ = new Affectation($1, $3); }
+						;
 
 condition	: CONDITIONCKW PARENTOPEN expression PARENTCLOSE BRACEOPEN listBrick BRACECLOSE		{ $$ = new Condition($3, $6); montage.CheckConditionExpressionIsBoolean($3.dataType, @2.StartLine, @2.StartColumn); }
 			;

@@ -114,7 +114,7 @@
 %type<iteration> iteration
 %type<iterator> iterator
 
-%type<String> implication
+%type<listAffectation> implication
 
 // Priority
 
@@ -279,10 +279,26 @@ listProposition		: proposition							{ $$ = new List<Proposition>(); $$.Add($1);
 					;
 
 proposition			: PARENTOPEN ID COMMA STRING PARENTCLOSE BRACEOPEN listBrick BRACECLOSE							{ $$ = new Proposition($2,$4, $7); }
-					| PARENTOPEN ID COMMA STRING PARENTCLOSE implication BRACEOPEN listBrick BRACECLOSE			{ $$ = new Proposition($2,$4, $8); }
+					| PARENTOPEN ID COMMA STRING PARENTCLOSE implication BRACEOPEN listBrick BRACECLOSE				{ $$ = new Proposition($2,$4, $8); montage.AddListConditionalAffectation($6, new VariableId($2, "LBOOL"));}
 					;
 
-implication			: IMPLIQUECKW BRACEOPEN listAffectationWithCond BRACECLOSE											{ $$ = ""; Console.WriteLine("Implication !! "); }
+
+
+
+option		: OPTIONCKW PARENTOPEN ID COMMA STRING PARENTCLOSE BRACEOPEN listBrick BRACECLOSE					{ $$ = new Option($3, $5, $8); }
+			| OPTIONCKW PARENTOPEN ID COMMA STRING PARENTCLOSE implication BRACEOPEN listBrick BRACECLOSE		{ $$ = new Option($3, $5, $9); montage.AddListConditionalAffectation($7, new VariableId($3, "LBOOL")); }
+			;
+
+
+condition	: CONDITIONCKW PARENTOPEN expression PARENTCLOSE BRACEOPEN listBrick BRACECLOSE					{ $$ = new Condition($3, $6); montage.CheckConditionExpressionIsBoolean($3.dataType, @2.StartLine, @2.StartColumn); }
+			| CONDITIONCKW PARENTOPEN expression PARENTCLOSE implication BRACEOPEN listBrick BRACECLOSE		{ $$ = new Condition($3, $7); montage.CheckConditionExpressionIsBoolean($3.dataType, @2.StartLine, @2.StartColumn); 
+																												montage.AddListConditionalAffectation($5, $3); }
+			;
+
+
+
+
+implication			: IMPLIQUECKW BRACEOPEN listAffectationWithCond BRACECLOSE											{ $$ = $3; Console.WriteLine("Implication !! "); }
 					;
 
 					
@@ -292,13 +308,6 @@ listAffectationWithCond	:	/*Empty*/										{ $$ = new List<Affectation>();  }
 
 affectationWithCond		:		var ASSIGN expression SEMICOLON				{ $$ = new Affectation($1, $3); }
 						;
-
-
-option		: OPTIONCKW PARENTOPEN ID COMMA STRING PARENTCLOSE BRACEOPEN listBrick BRACECLOSE		{ $$ = new Option($3, $5, $8); }
-			;
-
-condition	: CONDITIONCKW PARENTOPEN expression PARENTCLOSE BRACEOPEN listBrick BRACECLOSE		{ $$ = new Condition($3, $6); montage.CheckConditionExpressionIsBoolean($3.dataType, @2.StartLine, @2.StartColumn); }
-			;
 
 iteration 	: POURCHAQUECKW PARENTOPEN iterator PARENTCLOSE BRACEOPEN listBrick BRACECLOSE		{ $$ = new Iteration($3.iteratorName, $3.listData , $6);  montage.RemoveSymboles($3.GetListVariableOfIterator(montage));}
 			;
