@@ -59,7 +59,7 @@
 %token CODEINDIC
 %token NOUVLIGNE NOUVPARAG
 
-%token CHOIXCKW OPTIONCKW CONDITIONCKW POURCHAQUECKW
+%token CHOIXCKW OPTIONCKW CONDITIONCKW POURCHAQUECKW IMPLIQUECKW
 
 %token <String> ID
 %token <String> STRING
@@ -72,11 +72,13 @@
 
 %type<expression> montage
 %type<affectation> affectation
+%type<affectation> affectationWithCond
 %type<expression> expression
 %type<constante> constante
 %type<variable> var
 %type<listAffectation> listAffectation
 %type<listAffectation> listAffectationBis
+%type<listAffectation> listAffectationWithCond
 %type<String> defActeTitle
 %type<String> deadText
 %type<String> declaredVariableName
@@ -111,6 +113,8 @@
 
 %type<iteration> iteration
 %type<iterator> iterator
+
+%type<String> implication
 
 // Priority
 
@@ -274,8 +278,21 @@ listProposition		: proposition							{ $$ = new List<Proposition>(); $$.Add($1);
 					| listProposition proposition			{ $$ = $1; $$.Add($2); }
 					;
 
-proposition			: PARENTOPEN ID COMMA STRING PARENTCLOSE BRACEOPEN listBrick BRACECLOSE			{ $$ = new Proposition($2,$4, $7); }
+proposition			: PARENTOPEN ID COMMA STRING PARENTCLOSE BRACEOPEN listBrick BRACECLOSE							{ $$ = new Proposition($2,$4, $7); }
+					| PARENTOPEN ID COMMA STRING PARENTCLOSE implication BRACEOPEN listBrick BRACECLOSE			{ $$ = new Proposition($2,$4, $8); }
 					;
+
+implication			: IMPLIQUECKW BRACEOPEN listAffectationWithCond BRACECLOSE											{ $$ = ""; Console.WriteLine("Implication !! "); }
+					;
+
+					
+listAffectationWithCond	:	/*Empty*/										{ $$ = new List<Affectation>();  }
+						|   listAffectationWithCond affectationWithCond		{ $$=$1; $$.Add($2);  }
+						;
+
+affectationWithCond		:		var ASSIGN expression SEMICOLON				{ $$ = new Affectation($1, $3); }
+						;
+
 
 option		: OPTIONCKW PARENTOPEN ID COMMA STRING PARENTCLOSE BRACEOPEN listBrick BRACECLOSE		{ $$ = new Option($3, $5, $8); }
 			;
