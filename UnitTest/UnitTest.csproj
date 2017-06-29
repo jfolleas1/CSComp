@@ -53,6 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MainTest.cs" />
+    <Compile Include="TestAffectationWithCondition.cs" />
     <Compile Include="TestChoix.cs" />
     <Compile Include="TestCondition.cs" />
     <Compile Include="TestHtml.cs" />

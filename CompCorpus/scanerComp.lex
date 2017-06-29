@@ -25,7 +25,7 @@
 // Liste des regex
 
 
-
+assig (=|(:=))
 Identifier [A-Za-z][A-Za-z0-9_\.]*
 Integer [0-9]+
 Float [0-9]+,[0-9]+
@@ -59,7 +59,7 @@ DeadWord	[^ ,\t\n{}\(\)\$+\-/*(&&)(||)!(==)(<=)(<)(>=)(>)(:=);:(%%)]+
 {TitleId}				{yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); yylval.String = yytext; return (int)Tokens.TITLEID;}
 "$choix"				{yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.CHOIXCKW;}
 "$option"				{yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.OPTIONCKW;}
-"$condition"			{yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.CONDITIONCKW;}
+"$si"			{yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.CONDITIONCKW;}
 "$pourchaque"			{ yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.POURCHAQUECKW; }
 "$implique"				{ yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.IMPLIQUECKW; }
 
@@ -82,7 +82,7 @@ DeadWord	[^ ,\t\n{}\(\)\$+\-/*(&&)(||)!(==)(<=)(<)(>=)(>)(:=);:(%%)]+
 ">"                     {yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.SUP;}
 ">="                    {yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.SUPEGALE;}
 
-":="					{yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.ASSIGN;}
+{assig}					{yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.ASSIGN;}
 
 ";"						{yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.SEMICOLON; }
 ","						{yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.COMMA; }

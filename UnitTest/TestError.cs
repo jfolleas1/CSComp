@@ -94,7 +94,7 @@ namespace UnitTest
             string[] args = { srcFilePath, "", "" };
             List<Error> myListError = TestErrorMain(args);
             List<Error> resListError = new List<Error>();
-            resListError.Add(new Error(ErrorType.INVALID_CONDITION_EXPR, "", 5,11));
+            resListError.Add(new Error(ErrorType.INVALID_CONDITION_EXPR, "", 5,4));
             bool test = (myListError.Count == 1);
             test &= (resListError.First().Equals(myListError.First()));
             Assert.AreEqual(true, test);
