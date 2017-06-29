@@ -12,7 +12,7 @@ namespace CompCorpus.RunTime
     {
         public Dictionary<string, string> symboleTabe { get; set; }
         public string nameOfTheMontage { get; set; }
-        public List<Affectation> listOfCalculExpressions { get; set; }
+        public List<Affectation> listOfCalculExpressions { get; }
         public List<Declaration> listOfDeclarations { get; set; }
         public List<Brick> listOfBricks { get; set; }
         public List<Error> errorList { get; }
