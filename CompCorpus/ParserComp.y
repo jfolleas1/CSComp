@@ -168,7 +168,6 @@ affectation	:		var affectationType ASSIGN expression SEMICOLON				{ $$ = new Aff
 			;
 
 affectationType			:	declaredVariableType		{ @$=@1; $$ = $1; }
-						| /*Empty*/						{ $$=null; }
 						;
 
 declaredVariableType	:	ID		{ @$=@1; $$ = $1.ToUpper(); }

@@ -150,7 +150,7 @@ namespace UnitTest
             string[] args = { srcFilePath, "", "" };
             List<Error> myListError = TestErrorMain(args);
             List<Error> resListError = new List<Error>();
-            resListError.Add(new Error(ErrorType.UNKNOW_VARIABLE,"titi", 3, 9));
+            resListError.Add(new Error(ErrorType.UNKNOW_VARIABLE,"titi", 3, 12));
             bool test = (myListError.Count == 1);
             test &= (resListError.First().Equals(myListError.First()));
             Assert.AreEqual(true, test);
