@@ -251,8 +251,8 @@ namespace CompCorpus.RunTime
             }
             else if (expectedType != expressionType)
             {
-                string data = symbole + " ( attendue : " + expectedTypeString + ", retourner : ";
-                data += expressionType.ToString() + " )";
+                string data = symbole + " (attendue : " + expectedTypeString + ", retourné : ";
+                data += expressionType.ToString() + ")";
                 errorList.Add(new Error(ErrorType.INCOMPATIBLE_AFFECTATION, data, line));
             }
 
@@ -265,13 +265,22 @@ namespace CompCorpus.RunTime
                 string varName = aff.variableName.name;
                 if (mapOfCalculExpressions.TryGetValue(varName, out _))
                 {
-                    mapOfCalculExpressions[varName].listOfConditionAndExpression.Add(
-                        new Tuple<AbstractExpression, AbstractExpression>(exp, aff.expression));
+                    if (mapOfCalculExpressions[varName].expression.dataType == aff.expression.dataType)
+                    {
+                        mapOfCalculExpressions[varName].listOfConditionAndExpression.Add(
+                          new Tuple<AbstractExpression, AbstractExpression>(exp, aff.expression));
+                    }
+                    else
+                    {
+                        string data = varName + " (attendue : " + mapOfCalculExpressions[varName].expression.dataType.ToString() +
+                            ", retourné : " + aff.expression.dataType.ToString() + ")";
+                        errorList.Add(new Error(ErrorType.INCOMPATIBLE_AFFECTATION, data, aff.line, aff.col));
+                    }
                 }
                 else
                 {
                     //Rise Error
-                    errorList.Add(new Error(ErrorType.UNKNOW_VARIABLE, varName, 0, 0));
+                    errorList.Add(new Error(ErrorType.UNKNOW_VARIABLE, varName, aff.line, aff.col));
                 }
 
             }
@@ -288,13 +297,22 @@ namespace CompCorpus.RunTime
                     string varName = aff.variableName.name;
                     if (mapOfCalculExpressions.TryGetValue(varName, out _))
                     {
-                        mapOfCalculExpressions[varName].listOfConditionAndExpression.Add(
-                            new Tuple<AbstractExpression, AbstractExpression>(exp, aff.expression));
+                        if (mapOfCalculExpressions[varName].expression.dataType == aff.expression.dataType)
+                        {
+                            mapOfCalculExpressions[varName].listOfConditionAndExpression.Add(
+                              new Tuple<AbstractExpression, AbstractExpression>(exp, aff.expression));
+                        }
+                        else
+                        {
+                            string data = varName + " (attendue : " + mapOfCalculExpressions[varName].expression.dataType.ToString() +
+                                ", retourné : " + aff.expression.dataType.ToString() + ")";
+                            errorList.Add(new Error(ErrorType.INCOMPATIBLE_AFFECTATION, data, aff.line, aff.col));
+                        }
                     }
                     else
                     {
                         //Rise Error
-                        errorList.Add(new Error(ErrorType.UNKNOW_VARIABLE, varName, 0, 0));
+                        errorList.Add(new Error(ErrorType.UNKNOW_VARIABLE, varName, aff.line, aff.col));
                     }
                 }
 

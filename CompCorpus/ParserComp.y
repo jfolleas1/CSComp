@@ -298,7 +298,7 @@ condition	: CONDITIONCKW PARENTOPEN expression PARENTCLOSE BRACEOPEN listBrick B
 
 
 
-implication			: IMPLIQUECKW BRACEOPEN listAffectationWithCond BRACECLOSE											{ $$ = $3; Console.WriteLine("Implication !! "); }
+implication			: IMPLIQUECKW BRACEOPEN listAffectationWithCond BRACECLOSE											{ $$ = $3; }
 					;
 
 					
@@ -306,7 +306,7 @@ listAffectationWithCond	:	/*Empty*/										{ $$ = new List<Affectation>();  }
 						|   listAffectationWithCond affectationWithCond		{ $$=$1; $$.Add($2);  }
 						;
 
-affectationWithCond		:		var ASSIGN expression SEMICOLON				{ $$ = new Affectation($1, $3); }
+affectationWithCond		:		var ASSIGN expression SEMICOLON				{ $$ = new Affectation($1, $3, @1.StartLine, @1.StartColumn); }
 						;
 
 iteration 	: POURCHAQUECKW PARENTOPEN iterator PARENTCLOSE BRACEOPEN listBrick BRACECLOSE		{ $$ = new Iteration($3.iteratorName, $3.listData , $6);  montage.RemoveSymboles($3.GetListVariableOfIterator(montage));}

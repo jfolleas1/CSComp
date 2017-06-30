@@ -11,12 +11,16 @@ namespace CompCorpus.RunTime
         public VariableId variableName { get; }
         public AbstractExpression expression { get; }
         public List<Tuple<AbstractExpression, AbstractExpression>> listOfConditionAndExpression{ get; set; }
+        public int line { get; }
+        public int col { get; }
 
-        public Affectation(VariableId name, AbstractExpression exp)
+        public Affectation(VariableId name, AbstractExpression exp, int line = 0, int col = 0)
         {
             this.variableName = name;
             this.expression = exp;
             listOfConditionAndExpression = new List<Tuple<AbstractExpression, AbstractExpression>>();
+            this.line = line;
+            this.col = col;
         }
 
         public void Print()

@@ -30,9 +30,14 @@ namespace CompCorpus.RunTime.Bricks
             {
                 htmlText += " <input type=\"";
                 htmlText += GetHtmlType();
-                htmlText += "\" ng-model=\"" +
-                    text + "\" onkeypress = \"this.style.width ="+
-                    " Math.max( ((this.value.length) * 8 + 16 ), 32) + 'px';\" > ";
+                htmlText += "\" ng-model=\"" + text + "\"";
+                htmlText += "ng-init=\"" + text;
+                if (GetHtmlType() == "number")
+                    htmlText += "=0\"";
+                else
+                    htmlText += "=''\"";
+                htmlText += " onkeypress = \"this.style.width =" +
+                    " Math.max( ((this.value.length) * 10 + 16 ),50) + 'px';\" > ";
 
             }
             return htmlText;

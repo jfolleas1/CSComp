@@ -61,13 +61,13 @@ namespace CompCorpus.RunTime.error
                     message += " l'affectation est impossible pour la variable " + data ;
                     break;
                 case ErrorType.DOUBLE_DECLARATION:
-                    message = "ERREUR: le nom de variable " + data + " à été déclaré plusieur fois.";
+                    message = "ERREUR: le nom de variable " + data + " à été déclarée plusieurs fois.";
                     break;
                 case ErrorType.INVALID_CONDITION_EXPR:
-                    message += " l'expression utilisé pour une condition ne retourne pas une valeur boolean";
+                    message += " l'expression utilisée pour une condition ne retourne pas une valeur booléenne";
                     break;
                 case ErrorType.NOTLIST_USE_FOR_ITERATION:
-                    message += " la variable " + data + " est utilisé dans une itération mais n'est pas une liste";
+                    message += " la variable " + data + " est utilisée dans une itération mais n'est pas une liste";
                     break;
                 default:
                     break;

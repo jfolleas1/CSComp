@@ -4,9 +4,9 @@
 
 // GPPG version 1.5.2
 // Machine:  FIDF3675368
-// DateTime: 29/06/2017 17:30:08
+// DateTime: 30/06/2017 11:03:43
 // UserName: j.folleas
-// Input file <ParserComp.y - 29/06/2017 17:29:55>
+// Input file <ParserComp.y - 30/06/2017 11:03:18>
 
 // options: no-lines gplex
 
@@ -77,11 +77,11 @@ public class ScanObj {
 [GeneratedCodeAttribute( "Gardens Point Parser Generator", "1.5.2")]
 public class Parser: ShiftReduceParser<ValueType, LexLocation>
 {
-  // Verbatim content from ParserComp.y - 29/06/2017 17:29:55
+  // Verbatim content from ParserComp.y - 30/06/2017 11:03:18
     
     public Montage montage = new Montage();
 
-  // End verbatim content from ParserComp.y - 29/06/2017 17:29:55
+  // End verbatim content from ParserComp.y - 30/06/2017 11:03:18
 
 #pragma warning disable 649
   private static Dictionary<int, string> aliases;
@@ -669,7 +669,7 @@ public class Parser: ShiftReduceParser<ValueType, LexLocation>
 																												montage.AddListConditionalAffectation(ValueStack[ValueStack.Depth-4].listAffectation, ValueStack[ValueStack.Depth-6].expression); }
         break;
       case 91: // implication -> IMPLIQUECKW, BRACEOPEN, listAffectationWithCond, BRACECLOSE
-{ CurrentSemanticValue.listAffectation = ValueStack[ValueStack.Depth-2].listAffectation; Console.WriteLine("Implication !! "); }
+{ CurrentSemanticValue.listAffectation = ValueStack[ValueStack.Depth-2].listAffectation; }
         break;
       case 92: // listAffectationWithCond -> /* empty */
 { CurrentSemanticValue.listAffectation = new List<Affectation>();  }
@@ -678,7 +678,7 @@ public class Parser: ShiftReduceParser<ValueType, LexLocation>
 { CurrentSemanticValue.listAffectation=ValueStack[ValueStack.Depth-2].listAffectation; CurrentSemanticValue.listAffectation.Add(ValueStack[ValueStack.Depth-1].affectation);  }
         break;
       case 94: // affectationWithCond -> var, ASSIGN, expression, SEMICOLON
-{ CurrentSemanticValue.affectation = new Affectation(ValueStack[ValueStack.Depth-4].variable, ValueStack[ValueStack.Depth-2].expression); }
+{ CurrentSemanticValue.affectation = new Affectation(ValueStack[ValueStack.Depth-4].variable, ValueStack[ValueStack.Depth-2].expression, LocationStack[LocationStack.Depth-4].StartLine, LocationStack[LocationStack.Depth-4].StartColumn); }
         break;
       case 95: // iteration -> POURCHAQUECKW, PARENTOPEN, iterator, PARENTCLOSE, BRACEOPEN, 
                //              listBrick, BRACECLOSE
