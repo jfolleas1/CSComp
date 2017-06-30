@@ -85,7 +85,7 @@ namespace CompCorpus.RunTime.declaration
             ls.Add(new Tuple<string, string>(baseSymbole, type.ToString()));
             if (type == ExpressionType.LISTSTRUCT)
             {
-                ls.Add(new Tuple<string, string>("nombreDe_" + baseSymbole, "L" + ExpressionType.NUMBER.ToString()));
+                ls.Add(new Tuple<string, string>("nombreDe_" + baseSymbole, "L"+ExpressionType.NOMBRE.ToString()));
             }
             foreach (Declaration dec in declarationList)
             {

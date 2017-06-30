@@ -45,8 +45,7 @@ namespace CompCorpus.RunTime.Bricks
 
         private string GetHtmlType()
         {
-            if (typeString == "L" + ExpressionType.NUMBER.ToString() ||
-                typeString == ExpressionType.NUMBER.ToString())
+            if (typeString == ExpressionType.NOMBRE.ToString())
             {
                 return "number";
             }

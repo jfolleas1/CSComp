@@ -164,7 +164,7 @@ namespace UnitTest
             string[] args = { srcFilePath, "", "" };
             List<Error> myListError = TestErrorMain(args);
             List<Error> resListError = new List<Error>();
-            resListError.Add(new Error(ErrorType.INCOMPATIBLE_AFFECTATION, "titi (attendue : TEXTE, retourné : NUMBER)", 3));
+            resListError.Add(new Error(ErrorType.INCOMPATIBLE_AFFECTATION, "titi (attendue : TEXTE, retourné : NOMBRE)", 3));
             bool test = (myListError.Count == 1);
             test &= (resListError.First().Equals(myListError.First()));
             Assert.AreEqual(true, test);
@@ -178,7 +178,7 @@ namespace UnitTest
             string[] args = { srcFilePath, "", "" };
             List<Error> myListError = TestErrorMain(args);
             List<Error> resListError = new List<Error>();
-            resListError.Add(new Error(ErrorType.INCOMPATIBLE_AFFECTATION, "maVar (attendue : NUMBER, retourné : TEXTE)", 9, 2));
+            resListError.Add(new Error(ErrorType.INCOMPATIBLE_AFFECTATION, "maVar (attendue : NOMBRE, retourné : TEXTE)", 9, 2));
             bool test = (myListError.Count == 1);
             test &= (resListError.First().Equals(myListError.First()));
             Assert.AreEqual(true, test);

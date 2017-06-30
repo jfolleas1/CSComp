@@ -10,7 +10,7 @@ namespace CompCorpus.RunTime
     public enum ExpressionType
     {
         INVALIDE,
-        NUMBER,
+        NOMBRE,
         TEXTE,
         BOOL,
         STRUCT,

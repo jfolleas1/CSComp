@@ -44,7 +44,7 @@ namespace CompCorpus.RunTime
     {
         public long value { get; }
 
-        public VariableInteger(long value) : base(VariableType.INTEGER, ExpressionType.NUMBER)
+        public VariableInteger(long value) : base(VariableType.INTEGER, ExpressionType.NOMBRE)
         {
             this.value = value;
         }
@@ -71,7 +71,7 @@ namespace CompCorpus.RunTime
     {
         public double value { get; }
 
-        public VariableFloat(double value) : base(VariableType.FLOAT, ExpressionType.NUMBER)
+        public VariableFloat(double value) : base(VariableType.FLOAT, ExpressionType.NOMBRE)
         {
             this.value = value;
         }
@@ -138,10 +138,10 @@ namespace CompCorpus.RunTime
                         type = ExpressionType.TEXTE;
                         break;
                     }
-                case "NUMBER":
-                case "LNUMBER":
+                case "NOMBRE":
+                case "LNOMBRE":
                     {
-                        type = ExpressionType.NUMBER;
+                        type = ExpressionType.NOMBRE;
                         break;
                     }
                 case "BOOL":
@@ -168,7 +168,7 @@ namespace CompCorpus.RunTime
         public VariableId(string name, string varType) : base(VariableType.ID, ComputeDataType(varType))
         {
             this.name = name;
-            local = ((varType == "L"+ExpressionType.TEXTE.ToString()) || (varType == "LNUMBER") || (varType == "LBOOL"));
+            local = ((varType == "L"+ExpressionType.TEXTE.ToString()) || (varType == "L"+ExpressionType.NOMBRE.ToString()) || (varType == "LBOOL"));
         }
 
         public override void Print(int level)

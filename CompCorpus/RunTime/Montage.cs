@@ -181,7 +181,7 @@ namespace CompCorpus.RunTime
                 symboleTabe.TryGetValue(varName, out type);
                 if (type == ("L" + ExpressionType.BOOL.ToString()) ||
                     type == ("L" + ExpressionType.TEXTE.ToString()) ||
-                    type == ("L" + ExpressionType.NUMBER.ToString()) )
+                    type == ("L" + ExpressionType.NOMBRE.ToString()) )
                 {
                     return true;
                 }

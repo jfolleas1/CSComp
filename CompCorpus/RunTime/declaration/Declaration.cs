@@ -59,7 +59,7 @@ namespace CompCorpus.RunTime.declaration
             {
                 case ExpressionType.INVALIDE:
                     break;
-                case ExpressionType.NUMBER:
+                case ExpressionType.NOMBRE:
                     defaultValue = "0";
                     break;
                 case ExpressionType.TEXTE:
