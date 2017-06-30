@@ -4,9 +4,9 @@
 
 // GPPG version 1.5.2
 // Machine:  FIDF3675368
-// DateTime: 30/06/2017 13:57:38
+// DateTime: 30/06/2017 15:17:44
 // UserName: j.folleas
-// Input file <ParserComp.y - 30/06/2017 13:53:59>
+// Input file <ParserComp.y - 30/06/2017 15:17:13>
 
 // options: no-lines gplex
 
@@ -77,11 +77,11 @@ public class ScanObj {
 [GeneratedCodeAttribute( "Gardens Point Parser Generator", "1.5.2")]
 public class Parser: ShiftReduceParser<ValueType, LexLocation>
 {
-  // Verbatim content from ParserComp.y - 30/06/2017 13:53:59
+  // Verbatim content from ParserComp.y - 30/06/2017 15:17:13
     
     public Montage montage = new Montage();
 
-  // End verbatim content from ParserComp.y - 30/06/2017 13:53:59
+  // End verbatim content from ParserComp.y - 30/06/2017 15:17:13
 
 #pragma warning disable 649
   private static Dictionary<int, string> aliases;
@@ -422,7 +422,7 @@ public class Parser: ShiftReduceParser<ValueType, LexLocation>
         break;
       case 12: // declaration -> declaredVariableName, declaredVariableType, BRACEOPEN, 
                //                listDeclaration, BRACECLOSE, SEMICOLON
-{ CurrentSemanticValue.declaration = new DeclarationStruct(ValueStack[ValueStack.Depth-6].String, ValueStack[ValueStack.Depth-5].String, ValueStack[ValueStack.Depth-3].listDeclaration); montage.IsValideTypeString(ValueStack[ValueStack.Depth-5].String,LocationStack[LocationStack.Depth-5].StartLine, LocationStack[LocationStack.Depth-5].StartColumn); montage.AddSymbole(CurrentSemanticValue.declaration.GetSymboles()); 
+{ CurrentSemanticValue.declaration = new DeclarationStruct(ValueStack[ValueStack.Depth-6].String, ValueStack[ValueStack.Depth-5].String, ValueStack[ValueStack.Depth-3].listDeclaration); montage.IsValideTypeStructString(ValueStack[ValueStack.Depth-5].String,LocationStack[LocationStack.Depth-5].StartLine, LocationStack[LocationStack.Depth-5].StartColumn); montage.AddSymbole(CurrentSemanticValue.declaration.GetSymboles()); 
 																												  montage.AddFunctionForList(CurrentSemanticValue.declaration); }
         break;
       case 13: // declaredVariableName -> ID

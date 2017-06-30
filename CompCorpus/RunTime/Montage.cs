@@ -197,8 +197,35 @@ namespace CompCorpus.RunTime
                 errorList.Add(new Error(ErrorType.INVALIDE_TYPE, typeString, line, column));
                 return false;
             }
+            else if (type == ExpressionType.LISTSTRUCT || type == ExpressionType.STRUCT)
+            {
+                    string text = " : il doit être suivie par une déclaration de la forme { ... }";
+                    errorList.Add(new Error(ErrorType.INVALIDE_TYPE_STR, typeString + text, line, column));
+                return false;
+            }
             else
             {
+                return true;
+            }
+        }
+
+        public bool IsValideTypeStructString(string typeString, int line, int column)
+        {
+            ExpressionType type;
+            if (!Enum.TryParse(typeString, out type) || (type == ExpressionType.INVALIDE))
+            {
+                errorList.Add(new Error(ErrorType.INVALIDE_TYPE, typeString, line, column));
+                return false;
+
+            }
+            else if (type != ExpressionType.LISTSTRUCT && type != ExpressionType.STRUCT)
+            {
+                string text = " : une déclaration de la forme { ... } doit être de type struct ou listStruct";
+                errorList.Add(new Error(ErrorType.INVALIDE_TYPE_STR, typeString + text, line, column));
+                return false;
+            }
+            else
+            { 
                 return true;
             }
         }

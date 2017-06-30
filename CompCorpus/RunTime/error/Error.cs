@@ -15,6 +15,7 @@ namespace CompCorpus.RunTime.error
         DOUBLE_DECLARATION,
         INVALID_CONDITION_EXPR,
         NOTLIST_USE_FOR_ITERATION,
+        INVALIDE_TYPE_STR,
     }
 
     public class Error
@@ -68,6 +69,9 @@ namespace CompCorpus.RunTime.error
                     break;
                 case ErrorType.NOTLIST_USE_FOR_ITERATION:
                     message += " la variable " + data + " est utilisée dans une itération mais n'est pas une liste";
+                    break;
+                case ErrorType.INVALIDE_TYPE_STR:
+                    message += " sur le type " + data;
                     break;
                 default:
                     break;
