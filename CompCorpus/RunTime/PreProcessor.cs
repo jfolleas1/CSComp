@@ -13,7 +13,7 @@ namespace CompCorpus.RunTime
         static public void AddIncludes(string fileName)
         {
             Console.WriteLine("Pre processor add includes");
-            //Wee get the directpry path of the source file. The file included are in the same file
+            //Wee get the directpry path of the source file. The file included are in the same dir
             String directoryPath = "";
             for(int i = 0; i<fileName.Split('\\').Length-1; i++)
             {
@@ -99,9 +99,39 @@ namespace CompCorpus.RunTime
 
             //And make the changes in the copied source file
 
+            string patternSeparator = "(%%)";
+            Regex rgxSep = new Regex(patternSeparator);
+
+            if (rgxSep.IsMatch(ToIincludeFile))
+            {
+                string[] substringsIncludeSrc = rgxSep.Split(ToIincludeFile);
+                if (substringsIncludeSrc.Length == 5)
+                {
+                    Console.WriteLine(substringsIncludeSrc[0]);
+                    Console.WriteLine(substringsIncludeSrc[2]);
+                    Console.WriteLine(substringsIncludeSrc[4]);
+
+
+                    string[] substringsRes = rgxSep.Split(copiedSourceFile);
+
+                    string patternTitre = "Titre{[^}]*}";
+                    Regex rgxTitre = new Regex(patternTitre);
+                    Match m = Regex.Match(substringsRes[0], patternTitre);
+                    substringsRes[0] = rgxTitre.Replace(substringsRes[0], m.Value + "\n" + substringsIncludeSrc[0]);
+                    Console.WriteLine("RES : ");
+                    Console.WriteLine(substringsRes[0]);
+                    //remplacer le titre par substringres[0]
+
+                }
+
+            }
+
+
             string pattern = '\\'+specificInclude+ " *;";
             Regex rgx = new Regex(pattern);
             string result =  rgx.Replace(copiedSourceFile, ToIincludeFile);
+
+            
 
             return result;
         }
