@@ -169,7 +169,6 @@ namespace CompCorpus.RunTime
         {
             this.name = name;
             local = ((varType == "L"+ExpressionType.TEXTE.ToString()) || (varType == "LNUMBER") || (varType == "LBOOL"));
-
         }
 
         public override void Print(int level)

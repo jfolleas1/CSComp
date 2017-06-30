@@ -245,11 +245,11 @@ namespace CompCorpus.RunTime
         private void CheckCorespondanceExpectedAndExpressionType(ExpressionType expressionType, string expectedTypeString, string symbole, int line)
         {
             ExpressionType expectedType;
-            if (!Enum.TryParse(expectedTypeString, out expectedType))
+            if (!Enum.TryParse(expectedTypeString, out expectedType) && expectedTypeString != "VAR" )
             {
                 errorList.Add(new Error(ErrorType.INVALIDE_TYPE, expectedTypeString, line));
             }
-            else if (expectedType != expressionType)
+            else if (expectedType != expressionType && expectedTypeString != "VAR")
             {
                 string data = symbole + " (attendue : " + expectedTypeString + ", retourné : ";
                 data += expressionType.ToString() + ")";
