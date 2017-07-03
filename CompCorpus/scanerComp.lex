@@ -1,6 +1,8 @@
 // appel des using avec le % pour les bout de code driect en C#
 
 %using QUT.Gppg;
+%using System.Text.RegularExpressions;
+
 
 %namespace CompCorpus.Analyzer
 
@@ -29,7 +31,7 @@ assig (=|(:=))
 Identifier [A-Za-z][A-Za-z0-9_\.]*
 Integer [0-9]+
 Float [0-9]+,[0-9]+
-CharString \"(\\.|[^\\"])*\"
+CharString \"((\\\$)|(\\\")|[^\"\$])*\"
 TitleId ($titre)[1-6]
 Comment ((\/\/)[^\n]*\n|\/\*[^(\*\/)]*\*\/)
 DeadWord	[^ ,\t\n{}\(\)\$+\-/*(&&)(||)!(==)(<=)(<)(>=)(>)(:=);:(%%)]+
@@ -94,7 +96,7 @@ DeadWord	[^ ,\t\n{}\(\)\$+\-/*(&&)(||)!(==)(<=)(<)(>=)(>)(:=);:(%%)]+
 
 {Integer}				{yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol);  Int64.TryParse (yytext, NumberStyles.Integer, CultureInfo.CurrentCulture, out yylval.Integer);  return (int)Tokens.INTEGER;}
 {Float}					{yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); double.TryParse (yytext, NumberStyles.Float, CultureInfo.CurrentCulture, out yylval.Float); return (int)Tokens.FLOAT;}
-{CharString}			{yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); yylval.String = yytext; return (int)Tokens.STRING;}
+{CharString}			{yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); Regex r = new Regex(@"\\\$"); yylval.String = r.Replace(yytext,"$"); return (int)Tokens.STRING;}
 {Identifier}			{yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); yylval.String = yytext; return (int)Tokens.ID;}
 
 {DeadWord}				{yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); yylval.String = yytext; return (int)Tokens.DEADWORD;}
