@@ -16,6 +16,11 @@ namespace UnitTest
             mainTestHtml("TestSimpleDeadText");
         }
 
+        [TestMethod]
+        public void TestStringEspac()
+        {
+            mainTestHtml("TestStringEspac");
+        }
 
         [TestMethod]
         public void TestVarCall()
