@@ -13,5 +13,12 @@ namespace UnitTest
         {
             TestHtml.mainTestHtml("TestIncludes");
         }
+
+        [TestMethod]
+        public void TestRecurciveIncludeFile()
+        {
+            TestHtml.mainTestHtml("TestRecurciveIncludeFile");
+        }
+
     }
 }
