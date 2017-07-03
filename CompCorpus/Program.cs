@@ -47,6 +47,7 @@ namespace CompCorpus
                 Parser parser = null;
                 Montage montage = null;
 
+                PreProcessor.dataStructeFile = dataStructurePath;
                 PreProcessor.AddIncludes(sourceCopiedFileName);
 
 
@@ -80,7 +81,7 @@ namespace CompCorpus
                     Console.WriteLine("FIN DE LECTURE DU CODE ");
                     Console.WriteLine();
 
-                    if (montage != null && !montage.errorList.Any() && !scn.hasErrors)
+                    if (montage != null && !montage.errorList.Any() && !scn.hasErrors && !PreProcessor.includesHasErros)
                     {
                         montage.WriteInFiles(targetFilehtmlName, targetFileJSName);
                         System.Diagnostics.Process.Start(targetFilehtmlName);
@@ -106,7 +107,7 @@ namespace CompCorpus
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine("The file could not be read:");
+                    Console.WriteLine("When we try to delete the copied main src file:");
                     Console.WriteLine(e.Message);
                 }
             }

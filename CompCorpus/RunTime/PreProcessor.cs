@@ -5,11 +5,16 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using CompCorpus.Analyzer;
+
 
 namespace CompCorpus.RunTime
 {
     static public class PreProcessor
     {
+        static public string dataStructeFile { get; set; }
+        static public bool includesHasErros { get; set; } = false;
+
         static public void AddIncludes(string fileName)
         {
             Console.WriteLine("Pre processor add includes");
@@ -21,7 +26,7 @@ namespace CompCorpus.RunTime
             }
 
             // We read the copied source file
-            string copiedSourceFile = ReadTheTmpSrcFile(fileName);
+            string copiedSourceFile = ReadFileWithPath(fileName);
             
 
             //We find the includes instructions
@@ -54,50 +59,37 @@ namespace CompCorpus.RunTime
             }
             catch (Exception e)
             {
-                Console.WriteLine("The file could not be read:");
+                Console.WriteLine("In WriteTheTmpSrcFile function :");
                 Console.WriteLine(e.Message);
             }
         }
 
-        private static string ReadTheTmpSrcFile(string fileName)
+        private static string ReadFileWithPath(string filePath)
         {
-            string copiedSourceFile = "";
+            string fileText = "";
             try
             {   // Open the text file using a stream reader.
-                using (StreamReader sr = new StreamReader(fileName))
+                using (StreamReader sr = new StreamReader(filePath))
                 {
                     // Read the stream to a string, and write the string to the console.
-                    copiedSourceFile = sr.ReadToEnd();
+                    fileText = sr.ReadToEnd();
                 }
             }
             catch (Exception e)
             {
-                Console.WriteLine("The file could not be read:");
+                Console.WriteLine("In ReadFileWithPath function :");
                 Console.WriteLine(e.Message);
             }
-            return copiedSourceFile;
+            return fileText;
         }
 
-        static private string  MakeOneInclude(string specificInclude ,string fileToIncludeName, string copiedSourceFile)
+        static private string  MakeOneInclude(string specificInclude ,string fileToIncludePath, string copiedSourceFile)
         {
            
             //We read the file to include
-            string toIincludeFile = "";
-            try
-            {   // Open the text file using a stream reader.
-                using (StreamReader sr = new StreamReader(fileToIncludeName))
-                {
-                    // Read the stream to a string, and write the string to the console.
-                    toIincludeFile = sr.ReadToEnd();
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("The file could not be read:");
-                Console.WriteLine(e.Message);
-            }
+            string toIncludeFile = ReadFileWithPath(fileToIncludePath);
 
-            //And make the changes in the copied source file
+            // We generate the regexs
             string result = "";
             string patternInclude = '\\' + specificInclude + " *;";
             Regex rgxInclude = new Regex(patternInclude);
@@ -105,39 +97,41 @@ namespace CompCorpus.RunTime
             string patternSeparator = "(%%)";
             Regex rgxSep = new Regex(patternSeparator);
 
-            if (rgxSep.IsMatch(toIincludeFile))
+            //If the include is an inteligente include, it got %%
+            if (rgxSep.IsMatch(toIncludeFile))
             {
-                string[] substringsIncludeSrc = rgxSep.Split(toIincludeFile);
-                if (substringsIncludeSrc.Length == 5)
+                // The inteligent include must have 3 parts
+                if (rgxSep.Split(toIncludeFile).Length == 5)
                 {
+                    // We check if the include his well written
+                    string sourceFiletoIncludeCopyPath = CompileInclude(fileToIncludePath);
+                    string toIncludeFileCopy = ReadFileWithPath(sourceFiletoIncludeCopyPath);
+                    string[] substringsIncludeSrcCopy = rgxSep.Split(toIncludeFileCopy);
 
-                    Console.WriteLine(substringsIncludeSrc[0]);
-                    Console.WriteLine(substringsIncludeSrc[2]);
-                    Console.WriteLine(substringsIncludeSrc[4]);
-
-
+                    // We integrate it into the main source file
                     string[] substringsRes = rgxSep.Split(copiedSourceFile);
 
                     string patternTitre = @"\$Titre{[^}]*}";
                     Regex rgxTitre = new Regex(patternTitre);
-                    substringsIncludeSrc[0] = rgxTitre.Replace(substringsIncludeSrc[0], "");
+                    substringsIncludeSrcCopy[0] = rgxTitre.Replace(substringsIncludeSrcCopy[0], "");
                     Match m = Regex.Match(substringsRes[0], patternTitre);
-                    substringsRes[0] = rgxTitre.Replace(substringsRes[0], m.Value + "\n" + substringsIncludeSrc[0]);
-                    substringsRes[2] = substringsIncludeSrc[2] + substringsRes[2];
-                    substringsRes[4] = rgxInclude.Replace(substringsRes[4], substringsIncludeSrc[4]);
+                    substringsRes[0] = rgxTitre.Replace(substringsRes[0], m.Value + "\n" + substringsIncludeSrcCopy[0]);
+                    substringsRes[2] = substringsIncludeSrcCopy[2] + substringsRes[2];
+                    substringsRes[4] = rgxInclude.Replace(substringsRes[4], substringsIncludeSrcCopy[4]);
                     result = substringsRes[0] + "%%" + substringsRes[2] + "%%" + substringsRes[4];
 
-                    Console.WriteLine("RES : ");
-                    Console.WriteLine(result);
-                    //remplacer le titre par substringres[0]
-                    
-
+                    //We delete the copied included source file
+                    deleteFile(sourceFiletoIncludeCopyPath);
+                }
+                else
+                {
+                    //Display an include error 
                 }
 
             }
             else
             {
-                result = rgxInclude.Replace(copiedSourceFile, toIincludeFile);
+                result = rgxInclude.Replace(copiedSourceFile, toIncludeFile);
             }
 
 
@@ -145,9 +139,79 @@ namespace CompCorpus.RunTime
             return result;
         }
 
-        static private bool CompileInclude(string toIncludeFile)
+        private static void deleteFile(string FilePath)
         {
-            return true;
+            try
+            {
+                File.Delete(FilePath);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(" In deleteFile function:");
+                Console.WriteLine(e.Message);
+            }
+        }
+
+        static private string CompileInclude(string fileToIncludePath)
+        {
+            // We got the include file name 
+            char[] splitChar = new char[1];
+            splitChar[0] = '\\';
+            string fileToIncludeName = fileToIncludePath.Split(splitChar)[fileToIncludePath.Split(splitChar).Length-1];
+            string sourceCopiedFiletoIncludePath = "";
+            Console.WriteLine("Compilation du fichier inclue : " + fileToIncludeName);
+
+            
+            try
+            {
+                // We make a copie of theincluded file to make recurcive includes
+                sourceCopiedFiletoIncludePath = fileToIncludePath + ".comp";
+                try
+                {
+                    File.Copy(fileToIncludePath, sourceCopiedFiletoIncludePath);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("Try to copy files in CompileInclude function :");
+                    Console.WriteLine(e.Message);
+                }
+
+                // We recurcivly add include on the included file
+                PreProcessor.AddIncludes(sourceCopiedFiletoIncludePath);
+
+
+                string copiedSourceFiletoInclude = ReadFileWithPath(sourceCopiedFiletoIncludePath);
+
+                // We check if the included file is valide
+                using (Stream toIncludeStream = new FileStream(sourceCopiedFiletoIncludePath, FileMode.Open))
+                {
+                    Scanner scn = new Scanner(toIncludeStream);
+                    Parser parser = new Parser(scn);
+                    parser.montage.AddSymboleFromFile(dataStructeFile);
+                    parser.montage.AddSymboleFromPreCompile(copiedSourceFiletoInclude);
+                    parser.Parse();
+                    if (parser.montage == null || parser.montage.errorList.Any() || scn.hasErrors)
+                    {
+                        includesHasErros = true;
+                        Console.WriteLine();
+                        parser.montage.PrintErrors();
+                        Console.WriteLine();
+                    }
+                    else
+                    {
+                        Console.WriteLine("L'inclusion " + fileToIncludeName + " a été compilée avec succès.");
+                    }
+                    
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("In CompileInclude function :");
+                Console.WriteLine(e.Message);
+            }
+
+            // We return the path of the file to include, which now do not containt any includes
+            return sourceCopiedFiletoIncludePath;
         }
     }
 }
