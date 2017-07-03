@@ -82,13 +82,13 @@ namespace CompCorpus.RunTime
         {
            
             //We read the file to include
-            string ToIincludeFile = "";
+            string toIincludeFile = "";
             try
             {   // Open the text file using a stream reader.
                 using (StreamReader sr = new StreamReader(fileToIncludeName))
                 {
                     // Read the stream to a string, and write the string to the console.
-                    ToIincludeFile = sr.ReadToEnd();
+                    toIincludeFile = sr.ReadToEnd();
                 }
             }
             catch (Exception e)
@@ -98,15 +98,19 @@ namespace CompCorpus.RunTime
             }
 
             //And make the changes in the copied source file
+            string result = "";
+            string patternInclude = '\\' + specificInclude + " *;";
+            Regex rgxInclude = new Regex(patternInclude);
 
             string patternSeparator = "(%%)";
             Regex rgxSep = new Regex(patternSeparator);
 
-            if (rgxSep.IsMatch(ToIincludeFile))
+            if (rgxSep.IsMatch(toIincludeFile))
             {
-                string[] substringsIncludeSrc = rgxSep.Split(ToIincludeFile);
+                string[] substringsIncludeSrc = rgxSep.Split(toIincludeFile);
                 if (substringsIncludeSrc.Length == 5)
                 {
+
                     Console.WriteLine(substringsIncludeSrc[0]);
                     Console.WriteLine(substringsIncludeSrc[2]);
                     Console.WriteLine(substringsIncludeSrc[4]);
@@ -114,26 +118,36 @@ namespace CompCorpus.RunTime
 
                     string[] substringsRes = rgxSep.Split(copiedSourceFile);
 
-                    string patternTitre = "Titre{[^}]*}";
+                    string patternTitre = @"\$Titre{[^}]*}";
                     Regex rgxTitre = new Regex(patternTitre);
+                    substringsIncludeSrc[0] = rgxTitre.Replace(substringsIncludeSrc[0], "");
                     Match m = Regex.Match(substringsRes[0], patternTitre);
                     substringsRes[0] = rgxTitre.Replace(substringsRes[0], m.Value + "\n" + substringsIncludeSrc[0]);
+                    substringsRes[2] = substringsIncludeSrc[2] + substringsRes[2];
+                    substringsRes[4] = rgxInclude.Replace(substringsRes[4], substringsIncludeSrc[4]);
+                    result = substringsRes[0] + "%%" + substringsRes[2] + "%%" + substringsRes[4];
+
                     Console.WriteLine("RES : ");
-                    Console.WriteLine(substringsRes[0]);
+                    Console.WriteLine(result);
                     //remplacer le titre par substringres[0]
+                    
 
                 }
 
             }
+            else
+            {
+                result = rgxInclude.Replace(copiedSourceFile, toIincludeFile);
+            }
 
 
-            string pattern = '\\'+specificInclude+ " *;";
-            Regex rgx = new Regex(pattern);
-            string result =  rgx.Replace(copiedSourceFile, ToIincludeFile);
-
-            
 
             return result;
+        }
+
+        static private bool CompileInclude(string toIncludeFile)
+        {
+            return true;
         }
     }
 }
