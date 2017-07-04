@@ -22,11 +22,6 @@ namespace CompCorpus.RunTime.Bricks
         static public void PushContexte(string Listname)
         {
             contextConcatenation.Add(new KeyValuePair<string, string>(Listname, Listname.Split('.')[Listname.Split('.').Length -1] + "Index"));
-            foreach (KeyValuePair<string, string> item in contextConcatenation)
-            {
-                Console.Write("[" + item.Key + "->" + item.Value + "]");
-            }
-            Console.Write("\n");
         }
 
         static public void PopContexte()

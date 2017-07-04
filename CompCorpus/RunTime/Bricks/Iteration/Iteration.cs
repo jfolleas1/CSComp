@@ -37,7 +37,6 @@ namespace CompCorpus.RunTime.Bricks
 
         public override string Write()
         {
-            Console.WriteLine("iter : " + listData.name + "-" + listOfParameter);
             string listName = listData.name.Split('.')[listData.name.Split('.').Length - 1];
 
             string htmlText = "";
