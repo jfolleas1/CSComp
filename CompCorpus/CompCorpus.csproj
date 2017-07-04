@@ -51,6 +51,7 @@
     <Compile Include="RunTime\Bricks\DeadText.cs" />
     <Compile Include="RunTime\Bricks\Iteration\Iteration.cs" />
     <Compile Include="RunTime\Bricks\Iteration\IteratorStr.cs" />
+    <Compile Include="RunTime\Bricks\Iteration\StructDecNameAndType.cs" />
     <Compile Include="RunTime\Bricks\Option.cs" />
     <Compile Include="RunTime\Bricks\Proposition.cs" />
     <Compile Include="RunTime\Bricks\Title.cs" />

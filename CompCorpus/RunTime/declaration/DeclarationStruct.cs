@@ -8,12 +8,84 @@ namespace CompCorpus.RunTime.declaration
 {
     public class DeclarationStruct : Declaration
     {
-        static string contextConcatenation { get; set; }
+        static List<KeyValuePair<string, string>> contextConcatenation { get; set; } = new List<KeyValuePair<string, string>>();
         List<Declaration> declarationList { get; }
         string itemGetterPath { get; }
+        string listOfParamForAddAndDel { get; }
+
+
         public DeclarationStruct(string name, string typeString, List<Declaration> declarationList ) : base(name, GetTypeFromString(typeString))
         {
             this.declarationList = declarationList;
+            itemGetterPath = GetCurrentContexte();
+            listOfParamForAddAndDel = GetListofIndexParametters();
+
+        }
+
+        static public void PushContexte(string nameStruct, string typeStruct)
+        {
+            if (typeStruct == ExpressionType.LISTSTRUCT.ToString())
+            {
+                contextConcatenation.Add(new KeyValuePair<string, string>(nameStruct, nameStruct + "Index"));
+            }
+           else
+            {
+                contextConcatenation.Add(new KeyValuePair<string, string>(nameStruct, "null"));
+            }
+        }
+
+        static public void PopContexte()
+        {
+            contextConcatenation.RemoveAt(contextConcatenation.Count - 1);
+        }
+
+        static private string GetCurrentContexte()
+        {
+            string path = "";
+            int i = 0;
+            int indexOfLast = contextConcatenation.Count - 1; // we dont need the last 
+                                                //context beacause its the curent 
+                                                //declaration 
+            foreach (KeyValuePair<string, string> item in contextConcatenation)
+            {
+                if (i != indexOfLast)
+                {
+                    if (item.Value == "null")
+                    {
+                        path += item.Key;
+                    }
+                    else
+                    {
+                        path += item.Key + "[" + item.Value + "]";
+                    }
+                    path += ".";
+                   i++;
+                }
+            }
+            return path;
+        }
+
+        static private string GetListofIndexParametters()
+        {
+            string indexparameter = "";
+            int i = 0;
+            int indexOfLast = contextConcatenation.Count - 1; // we dont need the last 
+                                                              //context beacause its the curent 
+                                                              //declaration 
+            foreach (KeyValuePair<string, string> item in contextConcatenation)
+            {
+                if (i != indexOfLast)
+                {
+                    if (item.Value != "null")
+                    {
+                        
+                        indexparameter += item.Value + ",";
+
+                    }
+                    i++;
+                }
+            }
+            return indexparameter;
         }
 
         static private ExpressionType GetTypeFromString(string typeString)
@@ -98,15 +170,22 @@ namespace CompCorpus.RunTime.declaration
 
         public override string GetAddNDelFunction()
         {
-            string functionAdd = "$scope.add" + this.name + " = function() {\n";
-            functionAdd += "$scope." + this.name + ".push({";
+            string functionAdd = "$scope.add" + this.name + " = function(";
+            if (this.listOfParamForAddAndDel != "")
+            {
+                //We delete the last comma
+                functionAdd += this.listOfParamForAddAndDel.Substring(0, (this.listOfParamForAddAndDel.Count() - 1));
+            }
+            functionAdd += ") {\n";
+            functionAdd += "$scope." + this.itemGetterPath + this.name + ".push({";
             foreach (Declaration dec in declarationList)
             {
                 functionAdd += (dec.Write(false, 1) + "\n");
             }
             functionAdd += "\n});\n}";
-            string functionDel = "$scope.del" + this.name + " = function(index) {\n";
-            functionDel += "$scope." + this.name + ".splice(index, 1); \n}\n";
+            string functionDel = "$scope.del" + this.name + " = function(" + this.listOfParamForAddAndDel;
+            functionDel += this.name + "Index) {\n";
+            functionDel += "$scope." + this.itemGetterPath + this.name + ".splice(" + this.name + "Index, 1); \n}\n";
             string functionCount = "$scope.nombreDe_" + this.name + " = function() {\n";
             functionCount += " return $scope." + this.name + ".length; \n}\n";
 

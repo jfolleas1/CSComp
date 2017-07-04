@@ -34,7 +34,8 @@
 		public Option option;
 		public Condition condition;
 		public Iteration iteration;
-		public IteratorStr iterator; 
+		public IteratorStr iterator;
+		public StructDecNameAndType decNameAndType;
 
 }
 
@@ -83,6 +84,7 @@
 %type<String> deadText
 %type<String> declaredVariableName
 %type<String> declaredVariableType
+%type<decNameAndType> decNameAndType
 %type<String> affectationType
 %type<declaration> declaration
 %type<listDeclaration> listDeclaration
@@ -148,10 +150,12 @@ listDeclaration :	/*Empty*/						{ $$ = new List<Declaration>(); }
 				;
 
 declaration		:	declaredVariableName declaredVariableType SEMICOLON											{ $$ = new Declaration($1, $2); montage.IsValideTypeString($2,@2.StartLine, @2.StartColumn); montage.AddSymbole($$); }
-				|	declaredVariableName declaredVariableType BRACEOPEN listDeclaration BRACECLOSE SEMICOLON	{ $$ = new DeclarationStruct($1, $2, $4); montage.IsValideTypeStructString($2,@2.StartLine, @2.StartColumn); montage.AddSymbole($$.GetSymboles()); 
-																												  montage.AddFunctionForList($$); }
+				|	decNameAndType BRACEOPEN listDeclaration BRACECLOSE SEMICOLON								{ $$ = new DeclarationStruct($1.name, $1.type, $3); montage.IsValideTypeStructString($1.type,@1.StartLine, @1.StartColumn); montage.AddSymbole($$.GetSymboles()); 
+																												  montage.AddFunctionForList($$); DeclarationStruct.PopContexte(); }
 				;
 
+decNameAndType  :	declaredVariableName declaredVariableType { $$ = new StructDecNameAndType($1,$2); @$ = @2; DeclarationStruct.PushContexte($1,$2); }
+				;
 
 
 declaredVariableName	:	ID		{ $$ = $1; }
@@ -310,10 +314,12 @@ listAffectationWithCond	:	/*Empty*/										{ $$ = new List<Affectation>();  }
 affectationWithCond		:		var ASSIGN expression SEMICOLON				{ $$ = new Affectation($1, $3, @1.StartLine, @1.StartColumn); }
 						;
 
-iteration 	: POURCHAQUECKW PARENTOPEN iterator PARENTCLOSE BRACEOPEN listBrick BRACECLOSE		{ $$ = new Iteration($3.iteratorName, $3.listData , $6);  montage.RemoveSymboles($3.GetListVariableOfIterator(montage));}
+iteration 	: POURCHAQUECKW PARENTOPEN iterator PARENTCLOSE BRACEOPEN listBrick BRACECLOSE		{ $$ = new Iteration($3.iteratorName, $3.listData , $6);  montage.RemoveSymboles($3.GetListVariableOfIterator(montage));
+																									IteratorStr.PopContexte(); }
 			;
 
-iterator	: ID COLON ID { $$ = new IteratorStr($1,new VariableId($3, montage.GetVarTypeStringForIteration($3,  @3.StartLine, @3.StartColumn))); montage.AddSymbole($$.GetListVariableOfIterator(montage)); }
+iterator	: ID COLON ID { $$ = new IteratorStr($1,new VariableId($3, montage.GetVarTypeStringForIteration($3,  @3.StartLine, @3.StartColumn)));
+							montage.AddSymbole($$.GetListVariableOfIterator(montage)); IteratorStr.PushContexte($3); }
 			;
 
 %%
