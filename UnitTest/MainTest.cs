@@ -60,7 +60,8 @@ namespace UnitTest
                     file = new FileStream(sourceCopiedFileName, FileMode.Open);
                     scn = new Scanner(file);
                     parser = new Parser(scn);
-                    parser.montage.AddSymboleFromFile(@"C:\Users\j.folleas\Desktop\settings\DataStructur.txt");
+                    parser.montage.AddSymboleFromFile(@"C:\Users\j.folleas\Desktop\settings\DataStruct.txt");
+                    parser.montage.dataBasPath = @"C:\Users\j.folleas\Desktop\settings\DataBase.txt";
                     parser.montage.AddSymboleFromPreCompile(fileForPreCompiling);
 
 

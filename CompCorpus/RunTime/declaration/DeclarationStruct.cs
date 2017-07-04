@@ -8,7 +8,9 @@ namespace CompCorpus.RunTime.declaration
 {
     public class DeclarationStruct : Declaration
     {
+        static string contextConcatenation { get; set; }
         List<Declaration> declarationList { get; }
+        string itemGetterPath { get; }
         public DeclarationStruct(string name, string typeString, List<Declaration> declarationList ) : base(name, GetTypeFromString(typeString))
         {
             this.declarationList = declarationList;

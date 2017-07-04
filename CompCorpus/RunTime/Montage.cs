@@ -17,6 +17,7 @@ namespace CompCorpus.RunTime
         public List<Brick> listOfBricks { get; set; }
         public List<Error> errorList { get; }
         public List<String> functionForListList { get; }
+        public string dataBasPath { get; set; }
 
 
         public Montage()
@@ -54,7 +55,7 @@ namespace CompCorpus.RunTime
                         String[] substrings = line.Split(' ');
                         if (substrings.Length == 2)
                         {
-                            symboleTabe.Add(substrings[0], substrings[1]);
+                            symboleTabe.Add(substrings[0], substrings[1].ToUpper());
                         }
                     }
                 }
@@ -381,7 +382,6 @@ namespace CompCorpus.RunTime
         }
 
 
-
         public static string GetLocalFileName(string fileName)
         {
             String[] substrings = fileName.Split('\\');
@@ -396,61 +396,6 @@ namespace CompCorpus.RunTime
                 aff.Print();
             }
         }
-
-        public void PrintFutureFiles()
-        {
-            Console.WriteLine("-----CODE IN THE HTML DOCUMENT------");
-            string beginOfTheHtmlDoc = "<!DOCTYPE html> \n<html lang=\"fr - FR\"> \n" +
-                "< script src = \"https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js\" ></ script >\n" +
-                "< script src = \"http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js\" ></ script >\n" +
-                "< script src = \"https://code.jquery.com/ui/1.12.1/jquery-ui.js\" ></ script >\n" +
-                "< head >\n" +
-                "\t< meta charset = \"utf-8\" />\n" +
-                "\t< title > " + nameOfTheMontage + "</title>\n" +
-                "\t< link rel = \"stylesheet\" type = \"text/css\" href = \"styleActe.css\" >\n" +
-                "\t< link rel = \"stylesheet\" href = \"//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css\" >\n" +
-                "</head>\n\n<body>\n" +
-                "<div ng-app=\"myActe\" ng-controller=\"myCtrl\">\n";
-            Console.Write(beginOfTheHtmlDoc);
-
-            // what will be written in the html document
-
-            foreach (Brick bk in listOfBricks)
-            {
-                Console.Write(bk.Write());
-            }
-            string endOfTheDoc = "\n</div>\n\n<script src=\"targetFileNameController.js\"></script>\n</body>\n</html>\n\n";
-            Console.Write(endOfTheDoc);
-
-            Console.WriteLine("-----CODE IN THE JS DOCUMENT------");
-            string beginOfTheJSDoc = "var app = angular.module('myActe', []);\n"+
-                                     "app.controller('myCtrl', function($scope) { \n\n";
-            Console.WriteLine(beginOfTheJSDoc);
-
-
-            // Variables declarations list
-
-
-            Console.WriteLine(@"// Liste des définition des expressions");
-
-            foreach (Affectation aff in mapOfCalculExpressions.Values)
-            {
-                Console.Write(aff.Write());
-            }
-
-
-            string endOfTheJSDoc = "});\n\n" +
-               "var listeInput = document.getElementsByTagName(\"input\");" +
-               "for (var iter = 0; iter < listeInput.length; iter++) {" +
-               "\tif (listeInput[iter].type == \"text\") {" +
-               "\t\tlisteInput[iter].style.width = ((listeInput[iter].value.length + 1) * 6) + 'px';" +
-               "\t}\n}\n\n";
-            Console.WriteLine(endOfTheJSDoc);
-
-
-
-        }
-
 
         public string DataFromFile(string filename)
         {
@@ -541,7 +486,7 @@ namespace CompCorpus.RunTime
                 myStreamWriter.Write(beginOfTheJSDoc);
 
                 //write the declaration of variables in data base
-                string varInDataBaseDec = DataFromFile(@"C:\Users\j.folleas\Desktop\settings\DataBase.txt");
+                string varInDataBaseDec = DataFromFile(dataBasPath); // @"C:\Users\j.folleas\Desktop\settings\DemoDataBase.txt"
                 myStreamWriter.Write(varInDataBaseDec+"\n\n\n");
 
 

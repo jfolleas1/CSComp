@@ -152,6 +152,8 @@ declaration		:	declaredVariableName declaredVariableType SEMICOLON											{ $
 																												  montage.AddFunctionForList($$); }
 				;
 
+
+
 declaredVariableName	:	ID		{ $$ = $1; }
 						;
 

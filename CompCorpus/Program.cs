@@ -16,7 +16,7 @@ namespace CompCorpus
        
         static public void Main(string[] args)
         {
-            if (args.Length == 4)
+            if (args.Length == 5)
             {
 
 
@@ -26,6 +26,7 @@ namespace CompCorpus
                 string targetFilehtmlName = args[1];
                 string targetFileJSName = args[2];
                 string dataStructurePath = args[3];
+                string dataBasePath = args[4];
 
 
 
@@ -73,6 +74,7 @@ namespace CompCorpus
                     scn = new Scanner(file);
                     parser = new Parser(scn);
                     parser.montage.AddSymboleFromFile(dataStructurePath);
+                    parser.montage.dataBasPath = dataBasePath; 
                     parser.montage.AddSymboleFromPreCompile(fileForPreCompiling);
 
                     parser.Parse();
