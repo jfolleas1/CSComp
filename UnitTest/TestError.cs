@@ -157,6 +157,22 @@ namespace UnitTest
         }
 
         [TestMethod]
+        public void TestErrorunknowVarInDataStruct()
+        {
+            string fileName = "TestErrorunknowVarInDataStruct";
+            string srcFilePath = @"C:\Users\j.folleas\Desktop\Tests\srcWithError\" + fileName + ".txt";
+            string[] args = { srcFilePath, "", "" };
+            List<Error> myListError = TestErrorMain(args);
+            List<Error> resListError = new List<Error>();
+            resListError.Add(new Error(ErrorType.UNKNOW_VARIABLE, "last", 10, 11));
+            resListError.Add(new Error(ErrorType.UNKNOW_VARIABLE, "titi", 12, 19));
+            bool test = (myListError.Count == 2);
+            test &= (resListError[0].Equals(myListError[0]));
+            test &= (resListError[1].Equals(myListError[1]));
+            Assert.AreEqual(true, test);
+        }
+
+        [TestMethod]
         public void TestErrorIncompatibleAffectation()
         {
             string fileName = "TestErrorIncompatibleAffectation";
