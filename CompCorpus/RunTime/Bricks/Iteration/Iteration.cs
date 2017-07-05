@@ -46,8 +46,10 @@ namespace CompCorpus.RunTime.Bricks
                 htmlText += bk.Write() + "\n";
             }
             htmlText += "<input type=\"submit\" value=\" - \" ng-click=\"del" + listName + "(" + listOfParameter +
-                listName + "Index" + ")\"></span>";
-            htmlText += "<input type=\"submit\" class=\"pull-left\" value=\" + \" ng-click=\"add" + listName + "(";
+                listName + "Index" + ")\"  data-toggle=\"tooltip\" data-placement=\"top\" title=\" suprimer le " +
+                listName +"\"></span>";
+            htmlText += "<input type=\"submit\" class=\"pull-left\" data-toggle=\"tooltip\" data-placement=\"top\" title=\" ajouter un "+
+                listName + "\" value=\" + \" ng-click=\"add" + listName + "(";
             if (listOfParameter != "")
             {
                 //We delete the last comma
