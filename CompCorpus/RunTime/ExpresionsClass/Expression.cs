@@ -16,6 +16,7 @@ namespace CompCorpus.RunTime
         OR,
         NOT,
         EGALE,
+        NOTEGALE,
         INF,
         INFEGALE,
         SUP,
@@ -97,6 +98,12 @@ namespace CompCorpus.RunTime
                         myType = ExpressionType.BOOL;
                     }
                     break;
+                case ExpressionSymbole.NOTEGALE:
+                    if (exp1Type == exp2Type)
+                    {
+                        myType = ExpressionType.BOOL;
+                    }
+                    break;
                 case ExpressionSymbole.INF:
                 case ExpressionSymbole.INFEGALE:
                 case ExpressionSymbole.SUP:
@@ -171,6 +178,9 @@ namespace CompCorpus.RunTime
                 case ExpressionSymbole.EGALE:
                     myExpressionInString = expression1.Write() + "==" + expression2.Write();
                     break;
+                case ExpressionSymbole.NOTEGALE:
+                    myExpressionInString = expression1.Write() + "!=" + expression2.Write();
+                    break;
                 case ExpressionSymbole.INF:
                     myExpressionInString = expression1.Write() + "<" + expression2.Write();
                     break;
@@ -223,6 +233,9 @@ namespace CompCorpus.RunTime
                     break;
                 case ExpressionSymbole.EGALE:
                     myExpressionInString = expression1.WriteForCondition() + "==" + expression2.WriteForCondition();
+                    break;
+                case ExpressionSymbole.NOTEGALE:
+                    myExpressionInString = expression1.WriteForCondition() + "!=" + expression2.WriteForCondition();
                     break;
                 case ExpressionSymbole.INF:
                     myExpressionInString = expression1.WriteForCondition() + "<" + expression2.WriteForCondition();

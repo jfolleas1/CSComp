@@ -50,7 +50,7 @@
 %token PARENTOPEN PARENTCLOSE BRACEOPEN BRACECLOSE
 
 %token AND OR NOT
-%token EGALE INF INFEGALE SUP SUPEGALE
+%token EGALE INF INFEGALE SUP SUPEGALE NOTEGALE
 
 %token ASSIGN
 
@@ -124,7 +124,7 @@
 
 %left AND OR 
 %left NOT
-%left EGALE INF INFEGALE SUP SUPEGALE
+%left EGALE INF INFEGALE SUP SUPEGALE NOTEGALE
 
 
 %left PLUS MINUS
@@ -198,6 +198,7 @@ expression  :       expression PLUS expression			{ /*Console.WriteLine("PLUS");*
             |       expression OR expression			{ /*Console.WriteLine("OR");*/		$$ = new Expression(ExpressionSymbole.OR, $1, $3); }
             |       NOT expression						{ /*Console.WriteLine("NOT");*/		$$ = new Expression(ExpressionSymbole.NOT, $2); }
             |       expression EGALE expression			{ /*Console.WriteLine("EGALE");*/	$$ = new Expression(ExpressionSymbole.EGALE, $1, $3); }
+			|       expression NOTEGALE expression		{ /*Console.WriteLine("EGALE");*/	$$ = new Expression(ExpressionSymbole.NOTEGALE, $1, $3); }
             |       expression INF expression			{ /*Console.WriteLine("INF");*/		$$ = new Expression(ExpressionSymbole.INF, $1, $3); }
             |       expression INFEGALE expression		{ /*Console.WriteLine("INFEGALE");*/ $$ = new Expression(ExpressionSymbole.INFEGALE, $1, $3); }
             |       expression SUP expression			{ /*Console.WriteLine("SUP");*/		$$ = new Expression(ExpressionSymbole.SUP, $1, $3); }

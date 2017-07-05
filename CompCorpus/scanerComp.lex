@@ -77,6 +77,7 @@ DeadWord	[^ ,\t\n{}\(\)\$+\-/*(&&)(||)!(==)(<=)(<)(>=)(>)(:=);:(%%)]+
 
 "&&"                    {yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.AND;}
 "||"                    {yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.OR;}
+"!="					{yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.NOTEGALE;}
 "!"                     {yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.NOT;}
 "=="                    {yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.EGALE;}
 "<"                     {yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.INF;}
