@@ -28,5 +28,12 @@ namespace UnitTest
         {
             TestHtml.mainTestHtml("TestCountFunction");
         }
+
+
+        [TestMethod]
+        public void TestRecurciveIteration()
+        {
+            TestHtml.mainTestHtml("TestRecurciveIteration");
+        }
     }
 }
