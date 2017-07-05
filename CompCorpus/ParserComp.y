@@ -88,6 +88,8 @@
 %type<String> affectationType
 %type<declaration> declaration
 %type<listDeclaration> listDeclaration
+%type<declaration> inStructDeclaration
+%type<listDeclaration> inStructListDeclaration
 
 %type<String> textBloc
 %type<String> textBlocElement
@@ -149,10 +151,19 @@ listDeclaration :	/*Empty*/						{ $$ = new List<Declaration>(); }
 				|   listDeclaration declaration		{ $$=$1; $$.Add($2); }
 				;
 
-declaration		:	declaredVariableName declaredVariableType SEMICOLON											{ $$ = new Declaration($1, $2); montage.IsValideTypeString($2,@2.StartLine, @2.StartColumn); montage.AddSymbole($$); }
-				|	decNameAndType BRACEOPEN listDeclaration BRACECLOSE SEMICOLON								{ $$ = new DeclarationStruct($1.name, $1.type, $3); montage.IsValideTypeStructString($1.type,@1.StartLine, @1.StartColumn); montage.AddSymbole($$.GetSymboles()); 
-																												  montage.AddFunctionForList($$); DeclarationStruct.PopContexte(); }
+declaration		:	declaredVariableName declaredVariableType SEMICOLON													{ $$ = new Declaration($1, $2); montage.IsValideTypeString($2,@2.StartLine, @2.StartColumn); montage.AddSymbole($$); }
+				|	decNameAndType BRACEOPEN inStructListDeclaration BRACECLOSE SEMICOLON								{ $$ = new DeclarationStruct($1.name, $1.type, $3); montage.IsValideTypeStructString($1.type,@1.StartLine, @1.StartColumn); montage.AddSymbole($$.GetSymboles()); 
+																														  montage.AddFunctionForList($$); DeclarationStruct.PopContexte(); }
 				;
+
+inStructListDeclaration :	/*Empty*/										{ $$ = new List<Declaration>(); }
+						|   inStructListDeclaration inStructDeclaration		{ $$=$1; $$.Add($2); }
+						;
+
+inStructDeclaration		:	declaredVariableName declaredVariableType SEMICOLON													{ $$ = new Declaration($1, $2); montage.IsValideTypeString($2,@2.StartLine, @2.StartColumn);  }
+						|	decNameAndType BRACEOPEN inStructListDeclaration BRACECLOSE SEMICOLON								{ $$ = new DeclarationStruct($1.name, $1.type, $3); montage.IsValideTypeStructString($1.type,@1.StartLine, @1.StartColumn); 
+																																	montage.AddFunctionForList($$); DeclarationStruct.PopContexte(); }
+						;
 
 decNameAndType  :	declaredVariableName declaredVariableType { $$ = new StructDecNameAndType($1,$2); @$ = @2; DeclarationStruct.PushContexte($1,$2); }
 				;
