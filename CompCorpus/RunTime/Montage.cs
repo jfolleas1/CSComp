@@ -83,7 +83,10 @@ namespace CompCorpus.RunTime
                 Affectation aff = new Affectation(new VariableId(choiceVarName.Trim(), "L"+ExpressionType.TEXTE.ToString()),
                     new VariableId(choiceVarName.Trim() + "Model", ExpressionType.TEXTE.ToString()));
                 this.AddSymbole(aff);
-                this.mapOfCalculExpressions.Add(aff.variableName.name, aff);
+                if (!mapOfCalculExpressions.ContainsKey(aff.variableName.name))
+                {
+                    this.mapOfCalculExpressions.Add(aff.variableName.name, aff);
+                }
             }
 
             //Add of the propositions variables 
@@ -105,7 +108,10 @@ namespace CompCorpus.RunTime
 
                 Affectation aff = new Affectation(new VariableId(propoVarName.Trim(), "LTEXTE"), new VariableString(propoString));
                 this.AddSymbole(aff);
-                this.mapOfCalculExpressions.Add(aff.variableName.name, aff);
+                if (!mapOfCalculExpressions.ContainsKey(aff.variableName.name))
+                {
+                    this.mapOfCalculExpressions.Add(aff.variableName.name, aff);
+                }
             }
 
             //Add of the option variables 
@@ -121,7 +127,10 @@ namespace CompCorpus.RunTime
                     (optionMatches[ctr].Value.Length - "$option(,".Length));
                 Affectation aff = new Affectation(new VariableId(optionVarName.Trim(), "LBOOL"), new VariableId(optionVarName.Trim()+"Model", "BOOL"));
                 this.AddSymbole(aff);
-                this.mapOfCalculExpressions.Add(aff.variableName.name, aff);
+                if (!mapOfCalculExpressions.ContainsKey(aff.variableName.name))
+                {
+                    this.mapOfCalculExpressions.Add(aff.variableName.name, aff);
+                }
             }
 
         }
@@ -141,6 +150,11 @@ namespace CompCorpus.RunTime
         {
             if(aff.expression.dataType != ExpressionType.UNKNOWVAR )
             {
+                if (symboleTabe.ContainsKey(aff.variableName.name))
+                {
+                    symboleTabe.Remove(aff.variableName.name);
+                    errorList.Add(new Error(ErrorType.DOUBLE_DECLARATION, aff.variableName.name, 0, 0));
+                }
                 AddSymbole(aff.variableName.name, ("L" + aff.expression.dataType.ToString()));
             }
         }
