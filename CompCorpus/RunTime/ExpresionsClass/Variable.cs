@@ -118,7 +118,8 @@ namespace CompCorpus.RunTime
 
         public override string WriteForCondition()
         {
-            return Write();
+            string orginalText = Write();
+            return "'" + orginalText.Substring(1, orginalText.Length -2 ) + "'";
         }
     }
 

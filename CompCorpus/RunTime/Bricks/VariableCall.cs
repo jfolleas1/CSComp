@@ -31,11 +31,7 @@ namespace CompCorpus.RunTime.Bricks
                 htmlText += " <input type=\"";
                 htmlText += GetHtmlType();
                 htmlText += "\" ng-model=\"" + text + "\"";
-                htmlText += "ng-init=\"" + text;
-                if (GetHtmlType() == "number")
-                    htmlText += "=0\"";
-                else
-                    htmlText += "=''\"";
+                htmlText += " data-toggle=\"tooltip\" data-placement=\"top\" title=\"" + text + "\"";
                 htmlText += " onkeypress = \"this.style.width =" +
                     " Math.max( ((this.value.length) * 10 + 16 ),50) + 'px';\" > ";
 
