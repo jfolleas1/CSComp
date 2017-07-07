@@ -62,8 +62,8 @@ namespace CompCorpus.RunTime
             }
             catch (Exception e)
             {
-                Console.WriteLine("The file could not be read:");
-                Console.WriteLine(e.Message);
+                LogManager.AddLog("The file could not be read:");
+                LogManager.AddLog(e.Message);
             }
         }
 
@@ -369,6 +369,16 @@ namespace CompCorpus.RunTime
             }
         }
 
+        public string WriteErrors()
+        {
+            string errorLogs = "";
+            foreach (Error err in errorList)
+            {
+                errorLogs += (err.GetMessage() + "\n");
+            }
+            return errorLogs;
+        }
+
         public string GetVarTypeString(string varName)
         {
             string value = "";
@@ -425,8 +435,8 @@ namespace CompCorpus.RunTime
             }
             catch (Exception e)
             {
-                Console.WriteLine("The file could not be read:");
-                Console.WriteLine(e.Message);
+                LogManager.AddLog("The file could not be read:");
+                LogManager.AddLog(e.Message);
             }
             return text;
         }
@@ -482,7 +492,8 @@ namespace CompCorpus.RunTime
             catch (Exception ex)
             {
                 // Code exécuté en cas d'exception 
-                Console.Write(ex.Message);
+                LogManager.AddLog("Lors de l'ecriture des fichier de sortie: \n");
+                LogManager.AddLog(ex.Message);
             }
 
             try
@@ -540,7 +551,8 @@ namespace CompCorpus.RunTime
             catch (Exception ex)
             {
                 // Code exécuté en cas d'exception 
-                Console.Write(ex.Message);
+                LogManager.AddLog("Lors de l'écriture des fichier de sortie");
+                LogManager.AddLog(ex.Message);
             }
 
            

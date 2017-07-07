@@ -13,8 +13,17 @@ namespace CompCorpus
    
     public static class Program
     {
-       
+        static public string logs;
+
         static public void Main(string[] args)
+        {
+            CompileMain(args);
+            LogManager.DisplayLogs();
+            Console.ReadLine();
+        }
+
+
+        static public void CompileMain(string[] args)
         {
             if (args.Length == 5)
             {
@@ -28,8 +37,9 @@ namespace CompCorpus
                 string dataStructurePath = args[3];
                 string dataBasePath = args[4];
 
+                LogManager.logFilePath = @"C:\Users\j.folleas\Desktop\settings\logs.txt";
 
-
+                LogManager.EmptyLogs();
 
                 string sourceCopiedFileName = sourceFileName + ".comp";
                 try
@@ -38,8 +48,8 @@ namespace CompCorpus
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine("The file could not be read:");
-                    Console.WriteLine(e.Message);
+                    LogManager.AddLog("The main src file could not be read:");
+                    LogManager.AddLog(e.Message);
                 }
 
 
@@ -64,8 +74,8 @@ namespace CompCorpus
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine("The file could not be read:");
-                    Console.WriteLine(e.Message);
+                    LogManager.AddLog("The main file comp could not be read:");
+                    LogManager.AddLog(e.Message);
                 }
 
                 try
@@ -74,7 +84,7 @@ namespace CompCorpus
                     scn = new Scanner(file);
                     parser = new Parser(scn);
                     parser.montage.AddSymboleFromFile(dataStructurePath);
-                    parser.montage.dataBasPath = dataBasePath; 
+                    parser.montage.dataBasPath = dataBasePath;
                     parser.montage.AddSymboleFromPreCompile(fileForPreCompiling);
 
                     parser.Parse();
@@ -85,23 +95,27 @@ namespace CompCorpus
 
                     if (montage != null && !montage.errorList.Any() && !scn.hasErrors && !PreProcessor.includesHasErros)
                     {
+
                         montage.WriteInFiles(targetFilehtmlName, targetFileJSName);
+                        LogManager.AddLog("Compilation principale à réussie");
                         System.Diagnostics.Process.Start(targetFilehtmlName);
                     }
                     else
                     {
-                        montage.PrintErrors();
+                        LogManager.AddLog(montage.WriteErrors());
                     }
 
                 }
                 catch (FileNotFoundException exnotfound)
                 {
-                    Console.WriteLine(exnotfound.Message);
+                    LogManager.AddLog("Lors de l'analyse du source");
+                    LogManager.AddLog(exnotfound.Message);
                 }
                 finally
                 {
                     file.Close();
                 }
+
 
                 try
                 {
@@ -113,7 +127,6 @@ namespace CompCorpus
                     Console.WriteLine(e.Message);
                 }
             }
-            Console.ReadLine();
         }
     }
 }

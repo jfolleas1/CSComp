@@ -59,8 +59,8 @@ namespace CompCorpus.RunTime
             }
             catch (Exception e)
             {
-                Console.WriteLine("In WriteTheTmpSrcFile function :");
-                Console.WriteLine(e.Message);
+                LogManager.AddLog("In WriteTheTmpSrcFile function :");
+                LogManager.AddLog(e.Message);
             }
         }
 
@@ -77,8 +77,8 @@ namespace CompCorpus.RunTime
             }
             catch (Exception e)
             {
-                Console.WriteLine("In ReadFileWithPath function :");
-                Console.WriteLine(e.Message);
+                LogManager.AddLog("In ReadFileWithPath function :");
+                LogManager.AddLog(e.Message);
             }
             return fileText;
         }
@@ -147,8 +147,8 @@ namespace CompCorpus.RunTime
             }
             catch (Exception e)
             {
-                Console.WriteLine(" In deleteFile function:");
-                Console.WriteLine(e.Message);
+                LogManager.AddLog(" In deleteFile function:");
+                LogManager.AddLog(e.Message);
             }
         }
 
@@ -159,7 +159,7 @@ namespace CompCorpus.RunTime
             splitChar[0] = '\\';
             string fileToIncludeName = fileToIncludePath.Split(splitChar)[fileToIncludePath.Split(splitChar).Length-1];
             string sourceCopiedFiletoIncludePath = "";
-            Console.WriteLine("Compilation du fichier inclue : " + fileToIncludeName);
+            LogManager.AddLog("Compilation du fichier inclue : " + fileToIncludeName);
 
             
             try
@@ -172,8 +172,8 @@ namespace CompCorpus.RunTime
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine("Try to copy files in CompileInclude function :");
-                    Console.WriteLine(e.Message);
+                    LogManager.AddLog("Try to copy files in CompileInclude function :");
+                    LogManager.AddLog(e.Message);
                 }
 
                 // We recurcivly add include on the included file
@@ -193,21 +193,21 @@ namespace CompCorpus.RunTime
                     if (parser.montage == null || parser.montage.errorList.Any() || scn.hasErrors)
                     {
                         includesHasErros = true;
-                        Console.WriteLine();
-                        parser.montage.PrintErrors();
-                        Console.WriteLine();
+                        //Console.WriteLine();
+                        LogManager.AddLog(parser.montage.WriteErrors());
+                        //Console.WriteLine();
                     }
                     else
                     {
-                        Console.WriteLine("L'inclusion " + fileToIncludeName + " a été compilée avec succès.");
+                        LogManager.AddLog("L'inclusion " + fileToIncludeName + " a été compilée avec succès.");
                     }
                     
                 }
             }
             catch (Exception e)
             {
-                Console.WriteLine("In CompileInclude function :");
-                Console.WriteLine(e.Message);
+                LogManager.AddLog("In CompileInclude function :");
+                LogManager.AddLog(e.Message);
             }
 
             // We return the path of the file to include, which now do not containt any includes
