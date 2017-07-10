@@ -64,6 +64,7 @@
     <Compile Include="TestDeclaration.cs" />
     <Compile Include="TestError.cs" />
     <Compile Include="TestOption.cs" />
+    <Compile Include="TestTable.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
