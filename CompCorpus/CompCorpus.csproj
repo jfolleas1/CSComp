@@ -31,6 +31,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="QUT.ShiftReduceParser">
       <HintPath>..\QUT.ShiftReduceParser.dll</HintPath>
@@ -55,6 +58,7 @@
     <Compile Include="RunTime\Bricks\Iteration\StructDecNameAndType.cs" />
     <Compile Include="RunTime\Bricks\Option.cs" />
     <Compile Include="RunTime\Bricks\Proposition.cs" />
+    <Compile Include="RunTime\Bricks\Table.cs" />
     <Compile Include="RunTime\Bricks\Title.cs" />
     <Compile Include="RunTime\Bricks\VariableCall.cs" />
     <Compile Include="RunTime\declaration\DeclarationStruct.cs" />

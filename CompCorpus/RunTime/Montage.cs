@@ -466,6 +466,7 @@ namespace CompCorpus.RunTime
                     "\t<title>" + nameOfTheMontage + "</title>\n" +
                     "\t<link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css\">\n" +
                     "\t<link rel=\"stylesheet\" href=\"//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css\">\n" +
+                    "\t<link rel=\"stylesheet\" href=\"styleActe.css\">\n" +
                     "</head>\n\n<body>\n" +
                     "<div class=\"container\" ng-app=\"myActe\" ng-controller=\"myCtrl\">\n"+
                     "<h1>" + nameOfTheMontage + "</h1>";

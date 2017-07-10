@@ -36,7 +36,7 @@ Float [0-9]+,[0-9]+
 CharString \"((\\\$)|(\\\")|[^\"\$])*\"
 TitleId ($titre)[1-6]
 Comment ((\/\/)[^\n]*\n|\/\*[^(\*\/)]*\*\/)
-DeadWord	[^ ,\t\n{}\(\)\$+\-/*(&&)(||)!(==)(<=)(<)(>=)(>)(:=);:(%%)]+
+DeadWord	[^ \r\s,\t\n{}\(\)\$+\-/\*(&&)(||)!(==)(<=)(<)(>=)(>)(:=);:(%%)]+
 
 %%
 
@@ -66,6 +66,7 @@ DeadWord	[^ ,\t\n{}\(\)\$+\-/*(&&)(||)!(==)(<=)(<)(>=)(>)(:=);:(%%)]+
 "$si"			{yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.CONDITIONCKW;}
 "$pourchaque"			{ yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.POURCHAQUECKW; }
 "$implique"				{ yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.IMPLIQUECKW; }
+"$tab"					{ yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.TABCKW; }
 
 "+"                     {yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.PLUS;}
 "-"                     {yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.MINUS;}

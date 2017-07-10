@@ -26,6 +26,9 @@
 		public List<Affectation> listAffectation ;
 		public Brick brick ;
 		public List<Brick> listBrick ;
+		public List<KeyValuePair<long, List<Brick>>> listCel ;
+		public List<List<KeyValuePair<long, List<Brick>>>> listRow ;
+		public Table Table;
 		public VariableCall variableCall;
 		public Title Title;
 		public Proposition proposition;
@@ -60,7 +63,7 @@
 %token CODEINDIC
 %token NOUVLIGNE NOUVPARAG
 
-%token CHOIXCKW OPTIONCKW CONDITIONCKW POURCHAQUECKW IMPLIQUECKW
+%token CHOIXCKW OPTIONCKW CONDITIONCKW POURCHAQUECKW IMPLIQUECKW TABCKW
 
 %token <String> ID
 %token <String> STRING
@@ -119,6 +122,10 @@
 %type<iterator> iterator
 
 %type<listAffectation> implication
+
+%type<Table> table
+%type<listRow> listTabRow
+%type<listCel> listTabCel
 
 // Priority
 
@@ -237,6 +244,7 @@ brick		: textBloc				{ $$ = new DeadText($1); }
 			| title					{ $$ = $1; }
 			| condition				{ $$ = $1; }
 			| iteration				{ $$ = $1; }
+			| table					{ $$ = new DeadText($1.Write()); }
 			;
 
 
@@ -314,8 +322,16 @@ condition	: CONDITIONCKW PARENTOPEN expression PARENTCLOSE BRACEOPEN listBrick B
 																												montage.AddListConditionalAffectation($5, $3); }
 			;
 
+table		: TABCKW BRACEOPEN listTabRow BRACECLOSE				{ $$ = new Table($3); $$.Print();  }
+			;
 
+listTabRow			: BRACEOPEN listTabCel BRACECLOSE						{ $$ = new List<List<KeyValuePair<long, List<Brick>>>>(); $$.Add($2); }
+					| listTabRow BRACEOPEN listTabCel BRACECLOSE			{ $$ = $1; $$.Add($3); }
+					;
 
+listTabCel			: PARENTOPEN INTEGER PARENTCLOSE BRACEOPEN listBrick BRACECLOSE						{ $$ = new List<KeyValuePair<long, List<Brick>>>(); $$.Add(new KeyValuePair<long, List<Brick>>($2,$5)); }
+					| listTabCel PARENTOPEN INTEGER PARENTCLOSE BRACEOPEN listBrick BRACECLOSE				{ $$ = $1; $$.Add(new KeyValuePair<long, List<Brick>>($3,$6)); }
+					;
 
 implication			: IMPLIQUECKW BRACEOPEN listAffectationWithCond BRACECLOSE											{ $$ = $3; }
 					;
