@@ -49,7 +49,7 @@ namespace UnitTest
                     file = new FileStream(sourceFileName, FileMode.Open);
                     scn = new Scanner(file);
                     parser = new Parser(scn);
-                    parser.montage.AddSymboleFromFile(@"C:\Users\j.folleas\Desktop\settings\DataStructur.txt");
+
                     parser.montage.AddSymboleFromPreCompile(fileForPreCompiling);
 
                     parser.Parse();

@@ -40,6 +40,7 @@ namespace UnitTest
                 Parser parser = null;
                 Montage montage = null;
 
+                PreProcessor.BDSIPath = @"C:\Users\j.folleas\Desktop\settings\SIDBTest.txt";
                 PreProcessor.AddIncludes(sourceCopiedFileName);
 
 
@@ -64,10 +65,9 @@ namespace UnitTest
                     file = new FileStream(sourceCopiedFileName, FileMode.Open);
                     scn = new Scanner(file);
                     parser = new Parser(scn);
-                    parser.montage.AddSymboleFromFile(@"C:\Users\j.folleas\Desktop\settings\DataStruct.txt");
-                    parser.montage.dataBasPath = @"C:\Users\j.folleas\Desktop\settings\DataBase.txt";
-                    parser.montage.AddSymboleFromPreCompile(fileForPreCompiling);
+                    parser.montage = PreProcessor.GetIncludeSIDB();
 
+                    parser.montage.AddSymboleFromPreCompile(fileForPreCompiling);
 
                     parser.Parse();
 

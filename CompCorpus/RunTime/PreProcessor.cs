@@ -12,8 +12,36 @@ namespace CompCorpus.RunTime
 {
     static public class PreProcessor
     {
-        static public string dataStructeFile { get; set; }
-        static public bool includesHasErros { get; set; } = false;
+        static public bool includesHasErros { get; set; }
+        static public string BDSIPath { get; set; }
+
+        static public Montage GetIncludeSIDB()
+        {
+            FileStream file = null;
+            Scanner scn = null;
+            Parser parser = null;
+            Montage montageBaseWithSIDB = null;
+            try
+            {
+                file = new FileStream(PreProcessor.BDSIPath, FileMode.Open);
+                scn = new Scanner(file);
+                parser = new Parser(scn);
+
+                parser.Parse();
+
+                montageBaseWithSIDB = parser.montage;
+            }
+            catch (Exception e)
+            {
+                LogManager.AddLog("Lors de GetIncludeSIDB");
+                LogManager.AddLog(e.Message);
+            }
+            finally
+            {
+                file.Close();
+            }
+            return montageBaseWithSIDB;
+        }
 
         static public void AddIncludes(string fileName)
         {
@@ -50,12 +78,7 @@ namespace CompCorpus.RunTime
         {
             try
             {
-                FileStream fs = new FileStream(fileName, FileMode.OpenOrCreate);
-                using (StreamWriter file =
-                new StreamWriter(fs, Encoding.UTF8))
-                {
-                    file.Write(copiedSourceFile);
-                }
+                File.WriteAllText(fileName, copiedSourceFile, Encoding.UTF8);
             }
             catch (Exception e)
             {
@@ -133,9 +156,6 @@ namespace CompCorpus.RunTime
             {
                 result = rgxInclude.Replace(copiedSourceFile, toIncludeFile);
             }
-
-
-
             return result;
         }
 
@@ -187,8 +207,9 @@ namespace CompCorpus.RunTime
                 {
                     Scanner scn = new Scanner(toIncludeStream);
                     Parser parser = new Parser(scn);
-                    parser.montage.AddSymboleFromFile(dataStructeFile);
+                    parser.montage = PreProcessor.GetIncludeSIDB();
                     parser.montage.AddSymboleFromPreCompile(copiedSourceFiletoInclude);
+                   
                     parser.Parse();
                     if (parser.montage == null || parser.montage.errorList.Any() || scn.hasErrors)
                     {

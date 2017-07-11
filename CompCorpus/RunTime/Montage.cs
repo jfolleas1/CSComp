@@ -17,8 +17,16 @@ namespace CompCorpus.RunTime
         public List<Brick> listOfBricks { get; set; }
         public List<Error> errorList { get; }
         public List<String> functionForListList { get; }
-        public string dataBasPath { get; set; }
 
+
+        public void PrintListDec()
+        {
+            foreach (Declaration dec in listOfDeclarations)
+            {
+               Console.Write(dec.Write());
+                Console.Write(" \n\n");
+            }
+        }
 
         public Montage()
         {
@@ -41,31 +49,7 @@ namespace CompCorpus.RunTime
         }
 
 
-        public void AddSymboleFromFile(string filename)
-        {
-            Console.WriteLine("AddSymboleFromFile");
-            try
-            {   // Open the text file using a stream reader.
-                using (StreamReader sr = new StreamReader(filename))
-                {
-                    // Read the stream to a string, and write the string to the console.
-                    string line;
-                    while ((line = sr.ReadLine()) != null)
-                    {
-                        String[] substrings = line.Split(' ');
-                        if (substrings.Length == 2)
-                        {
-                            symboleTabe.Add(substrings[0], substrings[1].ToUpper());
-                        }
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                LogManager.AddLog("The file could not be read:");
-                LogManager.AddLog(e.Message);
-            }
-        }
+
 
         public void AddSymboleFromPreCompile(string file)
         {
@@ -421,25 +405,6 @@ namespace CompCorpus.RunTime
             }
         }
 
-        public string DataFromFile(string filename)
-        {
-            Console.WriteLine("AddDataFromFile");
-            string text = "";
-            try
-            {   // Open the text file using a stream reader.
-                using (StreamReader sr = new StreamReader(filename))
-                {
-                    // Read the stream to a string, and write the string to the console
-                    text = sr.ReadToEnd();
-                }
-            }
-            catch (Exception e)
-            {
-                LogManager.AddLog("The file could not be read:");
-                LogManager.AddLog(e.Message);
-            }
-            return text;
-        }
 
 
         public void WriteInFiles( string targetFilehtmlName, string targetFileJSName)
@@ -511,9 +476,7 @@ namespace CompCorpus.RunTime
                                     "app.controller('myCtrl', function($scope) { \n\n";
                 myStreamWriter.Write(beginOfTheJSDoc);
 
-                //write the declaration of variables in data base
-                string varInDataBaseDec = DataFromFile(dataBasPath); // @"C:\Users\j.folleas\Desktop\settings\DemoDataBase.txt"
-                myStreamWriter.Write(varInDataBaseDec+"\n\n\n");
+                myStreamWriter.Write("\n\n\n");
 
 
                 //add the differents declarations

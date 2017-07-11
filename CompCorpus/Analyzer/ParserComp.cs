@@ -4,9 +4,9 @@
 
 // GPPG version 1.5.2
 // Machine:  FIDF3675368
-// DateTime: 11/07/2017 09:11:57
+// DateTime: 11/07/2017 14:43:56
 // UserName: j.folleas
-// Input file <ParserComp.y - 11/07/2017 09:11:32>
+// Input file <ParserComp.y - 11/07/2017 10:57:55>
 
 // options: no-lines gplex
 
@@ -82,11 +82,11 @@ public class ScanObj {
 [GeneratedCodeAttribute( "Gardens Point Parser Generator", "1.5.2")]
 public class Parser: ShiftReduceParser<ValueType, LexLocation>
 {
-  // Verbatim content from ParserComp.y - 11/07/2017 09:11:32
+  // Verbatim content from ParserComp.y - 11/07/2017 10:57:55
     
     public Montage montage = new Montage();
 
-  // End verbatim content from ParserComp.y - 11/07/2017 09:11:32
+  // End verbatim content from ParserComp.y - 11/07/2017 10:57:55
 
 #pragma warning disable 649
   private static Dictionary<int, string> aliases;
@@ -452,7 +452,7 @@ public class Parser: ShiftReduceParser<ValueType, LexLocation>
 { Console.WriteLine(" Empty programe "); }
         break;
       case 3: // montage -> defActeTitle, listDeclaration, SEPARATOR, listAffectation, document
-{  montage.nameOfTheMontage=ValueStack[ValueStack.Depth-5].String; montage.listOfDeclarations=ValueStack[ValueStack.Depth-4].listDeclaration; montage.listOfBricks=ValueStack[ValueStack.Depth-1].listBrick; }
+{  montage.nameOfTheMontage=ValueStack[ValueStack.Depth-5].String; montage.listOfDeclarations.AddRange(ValueStack[ValueStack.Depth-4].listDeclaration); montage.listOfBricks=ValueStack[ValueStack.Depth-1].listBrick; }
         break;
       case 4: // defActeTitle -> TITREACTEKW, BRACEOPEN, deadText, BRACECLOSE
 { CurrentSemanticValue.String = ValueStack[ValueStack.Depth-2].String; }
