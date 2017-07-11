@@ -13,7 +13,6 @@ namespace CompCorpus
    
     public static class Program
     {
-        static public string logs;
 
         static public void Main(string[] args)
         {

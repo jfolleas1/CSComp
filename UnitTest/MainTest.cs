@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using CompCorpus.Analyzer;
 using CompCorpus.RunTime;
+using CompCorpus;
 using System.Linq;
 
 namespace UnitTest
@@ -13,6 +14,9 @@ namespace UnitTest
     {
         static public bool TestMain(string[] args)
         {
+            LogManager.logFilePath = @"C:\Users\j.folleas\Desktop\settings\logs.txt";
+            LogManager.EmptyLogs();
+
             bool filemodified = false ;
             if (args.Length == 3)
             {
@@ -100,6 +104,7 @@ namespace UnitTest
                     Console.WriteLine(e.Message);
                 }
             }
+            LogManager.DisplayLogs();
             return filemodified;
         }
     }

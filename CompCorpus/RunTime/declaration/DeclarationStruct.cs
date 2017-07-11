@@ -159,7 +159,7 @@ namespace CompCorpus.RunTime.declaration
             ls.Add(new Tuple<string, string>(baseSymbole, type.ToString()));
             if (type == ExpressionType.LISTSTRUCT)
             {
-                ls.Add(new Tuple<string, string>("nombreDe_" + baseSymbole, "L"+ExpressionType.NOMBRE.ToString()));
+                ls.Add(new Tuple<string, string>(baseSymbole + "nombre_elements", "L"+ExpressionType.NOMBRE.ToString()));
             }
             foreach (Declaration dec in declarationList)
             {
@@ -186,7 +186,7 @@ namespace CompCorpus.RunTime.declaration
             string functionDel = "$scope.del" + this.name + " = function(" + this.listOfParamForAddAndDel;
             functionDel += this.name + "Index) {\n";
             functionDel += "$scope." + this.itemGetterPath + this.name + ".splice(" + this.name + "Index, 1); \n}\n";
-            string functionCount = "$scope.nombreDe_" + this.name + " = function() {\n";
+            string functionCount = "$scope." + this.name + "nombre_elements" + " = function() {\n";
             functionCount += " return $scope." + this.name + ".length; \n}\n";
 
             return functionAdd + "\n"+ functionDel +"\n" + functionCount;

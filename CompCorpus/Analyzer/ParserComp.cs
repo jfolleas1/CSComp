@@ -4,9 +4,9 @@
 
 // GPPG version 1.5.2
 // Machine:  FIDF3675368
-// DateTime: 10/07/2017 17:14:42
+// DateTime: 11/07/2017 09:11:57
 // UserName: j.folleas
-// Input file <ParserComp.y - 10/07/2017 17:14:39>
+// Input file <ParserComp.y - 11/07/2017 09:11:32>
 
 // options: no-lines gplex
 
@@ -82,11 +82,11 @@ public class ScanObj {
 [GeneratedCodeAttribute( "Gardens Point Parser Generator", "1.5.2")]
 public class Parser: ShiftReduceParser<ValueType, LexLocation>
 {
-  // Verbatim content from ParserComp.y - 10/07/2017 17:14:39
+  // Verbatim content from ParserComp.y - 11/07/2017 09:11:32
     
     public Montage montage = new Montage();
 
-  // End verbatim content from ParserComp.y - 10/07/2017 17:14:39
+  // End verbatim content from ParserComp.y - 11/07/2017 09:11:32
 
 #pragma warning disable 649
   private static Dictionary<int, string> aliases;
@@ -752,7 +752,7 @@ public class Parser: ShiftReduceParser<ValueType, LexLocation>
 																												montage.AddListConditionalAffectation(ValueStack[ValueStack.Depth-4].listAffectation, ValueStack[ValueStack.Depth-6].expression); }
         break;
       case 99: // table -> TABCKW, BRACEOPEN, listTabRow, BRACECLOSE
-{ CurrentSemanticValue.Table = new Table(ValueStack[ValueStack.Depth-2].listRow); CurrentSemanticValue.Table.Print();  }
+{ CurrentSemanticValue.Table = new Table(ValueStack[ValueStack.Depth-2].listRow); }
         break;
       case 100: // listTabRow -> BRACEOPEN, listTabCel, BRACECLOSE
 { CurrentSemanticValue.listRow = new List<List<KeyValuePair<long, List<Brick>>>>(); CurrentSemanticValue.listRow.Add(ValueStack[ValueStack.Depth-2].listCel); }

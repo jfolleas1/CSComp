@@ -322,7 +322,7 @@ condition	: CONDITIONCKW PARENTOPEN expression PARENTCLOSE BRACEOPEN listBrick B
 																												montage.AddListConditionalAffectation($5, $3); }
 			;
 
-table		: TABCKW BRACEOPEN listTabRow BRACECLOSE				{ $$ = new Table($3); $$.Print();  }
+table		: TABCKW BRACEOPEN listTabRow BRACECLOSE				{ $$ = new Table($3); }
 			;
 
 listTabRow			: BRACEOPEN listTabCel BRACECLOSE						{ $$ = new List<List<KeyValuePair<long, List<Brick>>>>(); $$.Add($2); }
