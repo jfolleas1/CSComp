@@ -39,6 +39,7 @@
 		public Iteration iteration;
 		public IteratorStr iterator;
 		public StructDecNameAndType decNameAndType;
+		public Include Include;
 
 }
 
@@ -63,7 +64,7 @@
 %token CODEINDIC
 %token NOUVLIGNE NOUVPARAG
 
-%token CHOIXCKW OPTIONCKW CONDITIONCKW POURCHAQUECKW IMPLIQUECKW TABCKW
+%token CHOIXCKW OPTIONCKW CONDITIONCKW POURCHAQUECKW IMPLIQUECKW TABCKW INCLUDECKW
 %token DOUBLECOTE
 
 %token <String> ID
@@ -127,6 +128,8 @@
 %type<Table> table
 %type<listRow> listTabRow
 %type<listCel> listTabCel
+
+%type<Include> include 
 
 // Priority
 
@@ -236,6 +239,7 @@ document	: /* Empty */					{ $$=new List<Brick>(); }
 
 listBrick	:  /* Empty */			{ $$ = new List<Brick>();  }
 			| listBrick brick		{ $$ = $1; $$.Add($2); }
+			| listBrick include		{ $$ = $1; $$.AddRange($2.brickList); }
 			;
 
 brick		: textBloc				{ $$ = new DeadText($1); }
@@ -248,6 +252,8 @@ brick		: textBloc				{ $$ = new DeadText($1); }
 			| table					{ $$ = new DeadText($1.Write()); }
 			;
 
+include		: INCLUDECKW ID	SEMICOLON { $$ = new Include($2); }
+			;
 
 textBloc	: textBlocElement				{ $$ = $1; }
 			| textBloc textBlocElement		{ $$ = $1; $$ += (" " + $2); }

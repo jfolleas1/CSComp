@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.IO;
 using CompCorpus.Analyzer;
 using CompCorpus.RunTime;
+using CompCorpus.RunTime.Bricks;
 
 
 namespace CompCorpus
@@ -13,7 +14,7 @@ namespace CompCorpus
    
     public static class Program
     {
-        static Montage mainMontage; 
+        public static Montage mainMontage; 
 
         static public void Main(string[] args)
         {
@@ -22,6 +23,9 @@ namespace CompCorpus
                 string sourceFileName = args[0];
                 string targetFilehtmlName = args[1];
                 string targetFileJSName = args[2];
+
+              
+
 
                 CompileMain(sourceFileName, targetFilehtmlName, targetFileJSName);
                 LogManager.DisplayLogs();
@@ -40,6 +44,12 @@ namespace CompCorpus
 
             LogManager.EmptyLogs();
 
+            String directoryPath = "";
+            for (int i = 0; i < sourceFileName.Split('\\').Length - 1; i++)
+            {
+                directoryPath += sourceFileName.Split('\\')[i] + '\\';
+            }
+            Include.directoryPath = directoryPath;
 
             // We make a copy of the source file in order to return it 
             // with all include into a single file 
@@ -85,6 +95,9 @@ namespace CompCorpus
                 file = new FileStream(sourceFileName, FileMode.Open);
                 scn = new Scanner(file);
                 parser = new Parser(scn);
+                //Empty the core of the montage, now it only contain the declaration and 
+                // the affectations
+                mainMontage.SetCoreFromOther(new Montage());
                 parser.montage = mainMontage;
                 parser.montage.AddSymboleFromPreCompile(fileForPreCompiling);
 

@@ -16,6 +16,7 @@ namespace UnitTest
         {
             LogManager.logFilePath = @"C:\Users\j.folleas\Desktop\settings\logs.txt";
             LogManager.EmptyLogs();
+           
 
             bool filemodified = false ;
             if (args.Length == 3)
@@ -23,6 +24,13 @@ namespace UnitTest
                 string sourceFileName = args[0];
                 string targetFilehtmlName = args[1];
                 string targetFileJSName = args[2];
+
+                String directoryPath = "";
+                for (int i = 0; i < sourceFileName.Split('\\').Length - 1; i++)
+                {
+                    directoryPath += sourceFileName.Split('\\')[i] + '\\';
+                }
+                Include.directoryPath = directoryPath;
 
                 string sourceCopiedFileName = sourceFileName + ".comp";
                 try

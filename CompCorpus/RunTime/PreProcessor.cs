@@ -200,14 +200,14 @@ namespace CompCorpus.RunTime
                 PreProcessor.AddIncludes(sourceCopiedFiletoIncludePath);
 
 
-                string copiedSourceFiletoInclude = ReadFileWithPath(sourceCopiedFiletoIncludePath);
+                string copiedSourceFiletoInclude = ReadFileWithPath(fileToIncludePath);
 
                 // We check if the included file is valide
-                using (Stream toIncludeStream = new FileStream(sourceCopiedFiletoIncludePath, FileMode.Open))
+                using (Stream toIncludeStream = new FileStream(fileToIncludePath, FileMode.Open))
                 {
                     Scanner scn = new Scanner(toIncludeStream);
                     Parser parser = new Parser(scn);
-                    parser.montage = PreProcessor.GetIncludeSIDB();
+                    parser.montage.SetDeclarationSymboleAffectationFromOther(Program.mainMontage);
                     parser.montage.AddSymboleFromPreCompile(copiedSourceFiletoInclude);
                    
                     parser.Parse();
@@ -220,6 +220,7 @@ namespace CompCorpus.RunTime
                     }
                     else
                     {
+
                         LogManager.AddLog("L'inclusion " + fileToIncludeName + " a été compilée avec succès.");
                     }
                     

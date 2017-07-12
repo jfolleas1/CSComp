@@ -12,11 +12,11 @@ namespace CompCorpus.RunTime
     {
         public Dictionary<string, string> symboleTabe { get; set; } //
         public string nameOfTheMontage { get; set; }
-        public Dictionary<string,Affectation> mapOfCalculExpressions { get; } //
+        public Dictionary<string,Affectation> mapOfCalculExpressions { get; set; } //
         public List<Declaration> listOfDeclarations { get; set; } //
         public List<Brick> listOfBricks { get; set; }
-        public List<Error> errorList { get; }
-        public List<String> functionForListList { get; }
+        public List<Error> errorList { get; set; }
+        public List<String> functionForListList { get; set; }
 
 
         public void PrintListDec()
@@ -42,11 +42,29 @@ namespace CompCorpus.RunTime
         {
             foreach (Affectation item in list)
             {
-                mapOfCalculExpressions.Add(item.variableName.name, item);
+                // When we make an include we allready have reorded all the affectation in the file so 
+                // we don't need to make it twice
+                if(!mapOfCalculExpressions.ContainsKey(item.variableName.name))
+                {
+                    mapOfCalculExpressions.Add(item.variableName.name, item);
+                }
             }
         }
 
+        public void SetDeclarationSymboleAffectationFromOther(Montage other)
+        {
+            this.mapOfCalculExpressions = other.mapOfCalculExpressions;
+            this.listOfDeclarations = other.listOfDeclarations;
+            this.symboleTabe = other.symboleTabe;
+            this.functionForListList = other.functionForListList;
+        }
 
+        public void SetCoreFromOther(Montage other)
+        {
+            this.listOfBricks = other.listOfBricks;
+            this.errorList = other.errorList;
+            
+        }
 
 
         public void AddSymboleFromPreCompile(string file)
