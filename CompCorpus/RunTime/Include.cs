@@ -23,7 +23,7 @@ namespace CompCorpus.RunTime
 
         private List<Brick> MakeListBrick(string fileName)
         {
-            List<Brick> localBrickList = new List<Brick>();
+            List<Brick> localBrickList = new List<Brick>(); 
             // We got the include file path 
             string filePath = directoryPath + '\\' + fileName;
             try
