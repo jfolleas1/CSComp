@@ -64,6 +64,7 @@
 %token NOUVLIGNE NOUVPARAG
 
 %token CHOIXCKW OPTIONCKW CONDITIONCKW POURCHAQUECKW IMPLIQUECKW TABCKW
+%token DOUBLECOTE
 
 %token <String> ID
 %token <String> STRING
@@ -261,6 +262,7 @@ textBlocElement		: DEADWORD		{ $$ = $1; }
 					| COMMA			{ $$ = ","; }
 					| COLON			{ $$ = ":"; }
 					| MINUS			{ $$ = "-"; }
+					| DOUBLECOTE	{ $$ = "\""; }
 					| INTEGER		{ $$ = $1.ToString(); }
 					| FLOAT			{ $$ = $1.ToString(); }
 					| STRING		{ $$ = $1; }
@@ -285,6 +287,7 @@ titleContentElement		: DEADWORD		{ $$ = $1; }
 						| COMMA			{ $$ = ","; }
 						| COLON			{ $$ = ":"; }
 						| MINUS			{ $$ = "-"; }
+						| DOUBLECOTE	{ $$ = "\""; }
 						| INTEGER		{ $$ = $1.ToString(); }
 						| FLOAT			{ $$ = $1.ToString(); }
 						| STRING		{ $$ = $1; }

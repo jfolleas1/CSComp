@@ -14,23 +14,23 @@ namespace CompCorpus
     public static class Program
     {
 
-        static public void Main(string[] args)
-        {
-            if (args.Length == 3)
-            {
-                string sourceFileName = args[0];
-                string targetFilehtmlName = args[1];
-                string targetFileJSName = args[2];
+        //static public void Main(string[] args)
+        //{
+        //    if (args.Length == 3)
+        //    {
+        //        string sourceFileName = args[0];
+        //        string targetFilehtmlName = args[1];
+        //        string targetFileJSName = args[2];
 
-                CompileMain(sourceFileName, targetFilehtmlName, targetFileJSName);
-                LogManager.DisplayLogs();
-            }
-            else
-            {
-                Console.WriteLine("Le programme requière 3 parmamètres: sourceFileName, targetFilehtmlName, targetFileJSName");
-            }
-            Console.ReadLine();
-        }
+        //        CompileMain(sourceFileName, targetFilehtmlName, targetFileJSName);
+        //        LogManager.DisplayLogs();
+        //    }
+        //    else
+        //    {
+        //        Console.WriteLine("Le programme requière 3 parmamètres: sourceFileName, targetFilehtmlName, targetFileJSName");
+        //    }
+        //    Console.ReadLine();
+        //}
 
 
         static public void CompileMain(string sourceFileName, string targetFilehtmlName, string targetFileJSName, bool launch = true)

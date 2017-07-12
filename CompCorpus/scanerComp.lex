@@ -36,7 +36,8 @@ Float [0-9]+,[0-9]+
 CharString \"((\\\$)|(\\\")|[^\"\$])*\"
 TitleId ($titre)[1-6]
 Comment ((\/\/)[^\n]*\n|\/\*[^\*\/]*\*\/)
-DeadWord	[^ \r\s,\t\n{}\(\)\$+\-/\*(&&)(||)!(==)(<=)(<)(>=)(>)(:=);:(%%)]+
+DeadWord	[^ \"\r\s,\t\n{}\(\)\$+\-\/\*(&&)(||)!(==)(<=)(<)(>=)(>)(:=);:(%%)]+
+DoubleCote (\")
 
 %%
 
@@ -104,6 +105,6 @@ DeadWord	[^ \r\s,\t\n{}\(\)\$+\-/\*(&&)(||)!(==)(<=)(<)(>=)(>)(:=);:(%%)]+
 {Identifier}			{yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); yylval.String = yytext; return (int)Tokens.ID;}
 
 {DeadWord}				{yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); yylval.String = yytext; return (int)Tokens.DEADWORD;}
-
+{DoubleCote}				{yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); yylval.String = yytext; return (int)Tokens.DOUBLECOTE;}
 
 %% //User-code Section

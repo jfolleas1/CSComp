@@ -4,7 +4,7 @@
 // ==========================================================================
 //  Version:  1.2.2
 //  Machine:  FIDF3675368
-//  DateTime: 26/06/2017 15:19:48
+//  DateTime: 12/07/2017 11:25:09
 //  UserName: j.folleas
 // ==========================================================================
 
@@ -12,6 +12,8 @@
 // appel des using avec le % pour les bout de code driect en C#
 
 %using QUT.Gppg;
+%using System.Text.RegularExpressions;
+
 
 %namespace CompCorpus.Analyzer
 
@@ -27,7 +29,9 @@
 	public bool hasErrors = false ;
 	public override void yyerror(string format, params object[] args) // remember to add override back
 	{
-		System.Console.Error.WriteLine("Error: line {0} - column {1} " + format, yyline, yycol);
+		
+		//System.Console.Error.WriteLine("Error: line {0} - column {1} " + format, yyline, yycol);
+		LogManager.AddLog("Error: line " + yyline +" - column " + yycol + " " + format);
 		hasErrors = true ;
 	}
 
@@ -36,17 +40,20 @@
 // Liste des regex
 
 
-
+assig (=|(:=))
 Identifier [A-Za-z][A-Za-z0-9_\.]*
 Integer [0-9]+
 Float [0-9]+,[0-9]+
-CharString \"(\\.|[^\\"])*\"
+CharString "((\\\$)|(\\")|[^"\$])*"
+// Error: Literal string terminated by end of line
+// -----------------------------------------------
 TitleId ($titre)[1-6]
-Comment (//)
-//--------^
-// Error: Expected character <')'> 
-// --------------------------------
-DeadWord	[^ ,\t\n{}\(\)\$+\-/*(&&)(||)!(==)(<=)(<)(>=)(>)(:=);(%%)]+
+//^^^^^
+// Error: Unexpected symbol, skipping to  <%%> 
+// Error: Parser error <Syntax error, unexpected name, expecting verbatim, or pattern> 
+// ------------------------------------------------------------------------------------
+Comment ((\/\/)[^\n]*\n|\/\*[^\*\/]*\*\/)
+DeadWord	[^ \r\s,\t\n{}\(\)\$+\-\/\*(&&)(||)!(==)(<=)(<)(>=)(>)(:=);:(%%)]+
 
 %%
 
@@ -61,7 +68,10 @@ DeadWord	[^ ,\t\n{}\(\)\$+\-/*(&&)(||)!(==)(<=)(<)(>=)(>)(:=);(%%)]+
 %{ //user-code that will be executed before getting the next token
 %}
 
-{Comment}				{ Console.WriteLine("Com"); yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); }
+{Comment}				{ yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); }
+//^^^^^^
+// Error: Unknown lexical category <Comment> 
+// ------------------------------------------
 
 "$Titre"				{yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.TITREACTEKW;}
 "$true"                 {yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.TRUE; }
@@ -71,9 +81,15 @@ DeadWord	[^ ,\t\n{}\(\)\$+\-/*(&&)(||)!(==)(<=)(<)(>=)(>)(:=);(%%)]+
 "$nouvparag"			{yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.NOUVPARAG;}
 
 {TitleId}				{yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); yylval.String = yytext; return (int)Tokens.TITLEID;}
+//^^^^^^
+// Error: Unknown lexical category <TitleId> 
+// ------------------------------------------
 "$choix"				{yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.CHOIXCKW;}
 "$option"				{yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.OPTIONCKW;}
-"$condition"			{yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.CONDITIONCKW;}
+"$si"			{yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.CONDITIONCKW;}
+"$pourchaque"			{ yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.POURCHAQUECKW; }
+"$implique"				{ yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.IMPLIQUECKW; }
+"$tab"					{ yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.TABCKW; }
 
 "+"                     {yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.PLUS;}
 "-"                     {yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.MINUS;}
@@ -87,6 +103,7 @@ DeadWord	[^ ,\t\n{}\(\)\$+\-/*(&&)(||)!(==)(<=)(<)(>=)(>)(:=);(%%)]+
 
 "&&"                    {yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.AND;}
 "||"                    {yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.OR;}
+"!="					{yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.NOTEGALE;}
 "!"                     {yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.NOT;}
 "=="                    {yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.EGALE;}
 "<"                     {yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.INF;}
@@ -94,10 +111,11 @@ DeadWord	[^ ,\t\n{}\(\)\$+\-/*(&&)(||)!(==)(<=)(<)(>=)(>)(:=);(%%)]+
 ">"                     {yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.SUP;}
 ">="                    {yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.SUPEGALE;}
 
-":="					{yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.ASSIGN;}
+{assig}					{yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.ASSIGN;}
 
 ";"						{yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.SEMICOLON; }
 ","						{yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.COMMA; }
+":"						{yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.COLON;  }
 
 "%%"					{yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.SEPARATOR; }
 
@@ -105,10 +123,16 @@ DeadWord	[^ ,\t\n{}\(\)\$+\-/*(&&)(||)!(==)(<=)(<)(>=)(>)(:=);(%%)]+
 
 {Integer}				{yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol);  Int64.TryParse (yytext, NumberStyles.Integer, CultureInfo.CurrentCulture, out yylval.Integer);  return (int)Tokens.INTEGER;}
 {Float}					{yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); double.TryParse (yytext, NumberStyles.Float, CultureInfo.CurrentCulture, out yylval.Float); return (int)Tokens.FLOAT;}
-{CharString}			{yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); yylval.String = yytext; return (int)Tokens.STRING;}
+{CharString}			{yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); Regex r = new Regex(@"\\\$"); yylval.String = r.Replace(yytext,"$"); return (int)Tokens.STRING;}
+//^^^^^^^^^
+// Error: Unknown lexical category <CharString> 
+// ---------------------------------------------
 {Identifier}			{yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); yylval.String = yytext; return (int)Tokens.ID;}
 
 {DeadWord}				{yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); yylval.String = yytext; return (int)Tokens.DEADWORD;}
+//^^^^^^^
+// Error: Unknown lexical category <DeadWord> 
+// -------------------------------------------
 
 
 %% //User-code Section// ==========================================================================
