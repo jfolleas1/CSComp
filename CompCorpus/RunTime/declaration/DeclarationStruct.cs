@@ -129,7 +129,8 @@ namespace CompCorpus.RunTime.declaration
             text += "{ \n";
             foreach (Declaration dec in declarationList)
             {
-                text += (dec.Write(false, nbTab+1) + "\n");
+                text += (dec.Write(false, nbTab+1) + ",\n");
+                
             }
             for (int i = 0; i < nbTab; i++)
             {
@@ -140,6 +141,7 @@ namespace CompCorpus.RunTime.declaration
             {
                 text += "]";
             }
+            
             if (notInStruct)
             {
                 text += ";";
@@ -180,7 +182,7 @@ namespace CompCorpus.RunTime.declaration
             functionAdd += "$scope." + this.itemGetterPath + this.name + ".push({";
             foreach (Declaration dec in declarationList)
             {
-                functionAdd += (dec.Write(false, 1) + "\n");
+                functionAdd += (dec.Write(false, 1) + ",\n");
             }
             functionAdd += "\n});\n}";
             string functionDel = "$scope.del" + this.name + " = function(" + this.listOfParamForAddAndDel;

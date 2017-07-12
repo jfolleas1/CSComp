@@ -46,7 +46,7 @@ namespace CompCorpus.RunTime.declaration
                 {
                     text += "\t";
                 }
-                text += name + ":" + GetDefaultValueForType() + ",";
+                text += name + ":" + GetDefaultValueForType();// + ",";
             }
             return text;
         }
