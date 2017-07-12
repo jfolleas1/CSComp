@@ -10,10 +10,10 @@ namespace CompCorpus.RunTime
 {
     public class Montage
     {
-        public Dictionary<string, string> symboleTabe { get; set; }
+        public Dictionary<string, string> symboleTabe { get; set; } //
         public string nameOfTheMontage { get; set; }
-        public Dictionary<string,Affectation> mapOfCalculExpressions { get; }
-        public List<Declaration> listOfDeclarations { get; set; }
+        public Dictionary<string,Affectation> mapOfCalculExpressions { get; } //
+        public List<Declaration> listOfDeclarations { get; set; } //
         public List<Brick> listOfBricks { get; set; }
         public List<Error> errorList { get; }
         public List<String> functionForListList { get; }
@@ -36,8 +36,6 @@ namespace CompCorpus.RunTime
             symboleTabe = new Dictionary<string, string>();
             errorList = new List<Error>();
             functionForListList = new List<string>();
-
-
         }
 
         public void AddListCalculExpression(List<Affectation> list)

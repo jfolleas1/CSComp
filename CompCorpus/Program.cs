@@ -13,24 +13,25 @@ namespace CompCorpus
    
     public static class Program
     {
+        static Montage mainMontage; 
 
-        //static public void Main(string[] args)
-        //{
-        //    if (args.Length == 3)
-        //    {
-        //        string sourceFileName = args[0];
-        //        string targetFilehtmlName = args[1];
-        //        string targetFileJSName = args[2];
+        static public void Main(string[] args)
+        {
+            if (args.Length == 3)
+            {
+                string sourceFileName = args[0];
+                string targetFilehtmlName = args[1];
+                string targetFileJSName = args[2];
 
-        //        CompileMain(sourceFileName, targetFilehtmlName, targetFileJSName);
-        //        LogManager.DisplayLogs();
-        //    }
-        //    else
-        //    {
-        //        Console.WriteLine("Le programme requière 3 parmamètres: sourceFileName, targetFilehtmlName, targetFileJSName");
-        //    }
-        //    Console.ReadLine();
-        //}
+                CompileMain(sourceFileName, targetFilehtmlName, targetFileJSName);
+                LogManager.DisplayLogs();
+            }
+            else
+            {
+                Console.WriteLine("Le programme requière 3 parmamètres: sourceFileName, targetFilehtmlName, targetFileJSName");
+            }
+            Console.ReadLine();
+        }
 
 
         static public void CompileMain(string sourceFileName, string targetFilehtmlName, string targetFileJSName, bool launch = true)
@@ -39,6 +40,9 @@ namespace CompCorpus
 
             LogManager.EmptyLogs();
 
+
+            // We make a copy of the source file in order to return it 
+            // with all include into a single file 
             string sourceCopiedFileName = sourceFileName + ".comp";
             try
             {
@@ -56,8 +60,9 @@ namespace CompCorpus
             Parser parser = null;
             Montage montage = null;
             PreProcessor.BDSIPath = @"C:\Users\j.folleas\Desktop\settings\SIDB.txt";
+            mainMontage = PreProcessor.GetIncludeSIDB();
             PreProcessor.AddIncludes(sourceCopiedFileName);
-
+            // And of mae all include 
 
             // Read the document to do the precompiling phase
             string fileForPreCompiling = "";
@@ -77,10 +82,10 @@ namespace CompCorpus
 
             try
             {
-                file = new FileStream(sourceCopiedFileName, FileMode.Open);
+                file = new FileStream(sourceFileName, FileMode.Open);
                 scn = new Scanner(file);
                 parser = new Parser(scn);
-                parser.montage = PreProcessor.GetIncludeSIDB();
+                parser.montage = mainMontage;
                 parser.montage.AddSymboleFromPreCompile(fileForPreCompiling);
 
                 parser.Parse();
