@@ -61,7 +61,7 @@ namespace UnitTest
             string resJSFilePath = @"C:\Users\j.folleas\Desktop\Tests\res\" + fileName + ".js";
             string[] args = { srcFilePath, trgHtmlFilePath, trgJSFilePath };
 
-            sameFiles &= MainTest.TestMain(args);
+            sameFiles &= MainTest.TestMain(srcFilePath, trgHtmlFilePath, trgJSFilePath);
             try
             {   // Open the text file using a stream reader.
                 String linetrgHtml;

@@ -41,7 +41,6 @@ namespace CompCorpus
         static public void CompileMain(string sourceFileName, string targetFilehtmlName, string targetFileJSName, bool launch = true)
         {
             LogManager.logFilePath = @"C:\Users\j.folleas\Desktop\settings\logs.txt";
-
             LogManager.EmptyLogs();
 
             String directoryPath = "";

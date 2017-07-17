@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CompCorpus.RunTime.Bricks;
+using System.Text.RegularExpressions;
 
 namespace CompCorpus.RunTime
 {
@@ -29,9 +30,11 @@ namespace CompCorpus.RunTime
             try
             {
                 string copiedSourceFiletoInclude = ReadFileWithPath(filePath);
+                // we have already done all the declaration and the affectationsS
+                string includeContentOnlyWithBricks = "$Titre{include} %% %% "+Regex.Split(copiedSourceFiletoInclude, "%%")[2];
 
                 // We check if the included file is valide
-                using (Stream toIncludeStream = new FileStream(filePath, FileMode.Open))
+                using (Stream toIncludeStream = new MemoryStream(Encoding.UTF8.GetBytes(includeContentOnlyWithBricks)))
                 {
                     Scanner scn = new Scanner(toIncludeStream);
                     Parser parser = new Parser(scn);
@@ -39,6 +42,7 @@ namespace CompCorpus.RunTime
                     parser.Parse();
                     if (parser.montage == null || parser.montage.errorList.Any() || scn.hasErrors)
                     {
+                        //parser.montage.PrintErrors();
                         LogManager.AddLog("L'inclussion " + fileName + " n'a pas été effectuée car le montage contenait des erreures.");
                     }
                     else

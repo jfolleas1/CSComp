@@ -12,18 +12,18 @@ namespace UnitTest
 {
     class MainTest
     {
-        static public bool TestMain(string[] args)
+        static public bool TestMain(string sourceFileName, string targetFilehtmlName, string targetFileJSName)
         {
             LogManager.logFilePath = @"C:\Users\j.folleas\Desktop\settings\logs.txt";
             LogManager.EmptyLogs();
            
 
             bool filemodified = false ;
-            if (args.Length == 3)
-            {
-                string sourceFileName = args[0];
-                string targetFilehtmlName = args[1];
-                string targetFileJSName = args[2];
+            //if (args.Length == 3)
+            //{
+            //    string sourceFileName = args[0];
+            //    string targetFilehtmlName = args[1];
+            //    string targetFileJSName = args[2];
 
                 String directoryPath = "";
                 for (int i = 0; i < sourceFileName.Split('\\').Length - 1; i++)
@@ -111,7 +111,7 @@ namespace UnitTest
                     Console.WriteLine("The file could not be read:");
                     Console.WriteLine(e.Message);
                 }
-            }
+            
             LogManager.DisplayLogs();
             return filemodified;
         }
