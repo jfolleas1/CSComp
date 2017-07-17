@@ -68,6 +68,7 @@ namespace CompCorpus
             Scanner scn = null;
             Parser parser = null;
             Montage montage = null;
+
             PreProcessor.BDSIPath = @"C:\Users\j.folleas\Desktop\settings\SIDB.txt";
             mainMontage = PreProcessor.GetIncludeSIDB();
             PreProcessor.AddIncludes(sourceCopiedFileName);

@@ -8,11 +8,11 @@ namespace UnitTest
     [TestClass]
     public class TestIncludes
     {
-        [TestMethod]
-        public void TestTowIncludes()
-        {
-            TestHtml.mainTestHtml("TestIncludes");
-        }
+        //[TestMethod]
+        //public void TestTowIncludes()
+        //{
+        //    TestHtml.mainTestHtml("TestIncludes");
+        //}
 
         [TestMethod]
         public void TestRecurciveIncludeFile()

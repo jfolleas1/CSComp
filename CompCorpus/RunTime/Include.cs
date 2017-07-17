@@ -32,7 +32,6 @@ namespace CompCorpus.RunTime
                 string copiedSourceFiletoInclude = ReadFileWithPath(filePath);
                 // we have already done all the declaration and the affectationsS
                 string includeContentOnlyWithBricks = "$Titre{include} %% %% "+Regex.Split(copiedSourceFiletoInclude, "%%")[2];
-
                 // We check if the included file is valide
                 using (Stream toIncludeStream = new MemoryStream(Encoding.UTF8.GetBytes(includeContentOnlyWithBricks)))
                 {

@@ -214,9 +214,7 @@ namespace CompCorpus.RunTime
                     if (parser.montage == null || parser.montage.errorList.Any() || scn.hasErrors)
                     {
                         includesHasErros = true;
-                        //Console.WriteLine();
                         LogManager.AddLog(parser.montage.WriteErrors());
-                        //Console.WriteLine();
                     }
                     else
                     {
