@@ -200,7 +200,7 @@ namespace CompCorpus.RunTime
                 PreProcessor.AddIncludes(sourceCopiedFiletoIncludePath);
 
 
-                string copiedSourceFiletoInclude = ReadFileWithPath(fileToIncludePath);
+                string SourceFiletoIncludeContent = ReadFileWithPath(fileToIncludePath);
 
                 // We check if the included file is valide
                 using (Stream toIncludeStream = new FileStream(fileToIncludePath, FileMode.Open))
@@ -208,7 +208,7 @@ namespace CompCorpus.RunTime
                     Scanner scn = new Scanner(toIncludeStream);
                     Parser parser = new Parser(scn);
                     parser.montage.SetDeclarationSymboleAffectationFromOther(Program.mainMontage);
-                    parser.montage.AddSymboleFromPreCompile(copiedSourceFiletoInclude);
+                    parser.montage.AddSymboleFromPreCompile(SourceFiletoIncludeContent);
                    
                     parser.Parse();
                     if (parser.montage == null || parser.montage.errorList.Any() || scn.hasErrors)
