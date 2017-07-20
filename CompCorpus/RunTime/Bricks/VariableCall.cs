@@ -9,7 +9,7 @@ namespace CompCorpus.RunTime.Bricks
 {
     public class VariableCall : Brick
     {
-        public string text { get; }
+        public string name { get; }
         private bool local { get; set; }
         public string typeString { get; }
         public AbstractExpression expression { get { return getExpression(); } }
@@ -17,7 +17,7 @@ namespace CompCorpus.RunTime.Bricks
         private AbstractExpression getExpression()
         {
             Affectation exp = null;
-            if (Program.mainMontage.mapOfCalculExpressions.TryGetValue(this.text, out exp))
+            if (Program.mainMontage.mapOfCalculExpressions.TryGetValue(this.name, out exp))
             {
                 return exp.expression;
             }
@@ -30,7 +30,7 @@ namespace CompCorpus.RunTime.Bricks
 
         public VariableCall(string text, bool local, string typeString)
         {
-            this.text = text;
+            this.name = text;
             this.local = local;
             this.typeString = typeString;
         }
@@ -41,14 +41,14 @@ namespace CompCorpus.RunTime.Bricks
             string htmlText = "";
             if (local)
             {
-                htmlText += " {{" + text + "()}}";
+                htmlText += " {{" + name + "()}}";
             }
             else
             {
                 htmlText += " <input type=\"";
                 htmlText += GetHtmlType();
-                htmlText += "\" ng-model=\"" + text + "\"";
-                htmlText += " data-toggle=\"tooltip\" data-placement=\"top\" title=\"" + text + "\"";
+                htmlText += "\" ng-model=\"" + name + "\"";
+                htmlText += " data-toggle=\"tooltip\" data-placement=\"top\" title=\"" + name + "\"";
                 htmlText += " onkeypress = \"this.style.width =" +
                     " Math.max( ((this.value.length) * 10 + 16 ),50) + 'px';\" > ";
 
