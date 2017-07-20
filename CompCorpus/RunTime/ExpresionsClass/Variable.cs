@@ -130,46 +130,22 @@ namespace CompCorpus.RunTime
 
         public static ExpressionType ComputeDataType(string dataType)
         {
-            ExpressionType type = ExpressionType.INVALIDE;
-            switch (dataType)
+            if (dataType[0] == 'L') // for local var
             {
-                case "TEXTE" :
-                case "LTEXTE":
-                    {
-                        type = ExpressionType.TEXTE;
-                        break;
-                    }
-                case "NOMBRE":
-                case "LNOMBRE":
-                    {
-                        type = ExpressionType.NOMBRE;
-                        break;
-                    }
-                case "BOOL":
-                case "LBOOL":
-                    {
-                        type = ExpressionType.BOOL;
-                        break;
-                    }
-                case "UNKNOWVAR":
-                    {
-                        // Si la variable tend à être remplacé alors ce sera par une string pour les choix 
-                        type = ExpressionType.UNKNOWVAR;
-                        break;
-                    }
-                default:
-                    {
-                        type = ExpressionType.INVALIDE;
-                        break;
-                    }
-            };
+                dataType = dataType.Substring(1);
+            }
+            ExpressionType type = ExpressionType.INVALIDE;
+            if (!Enum.TryParse<ExpressionType>(dataType, out type))
+            {
+                type = ExpressionType.INVALIDE;
+            }
             return type;
         }
 
         public VariableId(string name, string varType) : base(VariableType.ID, ComputeDataType(varType))
         {
             this.name = name;
-            local = ((varType == "L"+ExpressionType.TEXTE.ToString()) || (varType == "L"+ExpressionType.NOMBRE.ToString()) || (varType == "LBOOL"));
+            local = (Enum.TryParse<ExpressionType>(varType.Substring(1), out _) &&( varType[0] == 'L'));// LTEXTE || LNOMBRE || LBOOL
         }
 
         public override void Print(int level)

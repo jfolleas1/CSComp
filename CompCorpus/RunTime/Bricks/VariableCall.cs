@@ -10,7 +10,7 @@ namespace CompCorpus.RunTime.Bricks
     {
         public string text { get; }
         private bool local { get; set; }
-        string typeString { get; }
+        public string typeString { get; }
         public VariableCall(string text, bool local, string typeString)
         {
             this.text = text;

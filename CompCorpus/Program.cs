@@ -38,8 +38,9 @@ namespace CompCorpus
         }
 
 
-        static public void CompileMain(string sourceFileName, string targetFilehtmlName, string targetFileJSName, bool launch = true)
+        static public Montage CompileMain(string sourceFileName, string targetFilehtmlName, string targetFileJSName, bool launch = true)
         {
+            Montage resultMontage = new Montage();
             LogManager.logFilePath = @"C:\Users\j.folleas\Desktop\settings\logs.txt";
             LogManager.EmptyLogs();
 
@@ -78,7 +79,7 @@ namespace CompCorpus
             string fileForPreCompiling = "";
             try
             {   // Open the text file using a stream reader.
-                using (StreamReader sr = new StreamReader(sourceFileName))
+                using (StreamReader sr = new StreamReader(sourceFileName,true))
                 {
                     // Read the stream to a string, and write the string to the console.
                     fileForPreCompiling = sr.ReadToEnd();
@@ -93,7 +94,7 @@ namespace CompCorpus
             try
             {
                 file = new FileStream(sourceFileName, FileMode.Open);
-                scn = new Scanner(file);
+                scn = new Scanner(file,"GUESS");
                 parser = new Parser(scn);
                 //Empty the core of the montage, now it only contain the declaration and 
                 // the affectations
@@ -110,12 +111,13 @@ namespace CompCorpus
                 if (montage != null && !montage.errorList.Any() && !scn.hasErrors && !PreProcessor.includesHasErros)
                 {
 
-                    montage.WriteInFiles(targetFilehtmlName, targetFileJSName);
                     LogManager.AddLog("Compilation principale à réussie");
                     if(launch)
                     {
+                        montage.WriteInFiles(targetFilehtmlName, targetFileJSName);
                         System.Diagnostics.Process.Start(targetFilehtmlName);
                     }
+                    resultMontage = montage;
             }
                 else
                 {
@@ -143,6 +145,7 @@ namespace CompCorpus
                 Console.WriteLine("When we try to delete the copied main src file:");
                 Console.WriteLine(e.Message);
             }
+            return resultMontage;
         }
     }
 }
