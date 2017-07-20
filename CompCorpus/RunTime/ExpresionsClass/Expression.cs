@@ -155,46 +155,24 @@ namespace CompCorpus.RunTime
             {
                
                 case ExpressionSymbole.PLUS:
-                    myExpressionInString = expression1.Write() + "+" + expression2.Write();
-                    break;
                 case ExpressionSymbole.MUL:
-                    myExpressionInString = expression1.Write() + "*" + expression2.Write();
-                    break;
                 case ExpressionSymbole.DIV:
-                    myExpressionInString = expression1.Write() + "/" + expression2.Write();
-                    break;
                 case ExpressionSymbole.MINUS:
-                    myExpressionInString = expression1.Write() + "-" + expression2.Write();
-                    break;
                 case ExpressionSymbole.AND:
-                    myExpressionInString = expression1.Write() + "&&" + expression2.Write();
-                    break;
-                case ExpressionSymbole.OR:
-                    myExpressionInString = expression1.Write() + "||" + expression2.Write();
-                    break;
-                case ExpressionSymbole.NOT:
-                    myExpressionInString = "!" +expression1.Write();
-                    break;
+                case ExpressionSymbole.OR:          
                 case ExpressionSymbole.EGALE:
-                    myExpressionInString = expression1.Write() + "==" + expression2.Write();
-                    break;
                 case ExpressionSymbole.NOTEGALE:
-                    myExpressionInString = expression1.Write() + "!=" + expression2.Write();
-                    break;
                 case ExpressionSymbole.INF:
-                    myExpressionInString = expression1.Write() + "<" + expression2.Write();
-                    break;
                 case ExpressionSymbole.INFEGALE:
-                    myExpressionInString = expression1.Write() + "<=" + expression2.Write();
-                    break;
                 case ExpressionSymbole.SUP:
-                    myExpressionInString = expression1.Write() + ">" + expression2.Write();
-                    break;
                 case ExpressionSymbole.SUPEGALE:
-                    myExpressionInString = expression1.Write() + ">=" + expression2.Write();
+                    myExpressionInString = expression1.Write() + SymboleToString() + expression2.Write();
                     break;
                 case ExpressionSymbole.PARENT:
                     myExpressionInString = "(" + expression1.Write() + ")";
+                    break;
+                case ExpressionSymbole.NOT:
+                    myExpressionInString = "!" + expression1.Write();
                     break;
                 default:
                     Console.WriteLine("Symbole de calcul non reconu");
@@ -211,43 +189,21 @@ namespace CompCorpus.RunTime
             {
 
                 case ExpressionSymbole.PLUS:
-                    myExpressionInString = expression1.WriteForCondition() + "+" + expression2.WriteForCondition();
-                    break;
                 case ExpressionSymbole.MUL:
-                    myExpressionInString = expression1.WriteForCondition() + "*" + expression2.WriteForCondition();
-                    break;
                 case ExpressionSymbole.DIV:
-                    myExpressionInString = expression1.WriteForCondition() + "/" + expression2.WriteForCondition();
-                    break;
                 case ExpressionSymbole.MINUS:
-                    myExpressionInString = expression1.WriteForCondition() + "-" + expression2.WriteForCondition();
-                    break;
                 case ExpressionSymbole.AND:
-                    myExpressionInString = expression1.WriteForCondition() + "&&" + expression2.WriteForCondition();
-                    break;
                 case ExpressionSymbole.OR:
-                    myExpressionInString = expression1.WriteForCondition() + "||" + expression2.WriteForCondition();
+                case ExpressionSymbole.EGALE:
+                case ExpressionSymbole.NOTEGALE:
+                case ExpressionSymbole.INF:
+                case ExpressionSymbole.INFEGALE:
+                case ExpressionSymbole.SUP:
+                case ExpressionSymbole.SUPEGALE:
+                    myExpressionInString = expression1.WriteForCondition() + SymboleToString() + expression2.WriteForCondition();
                     break;
                 case ExpressionSymbole.NOT:
                     myExpressionInString = "!" + expression1.WriteForCondition();
-                    break;
-                case ExpressionSymbole.EGALE:
-                    myExpressionInString = expression1.WriteForCondition() + "==" + expression2.WriteForCondition();
-                    break;
-                case ExpressionSymbole.NOTEGALE:
-                    myExpressionInString = expression1.WriteForCondition() + "!=" + expression2.WriteForCondition();
-                    break;
-                case ExpressionSymbole.INF:
-                    myExpressionInString = expression1.WriteForCondition() + "<" + expression2.WriteForCondition();
-                    break;
-                case ExpressionSymbole.INFEGALE:
-                    myExpressionInString = expression1.WriteForCondition() + "<=" + expression2.WriteForCondition();
-                    break;
-                case ExpressionSymbole.SUP:
-                    myExpressionInString = expression1.WriteForCondition() + ">" + expression2.WriteForCondition();
-                    break;
-                case ExpressionSymbole.SUPEGALE:
-                    myExpressionInString = expression1.WriteForCondition() + ">=" + expression2.WriteForCondition();
                     break;
                 case ExpressionSymbole.PARENT:
                     myExpressionInString = "(" + expression1.WriteForCondition() + ")";
@@ -258,6 +214,42 @@ namespace CompCorpus.RunTime
                     break;
             }
             return myExpressionInString;
+        }
+
+        public string SymboleToString()
+        {
+            switch (symbole)
+            {
+                case ExpressionSymbole.PLUS:
+                   return "+";
+                case ExpressionSymbole.MUL:
+                    return "*";
+                case ExpressionSymbole.DIV:
+                    return "/";
+                case ExpressionSymbole.MINUS:
+                   return "-";
+                case ExpressionSymbole.AND:
+                    return "&&";
+                case ExpressionSymbole.OR:
+                    return "||";
+                case ExpressionSymbole.NOT:
+                    return "!";
+                case ExpressionSymbole.EGALE:
+                    return "==";
+                case ExpressionSymbole.NOTEGALE:
+                    return "!=";
+                case ExpressionSymbole.INF:
+                    return "<";
+                case ExpressionSymbole.INFEGALE:
+                    return "<=";
+                case ExpressionSymbole.SUP:
+                    return ">";
+                case ExpressionSymbole.SUPEGALE:
+                    return ">=";
+                default:
+                    Console.WriteLine("Symbole de calcul non reconu");
+                    return "";
+            }
         }
     }
 }
