@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CompCorpus;
 
 namespace CompCorpus.RunTime.Bricks
 {
@@ -11,6 +12,22 @@ namespace CompCorpus.RunTime.Bricks
         public string text { get; }
         private bool local { get; set; }
         public string typeString { get; }
+        public AbstractExpression expression { get { return getExpression(); } }
+
+        private AbstractExpression getExpression()
+        {
+            Affectation exp = null;
+            if (Program.mainMontage.mapOfCalculExpressions.TryGetValue(this.text, out exp))
+            {
+                return exp.expression;
+            }
+            else
+            {
+                return null;
+            }
+
+        }
+
         public VariableCall(string text, bool local, string typeString)
         {
             this.text = text;
