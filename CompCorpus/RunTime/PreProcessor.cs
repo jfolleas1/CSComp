@@ -6,6 +6,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using CompCorpus.Analyzer;
+using CompCorpus.RunTime.declaration;
 
 
 namespace CompCorpus.RunTime
@@ -28,7 +29,13 @@ namespace CompCorpus.RunTime
                 parser = new Parser(scn);
 
                 parser.Parse();
-
+                //ici on va rajouter que toute les déclaration du montage vienne de la db 
+                foreach (Declaration dec in parser.montage.listOfDeclarations)
+                {
+                    // Indicate that the declaration come from the dataBase
+                    dec.fromDataBase = true;
+                }
+                //
                 montageBaseWithSIDB = parser.montage;
             }
             catch (Exception e)

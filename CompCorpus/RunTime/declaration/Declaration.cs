@@ -12,11 +12,13 @@ namespace CompCorpus.RunTime.declaration
     {
         public string name { get; }
         public ExpressionType type { get; }
+        public bool fromDataBase { get; set; }
 
         public Declaration(string name, string typeString)
         {
             this.name = name;
-            type = GetTypeFromString(typeString);
+            this.type = GetTypeFromString(typeString);
+            this.fromDataBase = false;
         }
 
         public Declaration(string name, ExpressionType type)
