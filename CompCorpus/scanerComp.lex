@@ -103,8 +103,8 @@ DoubleCote (\")
 {Integer}				{yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol);  Int64.TryParse (yytext, NumberStyles.Integer, CultureInfo.CurrentCulture, out yylval.Integer);  return (int)Tokens.INTEGER;}
 {Float}					{yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); double.TryParse (yytext, NumberStyles.Float, CultureInfo.CurrentCulture, out yylval.Float); return (int)Tokens.FLOAT;}
 {CharString}			{yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); Regex r = new Regex(@"\\\$"); yylval.String = r.Replace(yytext,"$"); return (int)Tokens.STRING;}
-{DeadWord}				{ Console.WriteLine("DW : " + yytext); yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); yylval.String = yytext; return (int)Tokens.DEADWORD;}
-{Identifier}			{ Console.WriteLine("ID : " + yytext); yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); yylval.String = yytext; return (int)Tokens.ID;}
+{DeadWord}				{ yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); yylval.String = yytext; return (int)Tokens.DEADWORD;}
+{Identifier}			{ yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); yylval.String = yytext; return (int)Tokens.ID;}
 
 {DoubleCote}			{yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); yylval.String = yytext; return (int)Tokens.DOUBLECOTE;}
 

@@ -6,9 +6,9 @@
 //
 //  GPLEX Version:  1.2.2
 //  Machine:  FIDF3675368
-//  DateTime: 26/07/2017 11:17:05
+//  DateTime: 26/07/2017 11:49:32
 //  UserName: j.folleas
-//  GPLEX input file <ScanerComp.lex - 26/07/2017 11:13:11>
+//  GPLEX input file <ScanerComp.lex - 26/07/2017 11:49:29>
 //  GPLEX frame file <embedded resource>
 //
 //  Option settings: unicode, verbose, parser, stack, minimize
@@ -885,7 +885,7 @@ yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.MU
 yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.CODEINDIC;
             break;
         case 5: // Recognized '{Identifier}',	Shortest string "T"
-Console.WriteLine("ID : " + yytext); yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); yylval.String = yytext; return (int)Tokens.ID;
+yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); yylval.String = yytext; return (int)Tokens.ID;
             break;
         case 6: // Recognized '{Integer}',	Shortest string "1"
 yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol);  Int64.TryParse (yytext, NumberStyles.Integer, CultureInfo.CurrentCulture, out yylval.Integer);  return (int)Tokens.INTEGER;
@@ -934,7 +934,7 @@ yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.CO
 yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); yylval.String = yytext; return (int)Tokens.DOUBLECOTE;
             break;
         case 21: // Recognized '{DeadWord}',	Shortest string "\\"
-Console.WriteLine("DW : " + yytext); yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); yylval.String = yytext; return (int)Tokens.DEADWORD;
+yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); yylval.String = yytext; return (int)Tokens.DEADWORD;
             break;
         case 22: // Recognized '{CharString}',	Shortest string "\"\""
         case 23: // Recognized '{CharString}',	Shortest string "\"\\\""
