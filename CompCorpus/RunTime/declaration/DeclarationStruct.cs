@@ -9,7 +9,7 @@ namespace CompCorpus.RunTime.declaration
     public class DeclarationStruct : Declaration
     {
         static List<KeyValuePair<string, string>> contextConcatenation { get; set; } = new List<KeyValuePair<string, string>>();
-        List<Declaration> declarationList { get; }
+        public List<Declaration> declarationList { get; }
         string itemGetterPath { get; }
         string listOfParamForAddAndDel { get; }
 

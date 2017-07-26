@@ -36,6 +36,14 @@ namespace CompCorpus.RunTime
                     dec.fromDataBase = true;
                 }
                 //
+                //ici on va rajouter que toute les déclaration du montage vienne de la db 
+                foreach (Affectation aff in parser.montage.mapOfCalculExpressions.Values)
+                {
+                    // Indicate that the declaration come from the dataBase
+                    aff.fromDataBase = true;
+                }
+                //
+                //
                 montageBaseWithSIDB = parser.montage;
             }
             catch (Exception e)

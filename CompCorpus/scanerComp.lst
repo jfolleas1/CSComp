@@ -4,7 +4,7 @@
 // ==========================================================================
 //  Version:  1.2.2
 //  Machine:  FIDF3675368
-//  DateTime: 12/07/2017 11:25:09
+//  DateTime: 26/07/2017 09:32:06
 //  UserName: j.folleas
 // ==========================================================================
 
@@ -44,16 +44,11 @@ assig (=|(:=))
 Identifier [A-Za-z][A-Za-z0-9_\.]*
 Integer [0-9]+
 Float [0-9]+,[0-9]+
-CharString "((\\\$)|(\\")|[^"\$])*"
-// Error: Literal string terminated by end of line
-// -----------------------------------------------
+CharString \"((\\\$)|(\\\")|[^\"\$])*\"
 TitleId ($titre)[1-6]
-//^^^^^
-// Error: Unexpected symbol, skipping to  <%%> 
-// Error: Parser error <Syntax error, unexpected name, expecting verbatim, or pattern> 
-// ------------------------------------------------------------------------------------
 Comment ((\/\/)[^\n]*\n|\/\*[^\*\/]*\*\/)
-DeadWord	[^ \r\s,\t\n{}\(\)\$+\-\/\*(&&)(||)!(==)(<=)(<)(>=)(>)(:=);:(%%)]+
+DeadWord	[^ \"\r\s,\t\n{}\(\)\$+\-\/\*(&&)(||)!(==)(<=)(<)(>=)(>)(:=);:(%%)]*[^A-Za-z0-9][^ \"\r\s,\t\n{}\(\)\$+\-\/\*(&&)(||)!(==)(<=)(<)(>=)(>)(:=);:(%%)]*
+DoubleCote (\")
 
 %%
 
@@ -69,9 +64,6 @@ DeadWord	[^ \r\s,\t\n{}\(\)\$+\-\/\*(&&)(||)!(==)(<=)(<)(>=)(>)(:=);:(%%)]+
 %}
 
 {Comment}				{ yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); }
-//^^^^^^
-// Error: Unknown lexical category <Comment> 
-// ------------------------------------------
 
 "$Titre"				{yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.TITREACTEKW;}
 "$true"                 {yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.TRUE; }
@@ -81,15 +73,13 @@ DeadWord	[^ \r\s,\t\n{}\(\)\$+\-\/\*(&&)(||)!(==)(<=)(<)(>=)(>)(:=);:(%%)]+
 "$nouvparag"			{yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.NOUVPARAG;}
 
 {TitleId}				{yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); yylval.String = yytext; return (int)Tokens.TITLEID;}
-//^^^^^^
-// Error: Unknown lexical category <TitleId> 
-// ------------------------------------------
 "$choix"				{yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.CHOIXCKW;}
 "$option"				{yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.OPTIONCKW;}
 "$si"			{yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.CONDITIONCKW;}
 "$pourchaque"			{ yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.POURCHAQUECKW; }
 "$implique"				{ yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.IMPLIQUECKW; }
 "$tab"					{ yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.TABCKW; }
+"$include"				{ yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.INCLUDECKW; }
 
 "+"                     {yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.PLUS;}
 "-"                     {yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.MINUS;}
@@ -106,10 +96,10 @@ DeadWord	[^ \r\s,\t\n{}\(\)\$+\-\/\*(&&)(||)!(==)(<=)(<)(>=)(>)(:=);:(%%)]+
 "!="					{yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.NOTEGALE;}
 "!"                     {yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.NOT;}
 "=="                    {yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.EGALE;}
-"<"                     {yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.INF;}
 "<="                    {yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.INFEGALE;}
-">"                     {yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.SUP;}
+"<"                     {yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.INF;}
 ">="                    {yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.SUPEGALE;}
+">"                     {yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.SUP;}
 
 {assig}					{yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.ASSIGN;}
 
@@ -124,16 +114,16 @@ DeadWord	[^ \r\s,\t\n{}\(\)\$+\-\/\*(&&)(||)!(==)(<=)(<)(>=)(>)(:=);:(%%)]+
 {Integer}				{yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol);  Int64.TryParse (yytext, NumberStyles.Integer, CultureInfo.CurrentCulture, out yylval.Integer);  return (int)Tokens.INTEGER;}
 {Float}					{yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); double.TryParse (yytext, NumberStyles.Float, CultureInfo.CurrentCulture, out yylval.Float); return (int)Tokens.FLOAT;}
 {CharString}			{yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); Regex r = new Regex(@"\\\$"); yylval.String = r.Replace(yytext,"$"); return (int)Tokens.STRING;}
-//^^^^^^^^^
-// Error: Unknown lexical category <CharString> 
-// ---------------------------------------------
-{Identifier}			{yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); yylval.String = yytext; return (int)Tokens.ID;}
+{Identifier}			{ Console.WriteLine("ID : " + yytext); yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); yylval.String = yytext; return (int)Tokens.ID;}
 
-{DeadWord}				{yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); yylval.String = yytext; return (int)Tokens.DEADWORD;}
-//^^^^^^^
-// Error: Unknown lexical category <DeadWord> 
-// -------------------------------------------
-
+{DeadWord}				{ Console.WriteLine("DB : " + yytext); yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); yylval.String = yytext; return (int)Tokens.DEADWORD;}
+//^^^^^^^^
+// Warning: This pattern always overrides "{DoubleCote}" 
+// ------------------------------------------------------
+{DoubleCote}			{yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); yylval.String = yytext; return (int)Tokens.DOUBLECOTE;}
+//^^^^^^^^^^
+// Warning: This pattern always overridden by "{DeadWord}" 
+// --------------------------------------------------------
 
 %% //User-code Section// ==========================================================================
 

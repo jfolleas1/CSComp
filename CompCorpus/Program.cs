@@ -32,7 +32,7 @@ namespace CompCorpus
             }
             else
             {
-                Console.WriteLine("Le programme requière 3 parmamètres: sourceFileName, targetFilehtmlName, targetFileJSName");
+                Console.WriteLine("Le programme requière trois parmamètres: sourceFileName, targetFilehtmlName, targetFileJSName");
             }
             Console.ReadLine();
         }

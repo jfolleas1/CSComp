@@ -13,6 +13,7 @@ namespace CompCorpus.RunTime
         public List<Tuple<AbstractExpression, AbstractExpression>> listOfConditionAndExpression{ get; set; }
         public int line { get; }
         public int col { get; }
+        public bool fromDataBase { get; set; }
 
         public Affectation(VariableId name, AbstractExpression exp, int line = 0, int col = 0)
         {

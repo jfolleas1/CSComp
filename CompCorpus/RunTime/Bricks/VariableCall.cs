@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CompCorpus;
+﻿
 
 namespace CompCorpus.RunTime.Bricks
 {
@@ -16,6 +11,7 @@ namespace CompCorpus.RunTime.Bricks
 
         private AbstractExpression getExpression()
         {
+            
             Affectation exp = null;
             if (Program.mainMontage.mapOfCalculExpressions.TryGetValue(this.name, out exp))
             {

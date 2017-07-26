@@ -30,13 +30,13 @@
 
 
 assig (=|(:=))
+DeadWord	[^ \"\r,\t\n{}\(\)\$+\-\/\*(&&)(||)!(==)(<=)(<)(>=)(>)(:=);:(%%)]*[^A-Za-z0-9_\. \"\r,\t\n{}\(\)\$+\-\/\*(&&)(||)!(==)(<=)(<)(>=)(>)(:=);:(%%)][^ \"\r,\t\n{}\(\)\$+\-\/\*(&&)(||)!(==)(<=)(<)(>=)(>)(:=);:(%%)]*
 Identifier [A-Za-z][A-Za-z0-9_\.]*
 Integer [0-9]+
 Float [0-9]+,[0-9]+
 CharString \"((\\\$)|(\\\")|[^\"\$])*\"
 TitleId ($titre)[1-6]
 Comment ((\/\/)[^\n]*\n|\/\*[^\*\/]*\*\/)
-DeadWord	[^ \"\r\s,\t\n{}\(\)\$+\-\/\*(&&)(||)!(==)(<=)(<)(>=)(>)(:=);:(%%)]+
 DoubleCote (\")
 
 %%
@@ -85,10 +85,10 @@ DoubleCote (\")
 "!="					{yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.NOTEGALE;}
 "!"                     {yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.NOT;}
 "=="                    {yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.EGALE;}
-"<"                     {yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.INF;}
 "<="                    {yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.INFEGALE;}
-">"                     {yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.SUP;}
+"<"                     {yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.INF;}
 ">="                    {yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.SUPEGALE;}
+">"                     {yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.SUP;}
 
 {assig}					{yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); return (int)Tokens.ASSIGN;}
 
@@ -103,9 +103,9 @@ DoubleCote (\")
 {Integer}				{yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol);  Int64.TryParse (yytext, NumberStyles.Integer, CultureInfo.CurrentCulture, out yylval.Integer);  return (int)Tokens.INTEGER;}
 {Float}					{yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); double.TryParse (yytext, NumberStyles.Float, CultureInfo.CurrentCulture, out yylval.Float); return (int)Tokens.FLOAT;}
 {CharString}			{yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); Regex r = new Regex(@"\\\$"); yylval.String = r.Replace(yytext,"$"); return (int)Tokens.STRING;}
-{Identifier}			{yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); yylval.String = yytext; return (int)Tokens.ID;}
+{DeadWord}				{ Console.WriteLine("DW : " + yytext); yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); yylval.String = yytext; return (int)Tokens.DEADWORD;}
+{Identifier}			{ Console.WriteLine("ID : " + yytext); yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); yylval.String = yytext; return (int)Tokens.ID;}
 
-{DeadWord}				{yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); yylval.String = yytext; return (int)Tokens.DEADWORD;}
-{DoubleCote}				{yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); yylval.String = yytext; return (int)Tokens.DOUBLECOTE;}
+{DoubleCote}			{yylloc = new LexLocation(tokLin,tokCol+1,tokELin,tokECol); yylval.String = yytext; return (int)Tokens.DOUBLECOTE;}
 
 %% //User-code Section
