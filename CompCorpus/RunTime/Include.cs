@@ -35,7 +35,7 @@ namespace CompCorpus.RunTime
                 // We check if the included file is valide
                 using (Stream toIncludeStream = new MemoryStream(Encoding.UTF8.GetBytes(includeContentOnlyWithBricks)))
                 {
-                    Scanner scn = new Scanner(toIncludeStream);
+                    Scanner scn = new Scanner(toIncludeStream, "GUESS");
                     Parser parser = new Parser(scn);
                     parser.montage.SetDeclarationSymboleAffectationFromOther(Program.mainMontage);
                     parser.Parse();

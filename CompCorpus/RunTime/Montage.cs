@@ -5,6 +5,7 @@ using CompCorpus.RunTime.error;
 using CompCorpus.RunTime.declaration;
 using CompCorpus.RunTime.Bricks;
 using System.Text.RegularExpressions;
+using System.Text;
 
 namespace CompCorpus.RunTime
 {
@@ -434,7 +435,7 @@ namespace CompCorpus.RunTime
                     File.WriteAllText(targetFilehtmlName, String.Empty);
                 }
 
-                StreamWriter monStreamWriter = new StreamWriter(targetFilehtmlName, true);
+                StreamWriter monStreamWriter = new StreamWriter(targetFilehtmlName, true, Encoding.UTF8);
                 
                 //Ecriture du texte dans votre fichier 
                 string beginOfTheHtmlDoc = "<!DOCTYPE html> \n<html lang=\"fr - FR\"> \n" +
@@ -486,7 +487,7 @@ namespace CompCorpus.RunTime
                     File.WriteAllText(targetFileJSName, String.Empty);
                 }
 
-                StreamWriter myStreamWriter = new StreamWriter(targetFileJSName, true);
+                StreamWriter myStreamWriter = new StreamWriter(targetFileJSName, true, Encoding.UTF8);
 
                 string beginOfTheJSDoc = "var app = angular.module('myActe', []);\n" +
                                     "app.controller('myCtrl', function($scope) { \n\n";
